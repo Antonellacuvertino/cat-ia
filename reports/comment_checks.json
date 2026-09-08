@@ -1,0 +1,7 @@
+{
+  "python_files_unchanged_executable_ast": 20,
+  "frontend_and_launchers_unchanged_instructions": 7,
+  "documented_classes_and_functions": 86,
+  "scope": "Compara Python sin docstrings y recursos sin los comentarios añadidos; no evalúa calidad LLM.",
+  "passed": true
+}

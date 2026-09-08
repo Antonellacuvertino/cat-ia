@@ -1,0 +1,125 @@
+/* Paleta compartida y estilos base. Las variables permiten cambiar colores en un solo lugar. */
+:root{--ink:#17352e;--muted:#75827c;--green:#156b50;--line:#e2e8e2;--paper:#f6f8f4;--lime:#d9eea6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;font-size:14px}
+a{color:inherit;text-decoration:none}
+/* Navegación lateral fija en escritorio y elementos de identidad. */
+.sidebar{width:238px;background:#102e27;color:#eef3e8;position:fixed;inset:0 auto 0 0;padding:32px 24px;display:flex;flex-direction:column}
+.brand{display:flex;gap:10px;align-items:center;font-size:26px;font-weight:700;letter-spacing:-1px}
+.brand>span{color:var(--lime)}
+.brand b{font-size:22px;margin-left:2px}
+.workspace{font-size:11px;letter-spacing:1.5px;margin:40px 0 28px;color:#d4e3d5}
+.workspace span{display:block;font-size:11px;letter-spacing:0;color:#90a89b;margin-top:9px}
+nav a{display:block;padding:14px 12px;margin:6px -8px;font-size:13px;border-radius:7px;color:#b8c9bf}
+nav a.active{background:#27463c;color:var(--lime)}
+.sidebar-bottom{margin-top:auto;font-size:11px;color:#c3d8b1;line-height:1.9}
+.sidebar-bottom p{color:#94a89d;font-size:10px}
+.dot{display:inline-block;width:6px;height:6px;background:var(--lime);border-radius:50%;margin-right:5px}
+/* Área de contenido: deja espacio para la barra lateral y limita el ancho. */
+main{margin-left:238px;padding:0 42px;max-width:1700px}
+header{display:flex;justify-content:space-between;align-items:center;height:82px;border-bottom:1px solid var(--line);font-size:12px}
+.breadcrumb{color:var(--muted)}
+.breadcrumb span{margin:0 14px;color:#b8c2b8}
+.pill,.mini-tag{font-size:10px;letter-spacing:1px;padding:7px 10px;border:1px solid var(--line);border-radius:6px}
+.heading{display:flex;justify-content:space-between;align-items:center;margin:38px 0 28px}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;color:var(--green)}
+h1{font-size:36px;letter-spacing:-1.5px;margin:12px 0}
+p{line-height:1.6}
+.heading p{color:var(--muted);margin:0}
+.status{font-size:11px;border:1px solid #cbd8bf;background:#edf2e5;border-radius:20px;padding:9px 14px}
+/* Indicadores distribuidos en tres columnas mediante CSS Grid. */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stats article{background:#fff;border:1px solid var(--line);border-radius:10px;padding:19px 22px}
+.stats span,.stats small{display:block;color:var(--muted);font-size:11px}
+.stats strong{font-size:27px;display:block;margin:10px 0;letter-spacing:-.7px}
+.banner{padding:12px 16px;background:#f2eddc;border:1px solid #e7dbb7;border-radius:7px;margin:22px 0;color:#73602a;font-size:12px}
+/* Dos columnas para entrada y resultado; las media queries las apilan en pantallas pequeñas. */
+.workgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px}
+.card-title{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
+h2{font-size:19px;letter-spacing:-.5px;margin:8px 0 0}
+.mini-tag{letter-spacing:0;color:var(--muted);white-space:nowrap}
+/* Formulario y controles: tipografía, espaciado, foco visible y estados de interacción. */
+label{display:block;font-size:12px;font-weight:600;margin:16px 0 9px}
+textarea,select{font:inherit;color:var(--ink);border:1px solid #d7dfd5;border-radius:7px;width:100%;background:#fcfdfa;padding:12px}
+textarea{height:150px;resize:vertical;line-height:1.7}
+textarea:focus,select:focus{outline:2px solid #96c8ac;outline-offset:2px}
+textarea::placeholder{color:#97a297}
+.field-note{display:flex;justify-content:space-between;gap:12px;font-size:10px;color:var(--muted);margin-top:7px}
+.examples{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:18px 0;font-size:10px;color:var(--muted)}
+button{cursor:pointer;font:inherit}
+.examples button{background:#f1f5ed;border:1px solid #e0e8d8;padding:7px 9px;border-radius:5px;color:#526747;font-size:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.check{font-weight:400;display:flex;gap:8px;align-items:center}
+.check input{accent-color:var(--green);width:15px;height:15px}
+details{border-top:1px solid var(--line);margin-top:18px;padding-top:16px;font-size:12px}
+summary{cursor:pointer;color:#5a7061}
+.primary{margin-top:22px;width:100%;padding:14px 17px;background:var(--green);border:0;border-radius:7px;color:white;font-weight:600;display:flex;justify-content:space-between}
+/* El estado ocupado reduce opacidad y cambia el cursor mientras responde la API. */
+.primary:disabled{opacity:.65;cursor:wait}
+/* Estado inicial sin ticket: orientación visual antes de ejecutar el análisis. */
+.empty{min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.empty-icon{background:#edf4e8;color:#43885c;font-size:40px;padding:17px 25px;border-radius:18px}
+.empty h3{font-size:20px;letter-spacing:-.4px;margin:25px 0 0}
+.empty p{color:var(--muted);font-size:12px}
+.flow{font-size:10px;color:#6f7d6e;margin-top:24px}
+.flow span{margin:0 12px;color:#aaba9b}
+/* Categoría, prioridad, borrador y aviso de revisión humana. */
+.badges{display:flex;gap:9px}
+.badges span{border-radius:5px;padding:8px 10px;background:#edf3e4;font-size:11px}
+.badges span:last-child{background:#f3ecd6}
+.reply{white-space:pre-wrap;font-size:13px;line-height:1.8;padding:17px;background:#f5f8f1;border-left:3px solid #a2be8a;border-radius:4px}
+.sla,.justification{font-size:12px;color:var(--muted)}
+.review-note{font-size:11px;background:#fff5de;border-radius:6px;padding:11px;line-height:1.6}
+.secondary{background:white;border:1px solid var(--line);padding:10px 12px;border-radius:6px;font-size:11px;margin-top:16px;color:var(--green)}
+.trace{font-size:9px;color:var(--muted);overflow-wrap:anywhere}
+#steps{padding-left:20px;line-height:1.9;font-size:11px}
+.section-heading{display:flex;justify-content:space-between;align-items:end;margin:35px 0 18px}
+.section-heading p{color:var(--muted);font-size:11px}
+/* Tarjetas documentales con texto, citas y procedencia verificable. */
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.evidence-card{border:1px solid var(--line);background:white;border-radius:9px;padding:18px}
+.evidence-card h3{font-size:14px}
+.evidence-card p{font-size:12px;color:#657567}
+.evidence-card small{font-size:10px;color:var(--green);overflow-wrap:anywhere}
+.evidence-card blockquote{margin:14px 0;padding-left:12px;border-left:2px solid #a7c17f;font-size:12px;line-height:1.6}
+/* Catálogo de conocimiento disponible para recuperación. */
+.source-list{background:white;border:1px solid var(--line);border-radius:10px}
+.source-row{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:15px 20px;border-bottom:1px solid var(--line);font-size:12px}
+.source-row:last-child{border:0}
+.source-row small{color:var(--muted);font-size:10px}
+.source-row span{color:var(--green);font-size:10px;white-space:nowrap}
+footer{display:flex;justify-content:space-between;margin:30px 0;color:var(--muted);font-size:10px}
+#error{color:#a73524;font-size:12px;margin-top:12px}
+/* Foco para navegación con teclado; hidden mantiene ocultos los paneles inactivos. */
+:focus-visible{outline:2px solid #78a577;outline-offset:3px}
+[hidden]{display:none!important}
+/* Adaptación a pantallas medianas: una columna de trabajo. */
+@media(max-width:1100px){.sidebar{width:190px;padding:28px 18px}
+main{margin-left:190px;padding:0 24px}
+.heading{align-items:start;gap:15px}
+h1{font-size:29px}
+.workgrid{grid-template-columns:1fr}
+.empty{min-height:280px}
+}
+/* Adaptación móvil: elimina la barra fija y apila los controles para evitar desbordamiento. */
+@media(max-width:700px){.sidebar{position:static;width:auto;padding:16px 20px}
+.workspace,nav,.sidebar-bottom{display:none}
+main{margin-left:0;padding:0 18px}
+header{height:60px}
+.heading{display:block}
+.status{display:inline-block;margin-top:14px}
+.stats{grid-template-columns:1fr}
+.stats article{padding:15px}
+.stats strong{font-size:23px;margin:7px 0}
+.evidence-grid{grid-template-columns:1fr}
+.section-heading{display:block}
+.source-row{align-items:start}
+.card{padding:18px}
+.card-title{gap:10px}
+footer{display:block;line-height:2}
+footer span{display:block}
+.two{grid-template-columns:1fr}
+h1{font-size:30px}
+}
+

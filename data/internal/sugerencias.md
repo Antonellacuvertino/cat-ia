@@ -1,0 +1,2 @@
+Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0.
+Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias. Recoger el problema que busca resolver, usuarios beneficiados y un ejemplo de uso, sin prometer implementación ni fecha de entrega. Enviar el antecedente al responsable de producto para evaluación. Diferenciar una propuesta de mejora de una función existente que falla: esta última puede corresponder a Soporte Técnico. Solicitar aclaración si el ticket mezcla ambas situaciones.

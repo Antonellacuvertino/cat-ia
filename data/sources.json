@@ -1,0 +1,107 @@
+[
+  {
+    "id": "INT-SLA",
+    "title": "Prioridad, impacto y primera respuesta",
+    "file": "internal/sla.md",
+    "type": "internal",
+    "origin": "Nexo TI / política académica simulada",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+  },
+  {
+    "id": "INT-ACC",
+    "title": "Acceso al portal y contraseña bloqueada",
+    "file": "internal/acceso.md",
+    "type": "internal",
+    "origin": "Nexo TI / procedimiento simulado",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f"
+  },
+  {
+    "id": "INT-FAC",
+    "title": "Factura, cobro duplicado y pagos",
+    "file": "internal/facturacion.md",
+    "type": "internal",
+    "origin": "Nexo TI / procedimiento simulado",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb"
+  },
+  {
+    "id": "INT-COM",
+    "title": "Planes, precios y cotización comercial",
+    "file": "internal/comercial.md",
+    "type": "internal",
+    "origin": "Nexo TI / catálogo simulado",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "9014f8f7d1e30ef2abdf928e89ff114f785786c485d824867f80ea2c35ecaee8"
+  },
+  {
+    "id": "INT-SUG",
+    "title": "Sugerencias y mejoras del producto",
+    "file": "internal/sugerencias.md",
+    "type": "internal",
+    "origin": "Nexo TI / procedimiento simulado",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "b20215df7b2d8e975a808b86cd3d62a5e38e4783e8c8a4fe372710530cb78b29"
+  },
+  {
+    "id": "INT-NET",
+    "title": "VPN, internet, Firefox y conectividad",
+    "file": "internal/conectividad.md",
+    "type": "internal",
+    "origin": "Nexo TI / procedimiento simulado",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe"
+  },
+  {
+    "id": "INT-SEC",
+    "title": "Seguridad, phishing y correo sospechoso",
+    "file": "internal/seguridad.md",
+    "type": "internal",
+    "origin": "Nexo TI / procedimiento simulado",
+    "version": "1.0",
+    "simulated": true,
+    "active": true,
+    "sha256": "7fb186493af1cca8e22a7b50a4e3a19b0d843df73360f94518d80038cd273645"
+  },
+  {
+    "id": "EXT-COOKIE",
+    "title": "Firefox: cookies, caché y datos del sitio",
+    "file": "external/mozilla_cookies.md",
+    "type": "external",
+    "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+    "version": "sintesis-2026-09-08",
+    "consulted_at": "2026-09-08",
+    "simulated": false,
+    "transformation": "Síntesis editorial en español; no copia íntegra ni descarga en cada consulta",
+    "publisher": "Mozilla Support",
+    "active": true,
+    "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce"
+  },
+  {
+    "id": "EXT-NET",
+    "title": "Firefox no carga sitios; otros navegadores funcionan",
+    "file": "external/mozilla_conexion.md",
+    "type": "external",
+    "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+    "version": "sintesis-2026-09-08",
+    "consulted_at": "2026-09-08",
+    "simulated": false,
+    "transformation": "Síntesis editorial en español; se excluyen pasos avanzados de configuración",
+    "publisher": "Mozilla Support",
+    "active": true,
+    "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3"
+  }
+]

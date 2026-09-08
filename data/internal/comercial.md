@@ -1,0 +1,2 @@
+Catálogo interno simulado de atención comercial de Nexo TI, versión 1.0.
+Las consultas por planes, precios, cotización, contratación y cobertura del servicio pertenecen a Dudas Comerciales. Solicitar cantidad aproximada de usuarios y necesidades generales, y derivar al equipo comercial. La base del prototipo no contiene precios ni promociones vigentes: el asistente no debe inventar valores, descuentos, cobertura o fechas de activación. La consulta comercial individual sin interrupción tiene prioridad Baja según la política interna de atención.

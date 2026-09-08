@@ -1,0 +1,25 @@
+flowchart TB
+    subgraph Ingesta[Ingesta al iniciar]
+      I[7 fuentes internas simuladas] --> M[Manifiesto: origen, versión y SHA-256]
+      E[2 síntesis externas de Mozilla] --> M
+      M --> C[Fragmentación: 110 palabras / 20 overlap]
+      C --> V[Índice TF-IDF en memoria]
+      C -. modo híbrido opcional .-> D[Embeddings Ollama normalizados]
+    end
+    U[Operador: ticket e impacto] --> W[Interfaz web local]
+    W --> A[API FastAPI + validación de entrada]
+    A --> G[Agente de flujo acotado]
+    G --> R[Recuperar documentos: k, umbral y presupuesto]
+    V --> R
+    D -. señal semántica .-> R
+    G --> P[Política interna: prioridad y primera respuesta]
+    R --> X[Prompt versionado + contexto]
+    X --> L[LLM local Ollama / simulador explícito]
+    L --> J[Validar esquema y citas]
+    R -->|sin evidencia| N[Abstener y derivar]
+    J -->|salida inválida o fallo| N
+    J -->|borrador validado| H[Revisión humana]
+    P --> H
+    N --> H
+    H --> W
+    G --> T[Traza local sin texto del ticket]

@@ -1,0 +1,137 @@
+{
+  "trace_id": "a0b8172f-0f8c-497e-8847-0336094b3149",
+  "created_at": "2026-09-08T03:46:43.812954+00:00",
+  "status": "draft",
+  "mode": "ollama",
+  "model": "qwen2.5:1.5b",
+  "retriever": "lexical",
+  "prompt_version": "v2",
+  "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+  "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+  "config": {
+    "chunk_words": 110,
+    "overlap_words": 20,
+    "top_k": 4,
+    "min_score": 0.06,
+    "max_context_chars": 6500,
+    "semantic_weight": 0.55,
+    "prompt_version": "v2"
+  },
+  "decision": {
+    "category": "Soporte Técnico",
+    "summary": "El usuario necesita ayuda para iniciar sesión en Firefox y revisar cookies y datos del sitio.",
+    "suggested_reply": "Para resolver el problema de iniciar sesión en Firefox, primero asegúrate de que no estés bloqueado por cookies o datos del sitio. Consulta la guía de Mozilla para eliminar cookies y datos del sitio. Si el problema persiste, verifica la conexión y las extensiones del navegador. Si el sitio específico afectado no se encuentra en la guía, considera la posibilidad de contactar con Soporte Técnico para un diagnóstico más detallado.",
+    "justification": "El usuario necesita información sobre cómo iniciar sesión en Firefox y revisar cookies y datos del sitio. La guía de Mozilla proporciona una descripción general de cómo hacerlo, pero no especifica cómo resolver problemas específicos. Por lo tanto, sugiero que el usuario consulte la guía original para obtener la información más precisa.",
+    "citations": [
+      {
+        "source_id": "EXT-COOKIE:0",
+        "quote": "Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios."
+      },
+      {
+        "source_id": "EXT-NET:0",
+        "quote": "Conviene comparar el comportamiento con otro navegador para delimitar la incidencia."
+      },
+      {
+        "source_id": "INT-ACC:0",
+        "quote": "Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento."
+      }
+    ],
+    "needs_review": false
+  },
+  "priority": "Baja",
+  "first_response_hours": 24,
+  "policy": {
+    "source_id": "INT-SLA:0",
+    "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+    "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+  },
+  "sources": [
+    {
+      "id": "EXT-COOKIE:0",
+      "doc_id": "EXT-COOKIE",
+      "title": "Firefox: cookies, caché y datos del sitio",
+      "source_type": "external",
+      "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+      "version": "sintesis-2026-09-08",
+      "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce",
+      "text": "Síntesis en español de Mozilla Support: cookies y datos de sitios en Firefox. Las cookies almacenan preferencias y estado de inicio de sesión. Firefox permite eliminar los datos del sitio actual desde el control situado junto a la dirección. También permite gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios. Los nombres de los controles varían con la versión. Al eliminar cookies puede perderse el estado de inicio de sesión. Consultar la guía original antes de aplicar los pasos.",
+      "word_start": 0,
+      "word_end": 109,
+      "score": 0.378329,
+      "lexical_score": 0.378329,
+      "semantic_score": 0.0
+    },
+    {
+      "id": "EXT-NET:0",
+      "doc_id": "EXT-NET",
+      "title": "Firefox no carga sitios; otros navegadores funcionan",
+      "source_type": "external",
+      "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+      "version": "sintesis-2026-09-08",
+      "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3",
+      "text": "Síntesis en español de Mozilla Support: Firefox no carga sitios aunque otro navegador funciona. Cuando el problema afecta solo a Firefox, la guía considera bloqueos de software de seguridad, configuración de conexión o proxy, datos del sitio y extensiones. Conviene comparar el comportamiento con otro navegador para delimitar la incidencia. Para fallos de ciertos sitios menciona revisar cookies y caché. Las modificaciones avanzadas requieren experiencia y pueden afectar estabilidad y seguridad; en una organización deben revisarse con el responsable técnico. Esta documentación del proveedor describe posibles diagnósticos, no demuestra cuál es la causa de un ticket concreto.",
+      "word_start": 0,
+      "word_end": 97,
+      "score": 0.117794,
+      "lexical_score": 0.117794,
+      "semantic_score": 0.0
+    },
+    {
+      "id": "INT-ACC:0",
+      "doc_id": "INT-ACC",
+      "title": "Acceso al portal y contraseña bloqueada",
+      "source_type": "internal",
+      "origin": "Nexo TI / procedimiento simulado",
+      "version": "1.0",
+      "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+      "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+      "word_start": 0,
+      "word_end": 101,
+      "score": 0.100443,
+      "lexical_score": 0.100443,
+      "semantic_score": 0.0
+    }
+  ],
+  "steps": [
+    {
+      "step": "preparar",
+      "detail": "Datos redactados; entrada validada",
+      "elapsed_ms": 0.54
+    },
+    {
+      "step": "recuperar_documentos",
+      "detail": "3 fragmentos; modo lexical",
+      "elapsed_ms": 2.82
+    },
+    {
+      "step": "consultar_politica",
+      "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+      "elapsed_ms": 2.84
+    },
+    {
+      "step": "generar",
+      "detail": "qwen2.5:1.5b",
+      "elapsed_ms": 45239.56
+    },
+    {
+      "step": "validar_citas",
+      "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+      "elapsed_ms": 45239.61
+    },
+    {
+      "step": "revision_humana",
+      "detail": "Borrador: el operador verifica evidencia y decide la acción",
+      "elapsed_ms": 45239.62
+    }
+  ],
+  "usage": {
+    "input_tokens": 1176,
+    "output_tokens": 361
+  },
+  "timings": {
+    "retrieval_ms": 2.27,
+    "generation_ms": 45236.77,
+    "total_ms": 45240.6
+  },
+  "human_approval_required": true
+}

@@ -1,0 +1,11 @@
+{
+  "browser": "Microsoft Edge headless / CDP",
+  "checks": [
+    "Firefox: borrador y ambas fuentes",
+    "Facturación: categoría y resultado renderizados",
+    "Sin evidencia: abstención visible",
+    "Viewport 390 px: sin desbordamiento horizontal"
+  ],
+  "mode": "demo",
+  "passed": true
+}

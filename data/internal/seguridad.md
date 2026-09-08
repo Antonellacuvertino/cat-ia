@@ -1,0 +1,2 @@
+Procedimiento interno simulado de incidentes de seguridad de Nexo TI, versión 1.0.
+Ante phishing, correo sospechoso o posible filtración, no abrir enlaces ni adjuntos del mensaje y comunicar el incidente al responsable de seguridad por el canal interno. No reenviar secretos al asistente. Registrar descripción general y hora, preservando la evidencia conforme a las instrucciones del operador. El indicador incidente de seguridad activa prioridad Alta y revisión humana obligatoria. El asistente no confirma que un equipo esté comprometido ni ejecuta una respuesta automática.

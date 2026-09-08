@@ -1,0 +1,2470 @@
+{
+  "created_at": "2026-09-08T03:58:39.445885+00:00",
+  "provider": "ollama",
+  "model": "qwen2.5:1.5b",
+  "retriever": "lexical",
+  "split": "test",
+  "n": 20,
+  "dataset_sha256": "bde9b5f9a1a4951c1116e5d80d8370816643387e7043d191afd1ae2d86444d23",
+  "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+  "config": {
+    "chunk_words": 110,
+    "overlap_words": 20,
+    "top_k": 4,
+    "min_score": 0.06,
+    "max_context_chars": 6500,
+    "semantic_weight": 0.55,
+    "prompt_version": "v2"
+  },
+  "metrics": {
+    "category_accuracy": 0.8,
+    "category_macro_f1": 0.78,
+    "priority_accuracy": 1.0,
+    "context_precision_doc_level": 0.8009259259259259,
+    "context_recall_doc_level": 1.0,
+    "mrr": 0.9722222222222222,
+    "abstention_accuracy": 1.0,
+    "valid_citation_draft_rate": 1.0,
+    "latency_p50_ms": 31339.43,
+    "latency_p95_ms": 53307.4705,
+    "faithfulness_human": null,
+    "answer_relevancy_human": null
+  },
+  "confusion_matrix": {
+    "labels": [
+      "Dudas Comerciales",
+      "Facturación",
+      "No determinado",
+      "Soporte Técnico",
+      "Sugerencias"
+    ],
+    "values": [
+      [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        6,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    ]
+  },
+  "limitations": "Dataset sintético pequeño, etiquetas iniciales del implementador sin validación independiente. El simulador no mide un LLM. Citas válidas no prueban fidelidad semántica.",
+  "rows": [
+    {
+      "id": "T01",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "35345619-db79-488a-ab58-f7222cb38ea0",
+        "created_at": "2026-09-08T03:48:50.173521+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "El usuario necesita ayuda para iniciar sesión en Firefox y revisar cookies y datos del sitio.",
+          "suggested_reply": "Para iniciar sesión en Firefox y revisar cookies y datos del sitio, asegúrate de eliminar los datos del sitio actual desde el control situado junto a la dirección. También puedes gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Consulta la guía original antes de aplicar los pasos.",
+          "justification": "El usuario necesita información sobre cómo iniciar sesión en Firefox y revisar cookies y datos del sitio. La documentación de Mozilla proporciona una explicación detallada de cómo hacerlo, incluyendo cómo eliminar datos del sitio actual y gestionar sitios específicos. Esta información es suficiente para ayudar al usuario.",
+          "citations": [
+            {
+              "source_id": "EXT-COOKIE:0",
+              "quote": "Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios."
+            },
+            {
+              "source_id": "EXT-NET:0",
+              "quote": "Conviene comparar el comportamiento con otro navegador para delimitar la incidencia."
+            },
+            {
+              "source_id": "INT-ACC:0",
+              "quote": "Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "EXT-COOKIE:0",
+            "doc_id": "EXT-COOKIE",
+            "title": "Firefox: cookies, caché y datos del sitio",
+            "source_type": "external",
+            "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+            "version": "sintesis-2026-09-08",
+            "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce",
+            "text": "Síntesis en español de Mozilla Support: cookies y datos de sitios en Firefox. Las cookies almacenan preferencias y estado de inicio de sesión. Firefox permite eliminar los datos del sitio actual desde el control situado junto a la dirección. También permite gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios. Los nombres de los controles varían con la versión. Al eliminar cookies puede perderse el estado de inicio de sesión. Consultar la guía original antes de aplicar los pasos.",
+            "word_start": 0,
+            "word_end": 109,
+            "score": 0.378329,
+            "lexical_score": 0.378329,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "EXT-NET:0",
+            "doc_id": "EXT-NET",
+            "title": "Firefox no carga sitios; otros navegadores funcionan",
+            "source_type": "external",
+            "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+            "version": "sintesis-2026-09-08",
+            "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3",
+            "text": "Síntesis en español de Mozilla Support: Firefox no carga sitios aunque otro navegador funciona. Cuando el problema afecta solo a Firefox, la guía considera bloqueos de software de seguridad, configuración de conexión o proxy, datos del sitio y extensiones. Conviene comparar el comportamiento con otro navegador para delimitar la incidencia. Para fallos de ciertos sitios menciona revisar cookies y caché. Las modificaciones avanzadas requieren experiencia y pueden afectar estabilidad y seguridad; en una organización deben revisarse con el responsable técnico. Esta documentación del proveedor describe posibles diagnósticos, no demuestra cuál es la causa de un ticket concreto.",
+            "word_start": 0,
+            "word_end": 97,
+            "score": 0.117794,
+            "lexical_score": 0.117794,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.100443,
+            "lexical_score": 0.100443,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.55
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "3 fragmentos; modo lexical",
+            "elapsed_ms": 2.19
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 2.2
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 53004.63
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 53004.71
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 53004.73
+          }
+        ],
+        "usage": {
+          "input_tokens": 1174,
+          "output_tokens": 337
+        },
+        "timings": {
+          "retrieval_ms": 1.63,
+          "generation_ms": 53002.52,
+          "total_ms": 53006.78
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T02",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Media",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "6ebb7fd5-4c38-4cf1-9241-30904fe23b0a",
+        "created_at": "2026-09-08T03:49:15.147414+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "Usuario necesita ayuda para recuperar la contraseña de su cuenta bloqueada.",
+          "suggested_reply": "Por favor, inténtelo de nuevo utilizando la opción de recuperación de contraseña en el portal oficial de Nexo TI. Si el problema persiste, contacte al Soporte Técnico para obtener asistencia.",
+          "justification": "El usuario ha experimentado un error de acceso a su cuenta, lo que indica un problema técnico. La respuesta sugiere que el usuario debe intentar la opción de recuperación de contraseña, lo que es una solución directa y eficaz para este tipo de incidencias.",
+          "citations": [
+            {
+              "source_id": "INT-ACC:0",
+              "quote": "Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Media",
+        "first_response_hours": 4,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.351311,
+            "lexical_score": 0.351311,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.28
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 3.28
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Media; primera respuesta 4 horas hábiles",
+            "elapsed_ms": 3.3
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 24968.99
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 24969.04
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 24969.05
+          }
+        ],
+        "usage": {
+          "input_tokens": 807,
+          "output_tokens": 209
+        },
+        "timings": {
+          "retrieval_ms": 2.96,
+          "generation_ms": 24965.74,
+          "total_ms": 24970.07
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T03",
+      "expected_category": "Facturación",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "1fda22de-ec01-4bfe-91e4-4aea453cf150",
+        "created_at": "2026-09-08T03:49:51.669401+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Factura con dos cargos por el mismo servicio.",
+          "suggested_reply": "Compruebe la factura para identificar si hay un error en la carga o cobro duplicado. Si es así, contacte con la Facturación para corregir el problema.",
+          "justification": "La solicitud se refiere a una factura con dos cargos por el mismo servicio, lo que indica un error en la facturación. La respuesta debe confirmar si el error es por un error en la carga o si se trata de un cobro duplicado, y solicitar la corrección de la factura.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.149081,
+            "lexical_score": 0.149081,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.07
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 3.29
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 3.33
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 36517.64
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 36517.69
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 36517.69
+          }
+        ],
+        "usage": {
+          "input_tokens": 813,
+          "output_tokens": 219
+        },
+        "timings": {
+          "retrieval_ms": 3.2,
+          "generation_ms": 36514.35,
+          "total_ms": 36518.67
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T04",
+      "expected_category": "Facturación",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "92c9a414-156b-4bee-8323-a093a339cfa0",
+        "created_at": "2026-09-08T03:50:21.212071+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Cliente reporta cobro incorrecto en factura.",
+          "suggested_reply": "Por favor, revise el cobro en la factura para confirmar si corresponde a un error de facturación.",
+          "justification": "El usuario menciona un cobro incorrecto en la factura, lo cual indica una incidencia relacionada con la facturación. La respuesta debe confirmar si el error está en la factura o si se debe revisar en la facturación.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.189425,
+            "lexical_score": 0.189425,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.08
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 3.89
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 3.92
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 29539.03
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 29539.07
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 29539.07
+          }
+        ],
+        "usage": {
+          "input_tokens": 820,
+          "output_tokens": 169
+        },
+        "timings": {
+          "retrieval_ms": 3.8,
+          "generation_ms": 29535.15,
+          "total_ms": 29540.04
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T05",
+      "expected_category": "Dudas Comerciales",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "9ba35854-2871-45ce-878c-102b155a78ec",
+        "created_at": "2026-09-08T03:50:55.758078+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Dudas Comerciales",
+          "summary": "Usuario busca información sobre precios y cobertura de planes de servicio.",
+          "suggested_reply": "Por favor, proporciona el número de usuario o la cantidad de usuarios para que pueda proporcionar la información solicitada.",
+          "justification": "La consulta por precios y cobertura de planes de servicio pertenece a la categoría de Dudas Comerciales. No se trata de una interrupción del servicio, por lo que la prioridad es baja. La base del prototipo no contiene precios ni promociones vigentes, por lo que no se debe inventar valores.",
+          "citations": [
+            {
+              "source_id": "INT-COM:0",
+              "quote": "Catálogo interno simulado de atención comercial de Nexo TI, versión 1.0."
+            },
+            {
+              "source_id": "INT-COM:0",
+              "quote": "Las consultas por planes, precios, cotización, contratación y cobertura del servicio pertenecen a Dudas Comerciales."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-COM:0",
+            "doc_id": "INT-COM",
+            "title": "Planes, precios y cotización comercial",
+            "source_type": "internal",
+            "origin": "Nexo TI / catálogo simulado",
+            "version": "1.0",
+            "sha256": "9014f8f7d1e30ef2abdf928e89ff114f785786c485d824867f80ea2c35ecaee8",
+            "text": "Catálogo interno simulado de atención comercial de Nexo TI, versión 1.0. Las consultas por planes, precios, cotización, contratación y cobertura del servicio pertenecen a Dudas Comerciales. Solicitar cantidad aproximada de usuarios y necesidades generales, y derivar al equipo comercial. La base del prototipo no contiene precios ni promociones vigentes: el asistente no debe inventar valores, descuentos, cobertura o fechas de activación. La consulta comercial individual sin interrupción tiene prioridad Baja según la política interna de atención.",
+            "word_start": 0,
+            "word_end": 76,
+            "score": 0.232373,
+            "lexical_score": 0.232373,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.06
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 3.82
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 3.85
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 34541.64
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 34541.67
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 34541.68
+          }
+        ],
+        "usage": {
+          "input_tokens": 790,
+          "output_tokens": 239
+        },
+        "timings": {
+          "retrieval_ms": 3.75,
+          "generation_ms": 34537.82,
+          "total_ms": 34543.42
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T06",
+      "expected_category": "Dudas Comerciales",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 0.5,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "978e073a-a191-4c8d-94ec-5dc2e804cfe9",
+        "created_at": "2026-09-08T03:51:30.750841+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Solicita información sobre planes y precios de un servicio de Nexo TI.",
+          "suggested_reply": "Por favor, proporciona el número de factura para que podamos verificar los detalles.",
+          "justification": "La consulta por factura duplicada o cobro incorrecto pertenece a Facturación, y la información sobre precios y planes de servicio pertenece a Dudas Comerciales. No se deben inventar valores ni promociones, ya que la política interna de Nexo TI no permite eso.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros."
+            },
+            {
+              "source_id": "INT-COM:0",
+              "quote": "Solicitar cantidad aproximada de usuarios y necesidades generales, y derivar al equipo comercial."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-COM:0",
+            "doc_id": "INT-COM",
+            "title": "Planes, precios y cotización comercial",
+            "source_type": "internal",
+            "origin": "Nexo TI / catálogo simulado",
+            "version": "1.0",
+            "sha256": "9014f8f7d1e30ef2abdf928e89ff114f785786c485d824867f80ea2c35ecaee8",
+            "text": "Catálogo interno simulado de atención comercial de Nexo TI, versión 1.0. Las consultas por planes, precios, cotización, contratación y cobertura del servicio pertenecen a Dudas Comerciales. Solicitar cantidad aproximada de usuarios y necesidades generales, y derivar al equipo comercial. La base del prototipo no contiene precios ni promociones vigentes: el asistente no debe inventar valores, descuentos, cobertura o fechas de activación. La consulta comercial individual sin interrupción tiene prioridad Baja según la política interna de atención.",
+            "word_start": 0,
+            "word_end": 76,
+            "score": 0.14401,
+            "lexical_score": 0.14401,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.065928,
+            "lexical_score": 0.065928,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.06
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "2 fragmentos; modo lexical",
+            "elapsed_ms": 2.9
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 2.92
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 34988.07
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 34988.1
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 34988.11
+          }
+        ],
+        "usage": {
+          "input_tokens": 981,
+          "output_tokens": 238
+        },
+        "timings": {
+          "retrieval_ms": 2.82,
+          "generation_ms": 34985.18,
+          "total_ms": 34989.37
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T07",
+      "expected_category": "Sugerencias",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "a5390733-2b2a-4479-95d7-bd23ddb5b645",
+        "created_at": "2026-09-08T03:51:59.154764+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Sugerencias",
+          "summary": "Solicito una mejora para agregar filtros al producto.",
+          "suggested_reply": "¡Gracias por tu sugerencia! Estaré encantada de incorporar este cambio para mejorar la experiencia del usuario.",
+          "justification": "Esta solicitud se clasifica como Sugerencias debido a que se trata de una propuesta de mejora para el producto. No se considera como Soporte Técnico porque no se trata de una incidencia técnica específica. La justificación se basa en la descripción del problema y el ejemplo proporcionado.",
+          "citations": [
+            {
+              "source_id": "INT-SUG:0",
+              "quote": "Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-SUG:0",
+            "doc_id": "INT-SUG",
+            "title": "Sugerencias y mejoras del producto",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "b20215df7b2d8e975a808b86cd3d62a5e38e4783e8c8a4fe372710530cb78b29",
+            "text": "Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0. Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias. Recoger el problema que busca resolver, usuarios beneficiados y un ejemplo de uso, sin prometer implementación ni fecha de entrega. Enviar el antecedente al responsable de producto para evaluación. Diferenciar una propuesta de mejora de una función existente que falla: esta última puede corresponder a Soporte Técnico. Solicitar aclaración si el ticket mezcla ambas situaciones.",
+            "word_start": 0,
+            "word_end": 81,
+            "score": 0.241972,
+            "lexical_score": 0.241972,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.05
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 2.68
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 2.71
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 28399.47
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 28399.51
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 28399.51
+          }
+        ],
+        "usage": {
+          "input_tokens": 791,
+          "output_tokens": 187
+        },
+        "timings": {
+          "retrieval_ms": 2.62,
+          "generation_ms": 28396.8,
+          "total_ms": 28400.47
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T08",
+      "expected_category": "Sugerencias",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 0.5,
+      "recall": 1.0,
+      "reciprocal_rank": 0.5,
+      "result": {
+        "trace_id": "be621032-88c4-4b7c-91e2-18299ab1fb1e",
+        "created_at": "2026-09-08T03:52:31.083330+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Sugerencias",
+          "summary": "Usuario propone permitir exportar registros del portal.",
+          "suggested_reply": "Acepto la sugerencia de permitir exportar registros del portal.",
+          "justification": "La categoría Sugerencias se utiliza para propuestas de mejoras o cambios en el producto. Esta sugerencia es una propuesta de mejora y no una función existente que falla.",
+          "citations": [
+            {
+              "source_id": "INT-SUG:0",
+              "quote": "Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.068115,
+            "lexical_score": 0.068115,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-SUG:0",
+            "doc_id": "INT-SUG",
+            "title": "Sugerencias y mejoras del producto",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "b20215df7b2d8e975a808b86cd3d62a5e38e4783e8c8a4fe372710530cb78b29",
+            "text": "Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0. Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias. Recoger el problema que busca resolver, usuarios beneficiados y un ejemplo de uso, sin prometer implementación ni fecha de entrega. Enviar el antecedente al responsable de producto para evaluación. Diferenciar una propuesta de mejora de una función existente que falla: esta última puede corresponder a Soporte Técnico. Solicitar aclaración si el ticket mezcla ambas situaciones.",
+            "word_start": 0,
+            "word_end": 81,
+            "score": 0.063244,
+            "lexical_score": 0.063244,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.07
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "2 fragmentos; modo lexical",
+            "elapsed_ms": 3.95
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 3.98
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 31924.2
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 31924.27
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 31924.29
+          }
+        ],
+        "usage": {
+          "input_tokens": 972,
+          "output_tokens": 150
+        },
+        "timings": {
+          "retrieval_ms": 3.87,
+          "generation_ms": 31920.29,
+          "total_ms": 31926.09
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T09",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Media",
+      "expected_abstention": false,
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "40e90d8c-95c7-4606-ae8b-df7c8739e56b",
+        "created_at": "2026-09-08T03:53:15.923318+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "Firefox no carga sitios, mientras otros navegadores funcionan.",
+          "suggested_reply": "Por favor, compara el comportamiento de Firefox con otro navegador para identificar si el problema es específico de Firefox o si se trata de un problema general.",
+          "justification": "La guía externa de Mozilla proporciona una descripción general de posibles diagnósticos, pero no especifica la causa de un ticket concreto. Por lo tanto, la recomendación es comparar el comportamiento con otro navegador para delimitar la incidencia.",
+          "citations": [
+            {
+              "source_id": "EXT-NET:0",
+              "quote": "Para fallos de ciertos sitios menciona revisar cookies y caché."
+            },
+            {
+              "source_id": "INT-NET:0",
+              "quote": "Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Media",
+        "first_response_hours": 4,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "EXT-NET:0",
+            "doc_id": "EXT-NET",
+            "title": "Firefox no carga sitios; otros navegadores funcionan",
+            "source_type": "external",
+            "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+            "version": "sintesis-2026-09-08",
+            "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3",
+            "text": "Síntesis en español de Mozilla Support: Firefox no carga sitios aunque otro navegador funciona. Cuando el problema afecta solo a Firefox, la guía considera bloqueos de software de seguridad, configuración de conexión o proxy, datos del sitio y extensiones. Conviene comparar el comportamiento con otro navegador para delimitar la incidencia. Para fallos de ciertos sitios menciona revisar cookies y caché. Las modificaciones avanzadas requieren experiencia y pueden afectar estabilidad y seguridad; en una organización deben revisarse con el responsable técnico. Esta documentación del proveedor describe posibles diagnósticos, no demuestra cuál es la causa de un ticket concreto.",
+            "word_start": 0,
+            "word_end": 97,
+            "score": 0.371959,
+            "lexical_score": 0.371959,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-NET:0",
+            "doc_id": "INT-NET",
+            "title": "VPN, internet, Firefox y conectividad",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+            "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+            "word_start": 0,
+            "word_end": 99,
+            "score": 0.216849,
+            "lexical_score": 0.216849,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "EXT-COOKIE:0",
+            "doc_id": "EXT-COOKIE",
+            "title": "Firefox: cookies, caché y datos del sitio",
+            "source_type": "external",
+            "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+            "version": "sintesis-2026-09-08",
+            "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce",
+            "text": "Síntesis en español de Mozilla Support: cookies y datos de sitios en Firefox. Las cookies almacenan preferencias y estado de inicio de sesión. Firefox permite eliminar los datos del sitio actual desde el control situado junto a la dirección. También permite gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios. Los nombres de los controles varían con la versión. Al eliminar cookies puede perderse el estado de inicio de sesión. Consultar la guía original antes de aplicar los pasos.",
+            "word_start": 0,
+            "word_end": 109,
+            "score": 0.060868,
+            "lexical_score": 0.060868,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.11
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "3 fragmentos; modo lexical",
+            "elapsed_ms": 6.76
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Media; primera respuesta 4 horas hábiles",
+            "elapsed_ms": 6.8
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 44834.51
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 44834.58
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 44834.59
+          }
+        ],
+        "usage": {
+          "input_tokens": 1169,
+          "output_tokens": 227
+        },
+        "timings": {
+          "retrieval_ms": 6.64,
+          "generation_ms": 44827.78,
+          "total_ms": 44836.42
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T10",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Alta",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "4ce4fca3-c7a8-4853-b69d-74876f045d30",
+        "created_at": "2026-09-08T03:53:47.827450+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "Problema de conexión a la VPN para toda la organización.",
+          "suggested_reply": "El equipo de soporte técnico está a disposición para ayudar a resolver el problema de conexión a la VPN para toda la organización.",
+          "justification": "El usuario menciona un error de conexión a la VPN para toda la organización, lo que indica un problema general y no un problema específico de un equipo o de un usuario individual. Este tipo de incidente requiere la atención inmediata de la soporte técnico para garantizar la continuidad del servicio.",
+          "citations": [
+            {
+              "source_id": "INT-SLA:0",
+              "quote": "Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Alta",
+        "first_response_hours": 1,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-NET:0",
+            "doc_id": "INT-NET",
+            "title": "VPN, internet, Firefox y conectividad",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+            "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+            "word_start": 0,
+            "word_end": 99,
+            "score": 0.273231,
+            "lexical_score": 0.273231,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-SLA:0",
+            "doc_id": "INT-SLA",
+            "title": "Prioridad, impacto y primera respuesta",
+            "source_type": "internal",
+            "origin": "Nexo TI / política académica simulada",
+            "version": "1.0",
+            "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854",
+            "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+            "word_start": 0,
+            "word_end": 110,
+            "score": 0.104669,
+            "lexical_score": 0.104669,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.11
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "2 fragmentos; modo lexical",
+            "elapsed_ms": 9.56
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Alta; primera respuesta 1 horas hábiles",
+            "elapsed_ms": 9.59
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 31897.09
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 31897.12
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 31897.13
+          }
+        ],
+        "usage": {
+          "input_tokens": 1021,
+          "output_tokens": 207
+        },
+        "timings": {
+          "retrieval_ms": 9.41,
+          "generation_ms": 31887.53,
+          "total_ms": 31897.98
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T11",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Media",
+      "expected_abstention": false,
+      "precision": 0.5,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "2887767a-c291-43b6-9f7c-2d064eb1ec24",
+        "created_at": "2026-09-08T03:54:16.830489+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "Equipo sin internet y error de VPN",
+          "suggested_reply": "Por favor, comunique al equipo técnico para que se encargue de la conexión al internet y el problema de la VPN.",
+          "justification": "El problema de conexión al internet y el error de la VPN son problemas técnicos que requieren la intervención de un técnico para solucionar.",
+          "citations": [
+            {
+              "source_id": "INT-NET:0",
+              "quote": "Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Media",
+        "first_response_hours": 4,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-NET:0",
+            "doc_id": "INT-NET",
+            "title": "VPN, internet, Firefox y conectividad",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+            "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+            "word_start": 0,
+            "word_end": 99,
+            "score": 0.27708,
+            "lexical_score": 0.27708,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.083307,
+            "lexical_score": 0.083307,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.05
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "2 fragmentos; modo lexical",
+            "elapsed_ms": 3.32
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Media; primera respuesta 4 horas hábiles",
+            "elapsed_ms": 3.34
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 28999.37
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 28999.44
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 28999.45
+          }
+        ],
+        "usage": {
+          "input_tokens": 989,
+          "output_tokens": 154
+        },
+        "timings": {
+          "retrieval_ms": 3.26,
+          "generation_ms": 28996.1,
+          "total_ms": 29000.57
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T12",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Alta",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "e7eb0ecd-86d4-48bd-a542-d6dc8f0cf05d",
+        "created_at": "2026-09-08T03:54:43.315674+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Correo de phishing con enlace sospechoso recibido.",
+          "suggested_reply": "El asistente recomienda que se evite abrir enlaces sospechosos en correos electrónicos y se comunique al responsable de seguridad para reportar el incidente.",
+          "justification": "El correo electrónico menciona un enlace sospechoso, lo cual es típico de phishing. La recomendación se basa en la política de seguridad interna de Nexo TI, que indica que no se deben abrir enlaces sospechosos en correos electrónicos.",
+          "citations": [
+            {
+              "source_id": "INT-SEC:0",
+              "quote": "Procedimiento interno simulado de incidentes de seguridad de Nexo TI, versión 1.0."
+            }
+          ],
+          "needs_review": true
+        },
+        "priority": "Alta",
+        "first_response_hours": 1,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-SEC:0",
+            "doc_id": "INT-SEC",
+            "title": "Seguridad, phishing y correo sospechoso",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "7fb186493af1cca8e22a7b50a4e3a19b0d843df73360f94518d80038cd273645",
+            "text": "Procedimiento interno simulado de incidentes de seguridad de Nexo TI, versión 1.0. Ante phishing, correo sospechoso o posible filtración, no abrir enlaces ni adjuntos del mensaje y comunicar el incidente al responsable de seguridad por el canal interno. No reenviar secretos al asistente. Registrar descripción general y hora, preservando la evidencia conforme a las instrucciones del operador. El indicador incidente de seguridad activa prioridad Alta y revisión humana obligatoria. El asistente no confirma que un equipo esté comprometido ni ejecuta una respuesta automática.",
+            "word_start": 0,
+            "word_end": 83,
+            "score": 0.292665,
+            "lexical_score": 0.292665,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.07
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 7.46
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Alta; primera respuesta 1 horas hábiles",
+            "elapsed_ms": 7.49
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 26472.74
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 26472.77
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 26484.23
+          }
+        ],
+        "usage": {
+          "input_tokens": 803,
+          "output_tokens": 196
+        },
+        "timings": {
+          "retrieval_ms": 7.37,
+          "generation_ms": 26465.28,
+          "total_ms": 26485.53
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T13",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Alta",
+      "expected_abstention": false,
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "7352434f-b9c9-40fd-b0db-9500b4f0f63b",
+        "created_at": "2026-09-08T03:55:21.965550+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "No determinado",
+          "summary": "El usuario requiere información sobre cómo reportar incidentes de seguridad.",
+          "suggested_reply": "Por favor, comuníquese con el equipo de seguridad para obtener instrucciones sobre cómo reportar incidentes de seguridad.",
+          "justification": "El mensaje no especifica un incidente de seguridad específico, por lo que no se puede determinar la categoría correcta. Además, la política interna de Nexo TI establece que los incidentes de seguridad deben reportarse a través de un canal interno, lo que no se menciona en el mensaje.",
+          "citations": [
+            {
+              "source_id": "INT-SLA:0",
+              "quote": "Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil."
+            }
+          ],
+          "needs_review": true
+        },
+        "priority": "Alta",
+        "first_response_hours": 1,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-SEC:0",
+            "doc_id": "INT-SEC",
+            "title": "Seguridad, phishing y correo sospechoso",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "7fb186493af1cca8e22a7b50a4e3a19b0d843df73360f94518d80038cd273645",
+            "text": "Procedimiento interno simulado de incidentes de seguridad de Nexo TI, versión 1.0. Ante phishing, correo sospechoso o posible filtración, no abrir enlaces ni adjuntos del mensaje y comunicar el incidente al responsable de seguridad por el canal interno. No reenviar secretos al asistente. Registrar descripción general y hora, preservando la evidencia conforme a las instrucciones del operador. El indicador incidente de seguridad activa prioridad Alta y revisión humana obligatoria. El asistente no confirma que un equipo esté comprometido ni ejecuta una respuesta automática.",
+            "word_start": 0,
+            "word_end": 83,
+            "score": 0.247509,
+            "lexical_score": 0.247509,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.111891,
+            "lexical_score": 0.111891,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-SLA:0",
+            "doc_id": "INT-SLA",
+            "title": "Prioridad, impacto y primera respuesta",
+            "source_type": "internal",
+            "origin": "Nexo TI / política académica simulada",
+            "version": "1.0",
+            "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854",
+            "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+            "word_start": 0,
+            "word_end": 110,
+            "score": 0.092582,
+            "lexical_score": 0.092582,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.06
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "3 fragmentos; modo lexical",
+            "elapsed_ms": 3.52
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Alta; primera respuesta 1 horas hábiles",
+            "elapsed_ms": 3.54
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 38642.82
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 38642.85
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 38642.87
+          }
+        ],
+        "usage": {
+          "input_tokens": 1197,
+          "output_tokens": 201
+        },
+        "timings": {
+          "retrieval_ms": 3.44,
+          "generation_ms": 38639.31,
+          "total_ms": 38643.85
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T14",
+      "expected_category": "Soporte Técnico",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 0.75,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "b3273c18-72b6-4929-8c0c-19ad04338088",
+        "created_at": "2026-09-08T03:56:20.991519+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "¿Cómo eliminar cookies y caché del portal en Firefox?",
+          "suggested_reply": "Para eliminar cookies y caché del portal en Firefox, primero asegúrate de que no estés bloqueado por software de seguridad, configuración de conexión o proxy. Luego, revisa la gestión de datos de ese sitio específico en la configuración de privacidad y borrar cookies, datos y caché. Si el problema afecta solo a Firefox, consulta la guía de Mozilla sobre cookies y datos de sitios para una solución más específica.",
+          "justification": "El usuario busca información sobre cómo eliminar cookies y caché del portal en Firefox, lo que indica una necesidad técnica. La respuesta proporciona una guía básica y detalla cómo identificar el problema y cómo resolverlo, basada en la documentación de Mozilla.",
+          "citations": [
+            {
+              "source_id": "EXT-COOKIE:0",
+              "quote": "Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios."
+            },
+            {
+              "source_id": "EXT-NET:0",
+              "quote": "Para fallos de ciertos sitios menciona revisar cookies y caché."
+            },
+            {
+              "source_id": "INT-ACC:0",
+              "quote": "Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado."
+            },
+            {
+              "source_id": "INT-NET:0",
+              "quote": "Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "EXT-COOKIE:0",
+            "doc_id": "EXT-COOKIE",
+            "title": "Firefox: cookies, caché y datos del sitio",
+            "source_type": "external",
+            "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+            "version": "sintesis-2026-09-08",
+            "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce",
+            "text": "Síntesis en español de Mozilla Support: cookies y datos de sitios en Firefox. Las cookies almacenan preferencias y estado de inicio de sesión. Firefox permite eliminar los datos del sitio actual desde el control situado junto a la dirección. También permite gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios. Los nombres de los controles varían con la versión. Al eliminar cookies puede perderse el estado de inicio de sesión. Consultar la guía original antes de aplicar los pasos.",
+            "word_start": 0,
+            "word_end": 109,
+            "score": 0.287626,
+            "lexical_score": 0.287626,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "EXT-NET:0",
+            "doc_id": "EXT-NET",
+            "title": "Firefox no carga sitios; otros navegadores funcionan",
+            "source_type": "external",
+            "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+            "version": "sintesis-2026-09-08",
+            "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3",
+            "text": "Síntesis en español de Mozilla Support: Firefox no carga sitios aunque otro navegador funciona. Cuando el problema afecta solo a Firefox, la guía considera bloqueos de software de seguridad, configuración de conexión o proxy, datos del sitio y extensiones. Conviene comparar el comportamiento con otro navegador para delimitar la incidencia. Para fallos de ciertos sitios menciona revisar cookies y caché. Las modificaciones avanzadas requieren experiencia y pueden afectar estabilidad y seguridad; en una organización deben revisarse con el responsable técnico. Esta documentación del proveedor describe posibles diagnósticos, no demuestra cuál es la causa de un ticket concreto.",
+            "word_start": 0,
+            "word_end": 97,
+            "score": 0.117653,
+            "lexical_score": 0.117653,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.090301,
+            "lexical_score": 0.090301,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-NET:0",
+            "doc_id": "INT-NET",
+            "title": "VPN, internet, Firefox y conectividad",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+            "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+            "word_start": 0,
+            "word_end": 99,
+            "score": 0.062756,
+            "lexical_score": 0.062756,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.06
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "4 fragmentos; modo lexical",
+            "elapsed_ms": 3.66
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 3.68
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 59019.45
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 59019.49
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 59019.5
+          }
+        ],
+        "usage": {
+          "input_tokens": 1351,
+          "output_tokens": 376
+        },
+        "timings": {
+          "retrieval_ms": 3.59,
+          "generation_ms": 59015.82,
+          "total_ms": 59020.59
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T15",
+      "expected_category": "No determinado",
+      "expected_priority": "Baja",
+      "expected_abstention": true,
+      "precision": 0.0,
+      "recall": null,
+      "reciprocal_rank": 0.0,
+      "result": {
+        "trace_id": "a31e1dd6-a1b7-4c2e-9dcc-02dc173ab65d",
+        "created_at": "2026-09-08T03:56:20.998897+00:00",
+        "status": "insufficient_context",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "No determinado",
+          "summary": "¿Cuál es la distancia exacta entre Júpiter y Neptuno en este instante?",
+          "suggested_reply": "No se recuperó evidencia suficiente para proponer una solución. Derivar a un operador y solicitar más antecedentes.",
+          "justification": "No se recuperó evidencia suficiente para proponer una solución.",
+          "citations": [],
+          "needs_review": true
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.07
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "0 fragmentos; modo lexical",
+            "elapsed_ms": 6.37
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 6.4
+          },
+          {
+            "step": "abstener",
+            "detail": "No se recuperó evidencia suficiente para proponer una solución.",
+            "elapsed_ms": 7.14
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 7.16
+          }
+        ],
+        "usage": {
+          "input_tokens": null,
+          "output_tokens": null
+        },
+        "timings": {
+          "retrieval_ms": 6.28,
+          "generation_ms": 0.75,
+          "total_ms": 8.38
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T16",
+      "expected_category": "No determinado",
+      "expected_priority": "Baja",
+      "expected_abstention": true,
+      "precision": 0.0,
+      "recall": null,
+      "reciprocal_rank": 0.0,
+      "result": {
+        "trace_id": "80a5a7ea-a4a2-4fa0-adc5-0e9f9da90e9f",
+        "created_at": "2026-09-08T03:56:21.000689+00:00",
+        "status": "insufficient_context",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "No determinado",
+          "summary": "Escribe un soneto sobre dinosaurios violetas.",
+          "suggested_reply": "No se recuperó evidencia suficiente para proponer una solución. Derivar a un operador y solicitar más antecedentes.",
+          "justification": "No se recuperó evidencia suficiente para proponer una solución.",
+          "citations": [],
+          "needs_review": true
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.05
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "0 fragmentos; modo lexical",
+            "elapsed_ms": 2.92
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 2.95
+          },
+          {
+            "step": "abstener",
+            "detail": "No se recuperó evidencia suficiente para proponer una solución.",
+            "elapsed_ms": 3.01
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 3.02
+          }
+        ],
+        "usage": {
+          "input_tokens": null,
+          "output_tokens": null
+        },
+        "timings": {
+          "retrieval_ms": 2.87,
+          "generation_ms": 0.06,
+          "total_ms": 3.69
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T17",
+      "expected_category": "Facturación",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 0.5,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "b1f8fad9-b9c7-4889-8c91-80bfa31ced50",
+        "created_at": "2026-09-08T03:56:51.785912+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Usuario solicita un reembolso por factura duplicada.",
+          "suggested_reply": "El asistente no puede aprobar reembolsos ni reenviar facturas. Por favor, comuníquese con el equipo de Facturación para solucionar el problema.",
+          "justification": "La solicitud de reembolso se encuentra fuera de la categoría de Soporte Técnico, Facturación, Dudas Comerciales o Sugerencias. La información proporcionada no indica un problema técnico o comercial, sino una solicitud de devolución de pago.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "No solicitar el número completo de tarjeta ni datos bancarios sensibles."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.138358,
+            "lexical_score": 0.138358,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-SEC:0",
+            "doc_id": "INT-SEC",
+            "title": "Seguridad, phishing y correo sospechoso",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "7fb186493af1cca8e22a7b50a4e3a19b0d843df73360f94518d80038cd273645",
+            "text": "Procedimiento interno simulado de incidentes de seguridad de Nexo TI, versión 1.0. Ante phishing, correo sospechoso o posible filtración, no abrir enlaces ni adjuntos del mensaje y comunicar el incidente al responsable de seguridad por el canal interno. No reenviar secretos al asistente. Registrar descripción general y hora, preservando la evidencia conforme a las instrucciones del operador. El indicador incidente de seguridad activa prioridad Alta y revisión humana obligatoria. El asistente no confirma que un equipo esté comprometido ni ejecuta una respuesta automática.",
+            "word_start": 0,
+            "word_end": 83,
+            "score": 0.070567,
+            "lexical_score": 0.070567,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.06
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "2 fragmentos; modo lexical",
+            "elapsed_ms": 2.31
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 2.33
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 30778.0
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 30778.07
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 30778.08
+          }
+        ],
+        "usage": {
+          "input_tokens": 998,
+          "output_tokens": 187
+        },
+        "timings": {
+          "retrieval_ms": 2.24,
+          "generation_ms": 30775.74,
+          "total_ms": 30780.88
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T18",
+      "expected_category": "Facturación",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "1001cdac-6d0e-4a5e-9685-0835b14cf3f5",
+        "created_at": "2026-09-08T03:57:20.888226+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Usuario necesita el comprobante de pago de su factura.",
+          "suggested_reply": "Por favor, comparte el número de factura para que podamos buscar el comprobante.",
+          "justification": "El usuario menciona que necesita el comprobante de pago de su factura, pero no proporciona el número de factura. Para poder ayudar adecuadamente, necesitamos el número de factura para buscar el comprobante.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.22063,
+            "lexical_score": 0.22063,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.08
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 4.96
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 4.99
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 29096.38
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 29096.44
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 29096.45
+          }
+        ],
+        "usage": {
+          "input_tokens": 815,
+          "output_tokens": 179
+        },
+        "timings": {
+          "retrieval_ms": 4.87,
+          "generation_ms": 29091.45,
+          "total_ms": 29097.63
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T19",
+      "expected_category": "Dudas Comerciales",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "fdff781b-425f-4ebd-860a-3bf9301e68df",
+        "created_at": "2026-09-08T03:58:13.256841+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Soporte Técnico",
+          "summary": "Solicito una cotización para contratar soporte para veinte usuarios.",
+          "suggested_reply": "Por favor, proporciona más detalles sobre las necesidades específicas para poder ofrecerte una cotización adecuada.",
+          "justification": "La solicitud de cotización para soporte técnico es una consulta técnica y no comercial, por lo que se clasifica en Soporte Técnico. La información proporcionada no incluye datos de facturación ni precios, por lo que no se puede afirmar que se haya solicitado una cotización para facturación.",
+          "citations": [
+            {
+              "source_id": "INT-COM:0",
+              "quote": "Solicitar cantidad aproximada de usuarios y necesidades generales, y derivar al equipo comercial."
+            },
+            {
+              "source_id": "INT-SUG:0",
+              "quote": "Solicitar aclaración si el ticket mezcla ambas situaciones."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-COM:0",
+            "doc_id": "INT-COM",
+            "title": "Planes, precios y cotización comercial",
+            "source_type": "internal",
+            "origin": "Nexo TI / catálogo simulado",
+            "version": "1.0",
+            "sha256": "9014f8f7d1e30ef2abdf928e89ff114f785786c485d824867f80ea2c35ecaee8",
+            "text": "Catálogo interno simulado de atención comercial de Nexo TI, versión 1.0. Las consultas por planes, precios, cotización, contratación y cobertura del servicio pertenecen a Dudas Comerciales. Solicitar cantidad aproximada de usuarios y necesidades generales, y derivar al equipo comercial. La base del prototipo no contiene precios ni promociones vigentes: el asistente no debe inventar valores, descuentos, cobertura o fechas de activación. La consulta comercial individual sin interrupción tiene prioridad Baja según la política interna de atención.",
+            "word_start": 0,
+            "word_end": 76,
+            "score": 0.149924,
+            "lexical_score": 0.149924,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-SUG:0",
+            "doc_id": "INT-SUG",
+            "title": "Sugerencias y mejoras del producto",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "b20215df7b2d8e975a808b86cd3d62a5e38e4783e8c8a4fe372710530cb78b29",
+            "text": "Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0. Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias. Recoger el problema que busca resolver, usuarios beneficiados y un ejemplo de uso, sin prometer implementación ni fecha de entrega. Enviar el antecedente al responsable de producto para evaluación. Diferenciar una propuesta de mejora de una función existente que falla: esta última puede corresponder a Soporte Técnico. Solicitar aclaración si el ticket mezcla ambas situaciones.",
+            "word_start": 0,
+            "word_end": 81,
+            "score": 0.093401,
+            "lexical_score": 0.093401,
+            "semantic_score": 0.0
+          },
+          {
+            "id": "INT-ACC:0",
+            "doc_id": "INT-ACC",
+            "title": "Acceso al portal y contraseña bloqueada",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+            "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+            "word_start": 0,
+            "word_end": 101,
+            "score": 0.073363,
+            "lexical_score": 0.073363,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.09
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "3 fragmentos; modo lexical",
+            "elapsed_ms": 6.19
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 6.22
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 52362.97
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 52363.01
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 52363.01
+          }
+        ],
+        "usage": {
+          "input_tokens": 1141,
+          "output_tokens": 225
+        },
+        "timings": {
+          "retrieval_ms": 6.08,
+          "generation_ms": 52356.79,
+          "total_ms": 52365.48
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "id": "T20",
+      "expected_category": "Sugerencias",
+      "expected_priority": "Baja",
+      "expected_abstention": false,
+      "precision": 1.0,
+      "recall": 1.0,
+      "reciprocal_rank": 1.0,
+      "result": {
+        "trace_id": "c303de93-4801-4309-a727-bc3749d83456",
+        "created_at": "2026-09-08T03:58:39.439497+00:00",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "retriever": "lexical",
+        "prompt_version": "v2",
+        "prompt_sha256": "a8b61494818d6ec7c0bb0481eae87771a3e83712e4b8d817e2568643b0a8df6c",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v2"
+        },
+        "decision": {
+          "category": "Sugerencias",
+          "summary": "Propuesta de mejora: nueva función de notificaciones.",
+          "suggested_reply": "¡Gracias por tu sugerencia! Estaré encantada de considerar esta propuesta para mejorar la experiencia de nuestros usuarios.",
+          "justification": "La categoría Sugerencias se utiliza para recoger ideas y propuestas de mejora del producto. Esta solicitud de una nueva función de notificaciones se clasifica en esta categoría, ya que busca mejorar la interacción del usuario con el sistema.",
+          "citations": [
+            {
+              "source_id": "INT-SUG:0",
+              "quote": "Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0."
+            },
+            {
+              "source_id": "INT-SUG:0",
+              "quote": "Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias."
+            }
+          ],
+          "needs_review": false
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-SUG:0",
+            "doc_id": "INT-SUG",
+            "title": "Sugerencias y mejoras del producto",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "b20215df7b2d8e975a808b86cd3d62a5e38e4783e8c8a4fe372710530cb78b29",
+            "text": "Procedimiento interno simulado de sugerencias de Nexo TI, versión 1.0. Una sugerencia de mejora, nueva función o cambio de diseño se registra en la categoría Sugerencias. Recoger el problema que busca resolver, usuarios beneficiados y un ejemplo de uso, sin prometer implementación ni fecha de entrega. Enviar el antecedente al responsable de producto para evaluación. Diferenciar una propuesta de mejora de una función existente que falla: esta última puede corresponder a Soporte Técnico. Solicitar aclaración si el ticket mezcla ambas situaciones.",
+            "word_start": 0,
+            "word_end": 81,
+            "score": 0.272155,
+            "lexical_score": 0.272155,
+            "semantic_score": 0.0
+          }
+        ],
+        "steps": [
+          {
+            "step": "preparar",
+            "detail": "Datos redactados; entrada validada",
+            "elapsed_ms": 0.07
+          },
+          {
+            "step": "recuperar_documentos",
+            "detail": "1 fragmentos; modo lexical",
+            "elapsed_ms": 6.26
+          },
+          {
+            "step": "consultar_politica",
+            "detail": "INT-SLA:0: Baja; primera respuesta 24 horas hábiles",
+            "elapsed_ms": 6.28
+          },
+          {
+            "step": "generar",
+            "detail": "qwen2.5:1.5b",
+            "elapsed_ms": 26177.48
+          },
+          {
+            "step": "validar_citas",
+            "detail": "Identificadores y extractos comprobados; fidelidad semántica requiere revisión",
+            "elapsed_ms": 26177.51
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Borrador: el operador verifica evidencia y decide la acción",
+            "elapsed_ms": 26177.52
+          }
+        ],
+        "usage": {
+          "input_tokens": 791,
+          "output_tokens": 212
+        },
+        "timings": {
+          "retrieval_ms": 6.17,
+          "generation_ms": 26171.23,
+          "total_ms": 26178.46
+        },
+        "human_approval_required": true
+      }
+    }
+  ]
+}
