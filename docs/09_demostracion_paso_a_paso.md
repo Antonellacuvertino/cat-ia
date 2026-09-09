@@ -177,6 +177,3 @@ Conserva una copia del prompt antes del ejercicio y restaúrala al terminar el e
 
 Este reparto es una sugerencia, subordinada al tiempo que asigne el docente. La demostración opcional de prioridad y la lectura extensa del código son material de ensayo o de respuesta a preguntas. Ambos integrantes deben poder recorrer todo el flujo, aunque dividan la exposición.
 
-## 13. Antes de entregar
-
-Las autoras registradas son Antonella Cuvertino y Miriam Hammami. La fecha de entrega es 09/09/2026 y el docente es Sebastián Ignacio Sánchez Morales. Completa la sección cuando se confirme. Confirma con el docente la aceptación del caso ficticio. Revisa los resultados que vas a declarar y practica las preguntas de docs/05_guia_defensa.md. Para actualizar PDF y ZIP tras cambios finales ejecuta, en este orden, los módulos scripts.build_documents, scripts.package y scripts.check_package con el Python de .venv. La presentación es deliverables/presentacion_CAT-IA.pdf; el paquete completo es dist/CAT-IA_entrega.zip. El envío a AVA y al docente lo realiza el equipo.
