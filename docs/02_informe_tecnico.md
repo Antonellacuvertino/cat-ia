@@ -2,6 +2,8 @@
 
 Autoras: Antonella Cuvertino y Miriam Hammami.
 
+Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.
+
 ## Resumen de la solución
 
 CAT-IA es una aplicación web local por capas que transforma un ticket en un borrador de atención verificable. FastAPI expone la API y sirve un frontend HTML/CSS/JavaScript. Python implementa ingesta, recuperación, orquestación, contratos y evaluación. Se prioriza código pequeño que el estudiante pueda explicar sobre una arquitectura de microservicios que añadiría despliegue y comunicación innecesarios para nueve documentos.

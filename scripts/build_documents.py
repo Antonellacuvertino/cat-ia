@@ -270,7 +270,7 @@ if __name__ == "__main__":
     build_architecture()
     summary=result_summary()
     presentation(summary)
-    dossier=["# CAT-IA · Dossier del proyecto", f"Autoras: {AUTHORS}.", "Este documento reúne la propuesta, informe de aplicación, plan de pruebas, manual, preparación de defensa y matriz de evaluación. La presentación y el diagrama PDF se entregan como archivos independientes."]
+    dossier=["# CAT-IA · Dossier del proyecto", f"Autoras: {AUTHORS}.", "Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.", "Este documento reúne la propuesta, informe de aplicación, plan de pruebas, manual, preparación de defensa y matriz de evaluación. La presentación y el diagrama PDF se entregan como archivos independientes."]
     for file in sorted((ROOT/"docs").glob("0*.md")):
         if not file.name.startswith("07_"):
             dossier.append(file.read_text(encoding="utf-8"))

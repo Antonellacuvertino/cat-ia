@@ -2,6 +2,8 @@
 
 **Autoras: Antonella Cuvertino y Miriam Hammami.**
 
+Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.
+
 Proyecto académico de Ingeniería de Software para ISY0101. Asistente de clasificación de tickets y propuestas de respuesta con recuperación aumentada. Organización ficticia: **Nexo TI**. No hay aprobación docente ni resultados organizacionales reales acreditados.
 
 ## Inicio rápido en Windows

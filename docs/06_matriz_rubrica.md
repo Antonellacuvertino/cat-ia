@@ -2,6 +2,8 @@
 
 Autoras: Antonella Cuvertino y Miriam Hammami.
 
+Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.
+
 ## IE1 · Diseño según requerimientos · 15 %
 
 Evidencia: docs/01_propuesta_mejorada.md y requisitos RF/RNF del informe. Organización, problema, objetivos medibles, datos, restricciones y alcance explícitos. Pendiente externo: validación docente del caso ficticio y, si se exige, ajuste a organización real autorizada. No se afirma aprobación.

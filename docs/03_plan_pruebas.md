@@ -2,6 +2,8 @@
 
 Autoras: Antonella Cuvertino y Miriam Hammami.
 
+Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.
+
 ## Propósito y niveles
 
 Las pruebas comprueban contratos y comportamiento del software. La evaluación de recuperación comprueba los documentos obtenidos. La evaluación semántica comprueba contenido generado. Ninguna de estas capas sustituye a las otras. Las evidencias automáticas están en reports/tests.xml, reports/coverage.json y los JSON de evaluación; el resumen PDF se genera a partir de esos archivos.

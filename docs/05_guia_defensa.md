@@ -2,6 +2,8 @@
 
 Autoras: Antonella Cuvertino y Miriam Hammami.
 
+Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.
+
 ## Lo primero que debes poder decir
 
 «CAT-IA ayuda a una mesa de soporte a clasificar tickets y preparar respuestas con evidencia. El caso es Nexo TI, una empresa ficticia. El sistema recupera políticas internas simuladas y guías externas reales de Mozilla, construye contexto para un LLM, valida su salida y muestra un borrador a un operador. El operador conserva la decisión final».
