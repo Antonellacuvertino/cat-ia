@@ -18,6 +18,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from catia.config import ROOT
 
 OUT = ROOT / "deliverables"
+# Autoría declarada por las integrantes; se conserva al regenerar cualquier PDF.
+AUTHORS = "Antonella Cuvertino y Miriam Hammami"
 GREEN = colors.HexColor("#173f32")
 MUTED = colors.HexColor("#687769")
 LIME = colors.HexColor("#d9eea6")
@@ -80,7 +82,7 @@ def markdown_pdf(source, target):
         else:
             flow.append(Paragraph(rich(block).replace("\n", "<br/>"), STYLES["BodyCAT"]))
     SimpleDocTemplate(str(target), pagesize=A4, rightMargin=20*mm, leftMargin=20*mm,
-                      topMargin=22*mm, bottomMargin=24*mm, title=target.stem, author="Equipo CAT-IA").build(flow, onFirstPage=footer, onLaterPages=footer)
+                      topMargin=22*mm, bottomMargin=24*mm, title=target.stem, author=AUTHORS).build(flow, onFirstPage=footer, onLaterPages=footer)
 
 
 def arrow(c, x1, y1, x2, y2):
@@ -138,6 +140,7 @@ def build_architecture():
     """Exporta el diagrama de arquitectura como un PDF independiente."""
     path=OUT/"arquitectura.pdf"
     c=canvas.Canvas(str(path),pagesize=(760,520));c.setTitle("Arquitectura CAT-IA")
+    c.setAuthor(AUTHORS)
     c.setFillColor(PAPER);c.rect(0,0,760,520,fill=1,stroke=0)
     c.setFont(BOLD,25);c.setFillColor(GREEN);c.drawString(35,475,"Arquitectura de CAT-IA")
     architecture(c,35,50);c.save()
@@ -215,6 +218,7 @@ def presentation(summary):
     source=(ROOT/"docs/07_presentacion.md").read_text(encoding="utf-8")
     sections=re.split(r"\n(?=## )",source)
     c=canvas.Canvas(str(OUT/"presentacion_CAT-IA.pdf"),pagesize=(960,540));c.setTitle("CAT-IA · Soporte con evidencia")
+    c.setAuthor(AUTHORS)
     for i,section in enumerate(sections):
         c.setFillColor(GREEN if i==0 else PAPER);c.rect(0,0,960,540,fill=1,stroke=0)
         c.setFillColor(LIME if i==0 else GREEN);c.setFont(BOLD,13);c.drawString(48,490,"CAT-IA / NEXO TI")
@@ -266,7 +270,7 @@ if __name__ == "__main__":
     build_architecture()
     summary=result_summary()
     presentation(summary)
-    dossier=["# CAT-IA · Dossier del proyecto", "Este documento reúne la propuesta, informe de aplicación, plan de pruebas, manual, preparación de defensa y matriz de evaluación. La presentación y el diagrama PDF se entregan como archivos independientes."]
+    dossier=["# CAT-IA · Dossier del proyecto", f"Autoras: {AUTHORS}.", "Este documento reúne la propuesta, informe de aplicación, plan de pruebas, manual, preparación de defensa y matriz de evaluación. La presentación y el diagrama PDF se entregan como archivos independientes."]
     for file in sorted((ROOT/"docs").glob("0*.md")):
         if not file.name.startswith("07_"):
             dossier.append(file.read_text(encoding="utf-8"))

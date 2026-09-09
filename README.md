@@ -1,5 +1,7 @@
 # CAT-IA · Soporte con evidencia
 
+**Autoras: Antonella Cuvertino y Miriam Hammami.**
+
 Proyecto académico de Ingeniería de Software para ISY0101. Asistente de clasificación de tickets y propuestas de respuesta con recuperación aumentada. Organización ficticia: **Nexo TI**. No hay aprobación docente ni resultados organizacionales reales acreditados.
 
 ## Inicio rápido en Windows

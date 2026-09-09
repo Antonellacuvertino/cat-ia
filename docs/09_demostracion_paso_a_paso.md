@@ -1,5 +1,7 @@
 # CAT-IA: cómo mostrar y explicar tu proyecto
 
+Autoras: Antonella Cuvertino y Miriam Hammami.
+
 Guía práctica para abrir la aplicación, recorrer el código comentado y defender las decisiones. Complementa docs/05_guia_defensa.md, que contiene los conceptos y las preguntas de estudio. Practica las acciones tú mismo antes de la evaluación; el segmento de dominio técnico exige resolver sin apoyo externo.
 
 ## 1. Prepara la demostración en este computador
@@ -175,4 +177,4 @@ Este reparto es una sugerencia, subordinada al tiempo que asigne el docente. La 
 
 ## 13. Antes de entregar
 
-Completa integrantes, sección y datos académicos donde corresponda. Confirma con el docente la aceptación del caso ficticio. Revisa los resultados que vas a declarar y practica las preguntas de docs/05_guia_defensa.md. Para actualizar PDF y ZIP tras cambios finales ejecuta, en este orden, los módulos scripts.build_documents, scripts.package y scripts.check_package con el Python de .venv. La presentación es deliverables/presentacion_CAT-IA.pdf; el paquete completo es dist/CAT-IA_entrega.zip. El envío a AVA y al docente lo realiza el equipo.
+Las autoras registradas son Antonella Cuvertino y Miriam Hammami. Completa sección, docente y fecha de entrega cuando se confirmen. Confirma con el docente la aceptación del caso ficticio. Revisa los resultados que vas a declarar y practica las preguntas de docs/05_guia_defensa.md. Para actualizar PDF y ZIP tras cambios finales ejecuta, en este orden, los módulos scripts.build_documents, scripts.package y scripts.check_package con el Python de .venv. La presentación es deliverables/presentacion_CAT-IA.pdf; el paquete completo es dist/CAT-IA_entrega.zip. El envío a AVA y al docente lo realiza el equipo.

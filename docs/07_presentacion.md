@@ -2,7 +2,8 @@
 Soporte con evidencia
 Clasificación de tickets y respuestas fundamentadas con LLM + RAG.
 Nexo TI · Organización ficticia académica.
-Integrantes: completar nombres · ISY0101 · Sección: completar.
+Autoras: Antonella Cuvertino y Miriam Hammami.
+ISY0101 · Sección y docente: pendientes de informar.
 
 ## 01 · El problema
 - La mesa de ayuda debe clasificar y consultar procedimientos dispersos.

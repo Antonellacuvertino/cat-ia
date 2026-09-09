@@ -1,12 +1,14 @@
 # Preparación de la entrega
 
+Autoras: Antonella Cuvertino y Miriam Hammami.
+
 ## Archivos principales
 
 Entregar dist/CAT-IA_entrega.zip con código, requirements.txt, configuración de ejemplo, fuentes, prompts, pruebas, evaluación, documentación y PDF. El ZIP excluye .venv, .env, runtime, cachés, herramientas locales y modelos. Los binarios/modelos se instalan según el README. La presentación es deliverables/presentacion_CAT-IA.pdf; el informe y la guía están en la misma carpeta.
 
 ## Antes de entregar
 
-1. Completar nombres de integrantes, sección, fecha y docente en propuesta y presentación.
+1. Autoras registradas: Antonella Cuvertino y Miriam Hammami. Completar sección, fecha de entrega y docente en propuesta y presentación cuando se confirmen.
 2. Confirmar aprobación del caso ficticio o reformular con la organización autorizada.
 3. Ejecutar Ollama y al menos una consulta real; luego evaluación v1/v2 y baseline según el plan.
 4. Completar revisión humana de fidelidad y relevancia; registrar resultados sin atribuir cifras demo al LLM.

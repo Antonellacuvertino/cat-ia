@@ -1,5 +1,7 @@
 # Matriz de trazabilidad de la pauta
 
+Autoras: Antonella Cuvertino y Miriam Hammami.
+
 ## IE1 · Diseño según requerimientos · 15 %
 
 Evidencia: docs/01_propuesta_mejorada.md y requisitos RF/RNF del informe. Organización, problema, objetivos medibles, datos, restricciones y alcance explícitos. Pendiente externo: validación docente del caso ficticio y, si se exige, ajuste a organización real autorizada. No se afirma aprobación.
@@ -30,7 +32,7 @@ Evidencia: ADR01–ADR06 del informe y parámetros de código/configuración. Al
 
 ## IE8 · Documentación y evidencia técnica · 10 %
 
-Evidencia: propuesta, informe, manual, plan de pruebas, guía, diagramas, PDF y reports. Scripts permiten regenerar evaluación y artefactos. Falta completar nombres y registrar aprobación/evaluación real cuando ocurran.
+Evidencia: propuesta, informe, manual, plan de pruebas, guía, diagramas, PDF y reports. Scripts permiten regenerar evaluación y artefactos. Autoras identificadas: Antonella Cuvertino y Miriam Hammami. Queda registrar aprobación docente y revisión humana cuando ocurran; las evaluaciones ejecutadas están en reports.
 
 ## IE9 · Lenguaje y comentarios técnicos · 10 %
 

@@ -2,7 +2,7 @@
 
 ## Identificación y estado
 
-Nombre: Clasificador y Asistente de Tickets con Inteligencia Artificial. Asignatura: Ingeniería de Soluciones con Inteligencia Artificial, ISY0101. Equipo: completar nombres de los dos integrantes, sección y docente antes de entregar. Estado: propuesta reformulada y prototipo académico; aprobación docente pendiente de acreditar.
+Nombre: Clasificador y Asistente de Tickets con Inteligencia Artificial. Asignatura: Ingeniería de Soluciones con Inteligencia Artificial, ISY0101. Autoras: Antonella Cuvertino y Miriam Hammami. Sección y docente: pendientes de informar. Estado: propuesta reformulada y prototipo académico; aprobación docente pendiente de acreditar.
 
 Esta propuesta amplía el PDF original del estudiante: conserva clasificación por categorías, prioridad y salida estructurada, y añade RAG, control de contexto, validación, pruebas y documentación. La pauta permite una organización ficticia con preferencia por una real. Se adopta un escenario ficticio explícito para no atribuir a una empresa información, problemas o mediciones no verificados.
 

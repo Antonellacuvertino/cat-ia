@@ -1,5 +1,7 @@
 # Manual de instalación y uso
 
+Autoras: Antonella Cuvertino y Miriam Hammami.
+
 ## Qué vas a abrir
 
 CAT-IA es una web local para un operador de soporte. La ventana de terminal mantiene el servidor activo; el navegador muestra la aplicación. Cerrar el navegador no detiene el servidor. Ctrl+C en la terminal lo detiene.
