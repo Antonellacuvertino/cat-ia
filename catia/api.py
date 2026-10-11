@@ -1,12 +1,16 @@
 """API local de demostración y frontend; /docs expone el contrato OpenAPI."""
 import os
+import importlib.util
+from pathlib import Path
+from uuid import UUID
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from .agent import Agent
+from .agent import ConversationAgent
+from .memory import MemoryStore
 from .config import ROOT, provider_name, read_config
 from .generation import DemoGenerator, OllamaGenerator
 from .retrieval import OllamaEmbeddings, Retriever
@@ -22,7 +26,10 @@ def create_agent():
                                   os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")) if mode == "hybrid" else None
     # La elección del proveedor es explícita y visible en /api/health y en la interfaz.
     generator = OllamaGenerator() if provider_name() == "ollama" else DemoGenerator()
-    return Agent(Retriever(read_config(), embeddings=embeddings), generator, ROOT / "runtime/traces")
+    memory = MemoryStore(Path(os.getenv("CATIA_MEMORY_DB", str(ROOT / "runtime/memory.sqlite3"))),
+                         window=int(os.getenv("CATIA_MEMORY_WINDOW", "3")))
+    return ConversationAgent(Retriever(read_config(), embeddings=embeddings), generator, memory,
+                             ROOT / "runtime/traces", mode=os.getenv("CATIA_ORCHESTRATION", "react"))
 
 
 def create_app(agent=None):
@@ -33,14 +40,14 @@ def create_app(agent=None):
         app.state.agent = agent or create_agent()
         yield
 
-    app = FastAPI(title="CAT-IA · Mesa de soporte", version="1.0.0", lifespan=lifespan)
+    app = FastAPI(title="CAT-IA · Mesa de soporte EA2", version="2.0.0", lifespan=lifespan)
 
     @app.middleware("http")
     async def local_boundary(request: Request, call_next):
         # Impide POST desde páginas ajenas. Este prototipo se sirve solo en loopback.
         """Filtra POST de otro origen y añade cabeceras del navegador; no implementa autenticación."""
         origin = request.headers.get("origin")
-        if request.method == "POST" and origin and origin != str(request.base_url).rstrip("/"):
+        if request.method in {"POST", "DELETE"} and origin and origin != str(request.base_url).rstrip("/"):
             from fastapi.responses import JSONResponse
             return JSONResponse({"detail": "Origen no permitido"}, status_code=403)
         response = await call_next(request)
@@ -55,6 +62,9 @@ def create_app(agent=None):
         """Muestra la configuración cargada; no realiza una inferencia ni verifica que Ollama responda."""
         active = app.state.agent
         return {"status": "ok", "provider": active.generator.name, "model": active.generator.model,
+                "orchestration": getattr(active, "mode", "legacy"),
+                "memory_enabled": hasattr(active, "memory"),
+                "crew_available": importlib.util.find_spec("crewai") is not None,
                 "retriever": active.retriever.mode, "documents": len(active.retriever.manifest),
                 "chunks": len(active.retriever.chunks), "config": active.retriever.config.model_dump()}
 
@@ -69,8 +79,36 @@ def create_app(agent=None):
         """Recibe un Ticket validado por FastAPI y ejecuta el flujo; errores no controlados devuelven 503."""
         try:
             return app.state.agent.run(ticket)
+        except KeyError as exc:
+            raise HTTPException(404, "Sesión inexistente. Inicia una conversación nueva.") from exc
         except Exception as exc:
-            raise HTTPException(503, "No se pudo consultar la base documental. Revisar el proveedor de embeddings.") from exc
+            raise HTTPException(503, "No se completó la operación. Revisar fuentes, memoria y proveedores.") from exc
+
+    def session_store():
+        """Obtiene la memoria de EA2 sin exigirla a agentes inyectados por pruebas anteriores."""
+        if not hasattr(app.state.agent, "memory"):
+            raise HTTPException(503, "La memoria EA2 no está habilitada")
+        return app.state.agent.memory
+
+    @app.post("/api/sessions", status_code=201)
+    def new_session():
+        """Inicia un hilo local; el UUID no es un mecanismo de autenticación empresarial."""
+        return {"session_id": session_store().create()}
+
+    @app.get("/api/sessions/{session_id}")
+    def get_session(session_id: UUID):
+        """Devuelve ventana y resumen persistidos para el operador de este equipo local."""
+        try:
+            return session_store().get(str(session_id))
+        except KeyError as exc:
+            raise HTTPException(404, "Sesión inexistente") from exc
+
+    @app.delete("/api/sessions/{session_id}")
+    def delete_session(session_id: UUID):
+        """Borra memoria del hilo; no borra resultados descargados previamente."""
+        if not session_store().delete(str(session_id)):
+            raise HTTPException(404, "Sesión inexistente")
+        return {"deleted": True}
 
     @app.get("/")
     def home():

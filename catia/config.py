@@ -28,7 +28,7 @@ class RAGConfig(BaseModel):
     # Solo en modo híbrido: peso de la señal densa frente a la señal léxica.
     semantic_weight: float = Field(default=0.55, ge=0, le=1)
     # Selecciona el archivo prompts/<versión>.txt utilizado como instrucción de sistema.
-    prompt_version: Literal["v1", "v2", "v3"] = "v3"
+    prompt_version: Literal["v1", "v2", "v3", "v4"] = "v3"
 
     @model_validator(mode="after")
     def valid_overlap(self):

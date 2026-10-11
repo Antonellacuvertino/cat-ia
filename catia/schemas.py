@@ -1,5 +1,6 @@
 """Contratos de API y salida del modelo: JSON sintáctico no basta."""
 from typing import Literal
+from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 Category = Literal["Soporte Técnico", "Facturación", "Dudas Comerciales", "Sugerencias", "No determinado"]
@@ -18,6 +19,11 @@ class Ticket(BaseModel):
     # None conserva la configuración; un número la cambia solo para este ticket.
     top_k: int | None = Field(default=None, ge=1, le=8)
     source_filter: Literal["all", "internal", "external"] = "all"
+    # EA2: una sesión identifica un hilo local; no es una cuenta ni autenticación.
+    session_id: UUID | None = None
+    orchestration: Literal["react", "crew"] | None = None
+    use_context: bool = True
+    allow_demo_fallback: bool = False
 
     @field_validator("text")
     @classmethod

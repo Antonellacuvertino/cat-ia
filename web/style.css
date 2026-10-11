@@ -123,3 +123,6 @@ footer span{display:block}
 h1{font-size:30px}
 }
 
+
+/* EA2: memoria y observaciones se muestran como texto, separadas de evidencia RAG. */
+.session-card{margin-bottom:22px}#history,#tool-events{line-height:1.6;padding-left:20px;overflow-wrap:anywhere}#history p{font-size:12px;color:var(--muted)}#memory-summary{white-space:pre-wrap;overflow-wrap:anywhere}#tool-events li{font-size:11px;margin-bottom:10px}

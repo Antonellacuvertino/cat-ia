@@ -26,7 +26,7 @@ Evidencia: docs/02_informe_tecnico.md, módulos catia/ y recorrido del agente en
 
 ## IE6 · Diagrama entregable · 10 %
 
-Evidencia: docs/arquitectura.mmd, deliverables/arquitectura.pdf y diapositiva de arquitectura. Se representan datos internos/externos, índice, consulta, proveedor y salidas; las flechas distinguen ingesta de consulta.
+Evidencia EA1: docs/arquitectura_ea1.mmd, deliverables/arquitectura_EA1.pdf y diapositiva de arquitectura. Se representan datos internos/externos, índice, consulta, proveedor y salidas; las flechas distinguen ingesta de consulta.
 
 ## IE7 · Decisiones fundamentadas · 10 %
 

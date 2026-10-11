@@ -1,0 +1,409 @@
+{
+  "created_at": "2026-10-11T15:07:15.105966+00:00",
+  "provider": "ollama",
+  "mode": "react",
+  "passed": true,
+  "scope": "Integración sintética, no evaluación independiente de fidelidad o generalización.",
+  "rows": [
+    {
+      "trace_id": "d966598b-6df9-4fd5-aa03-f11c636f03d9",
+      "created_at": "2026-10-11T15:05:30.565433+00:00",
+      "session_id": "9a7a03ca-bb29-41da-b7ae-f9897abe3cb3",
+      "status": "draft",
+      "mode": "ollama",
+      "model": "qwen2.5:1.5b",
+      "requested_provider": "ollama",
+      "fallback_used": false,
+      "warning": null,
+      "orchestration": {
+        "requested": "react",
+        "executed": "langchain-react-ollama"
+      },
+      "tool_events": [
+        {
+          "actor": "Agente ReAct",
+          "tool": "tool_search_knowledge_base",
+          "status": "ok",
+          "observation": {
+            "count": 4,
+            "source_ids": [
+              "EXT-COOKIE:0",
+              "EXT-NET:0",
+              "INT-NET:0",
+              "INT-ACC:0"
+            ],
+            "sufficient_for_draft": true
+          },
+          "elapsed_ms": 102.94
+        },
+        {
+          "actor": "Agente ReAct",
+          "tool": "tool_check_sla_policy",
+          "status": "ok",
+          "observation": {
+            "priority": "Baja",
+            "first_response_hours": 24,
+            "policy_id": "INT-SLA"
+          },
+          "elapsed_ms": 2.43
+        },
+        {
+          "actor": "Agente ReAct",
+          "tool": "tool_draft_response",
+          "status": "ok",
+          "observation": {
+            "status": "draft",
+            "category": "Soporte Técnico",
+            "citation_count": 3,
+            "human_approval_required": true
+          },
+          "elapsed_ms": 105731.8
+        }
+      ],
+      "memory": {
+        "previous_turns": 0,
+        "turn_count": 1,
+        "window_size": 3,
+        "retained_turns": 1,
+        "summary": "",
+        "used": false,
+        "summary_strategy": "extractive_user_messages"
+      },
+      "retriever": "lexical",
+      "prompt_version": "v4",
+      "prompt_sha256": "ac7c58c2eae5edb56fcb58313e8687ae9c2cecdc27268832ded1b490df5e7220",
+      "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+      "config": {
+        "chunk_words": 110,
+        "overlap_words": 20,
+        "top_k": 4,
+        "min_score": 0.06,
+        "max_context_chars": 6500,
+        "semantic_weight": 0.55,
+        "prompt_version": "v4"
+      },
+      "decision": {
+        "category": "Soporte Técnico",
+        "summary": "El usuario está intentando resolver un problema de inicio de sesión en Firefox, pero el sitio no funciona en este navegador. Se sugiere revisar las cookies y los datos del sitio para intentar solucionar el problema.",
+        "suggested_reply": "El problema parece estar relacionado con las cookies del sitio. Intenta eliminar las cookies del sitio en Firefox y vuelve a intentar iniciar sesión. Si el problema persiste, por favor comparte el mensaje de error y la hora del intento con el soporte técnico.",
+        "justification": "La intención del usuario es resolver un problema de inicio de sesión en Firefox, lo que se clasifica como Soporte Técnico. La documentación de Mozilla proporciona información sobre cómo gestionar cookies y datos del sitio, lo que es relevante para el diagnóstico del problema.",
+        "citations": [
+          {
+            "source_id": "EXT-COOKIE:0",
+            "quote": "Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios."
+          },
+          {
+            "source_id": "EXT-NET:0",
+            "quote": "Para fallos de ciertos sitios menciona revisar cookies y caché."
+          },
+          {
+            "source_id": "INT-ACC:0",
+            "quote": "Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad."
+          }
+        ],
+        "needs_review": true
+      },
+      "priority": "Baja",
+      "first_response_hours": 24,
+      "policy": {
+        "source_id": "INT-SLA:0",
+        "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+        "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+      },
+      "sources": [
+        {
+          "id": "EXT-COOKIE:0",
+          "doc_id": "EXT-COOKIE",
+          "title": "Firefox: cookies, caché y datos del sitio",
+          "source_type": "external",
+          "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+          "version": "sintesis-2026-09-08",
+          "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce",
+          "text": "Síntesis en español de Mozilla Support: cookies y datos de sitios en Firefox. Las cookies almacenan preferencias y estado de inicio de sesión. Firefox permite eliminar los datos del sitio actual desde el control situado junto a la dirección. También permite gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios. Los nombres de los controles varían con la versión. Al eliminar cookies puede perderse el estado de inicio de sesión. Consultar la guía original antes de aplicar los pasos.",
+          "word_start": 0,
+          "word_end": 109,
+          "score": 0.316706,
+          "lexical_score": 0.316706,
+          "semantic_score": 0.0
+        },
+        {
+          "id": "EXT-NET:0",
+          "doc_id": "EXT-NET",
+          "title": "Firefox no carga sitios; otros navegadores funcionan",
+          "source_type": "external",
+          "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+          "version": "sintesis-2026-09-08",
+          "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3",
+          "text": "Síntesis en español de Mozilla Support: Firefox no carga sitios aunque otro navegador funciona. Cuando el problema afecta solo a Firefox, la guía considera bloqueos de software de seguridad, configuración de conexión o proxy, datos del sitio y extensiones. Conviene comparar el comportamiento con otro navegador para delimitar la incidencia. Para fallos de ciertos sitios menciona revisar cookies y caché. Las modificaciones avanzadas requieren experiencia y pueden afectar estabilidad y seguridad; en una organización deben revisarse con el responsable técnico. Esta documentación del proveedor describe posibles diagnósticos, no demuestra cuál es la causa de un ticket concreto.",
+          "word_start": 0,
+          "word_end": 97,
+          "score": 0.221323,
+          "lexical_score": 0.221323,
+          "semantic_score": 0.0
+        },
+        {
+          "id": "INT-NET:0",
+          "doc_id": "INT-NET",
+          "title": "VPN, internet, Firefox y conectividad",
+          "source_type": "internal",
+          "origin": "Nexo TI / procedimiento simulado",
+          "version": "1.0",
+          "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+          "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+          "word_start": 0,
+          "word_end": 99,
+          "score": 0.132485,
+          "lexical_score": 0.132485,
+          "semantic_score": 0.0
+        },
+        {
+          "id": "INT-ACC:0",
+          "doc_id": "INT-ACC",
+          "title": "Acceso al portal y contraseña bloqueada",
+          "source_type": "internal",
+          "origin": "Nexo TI / procedimiento simulado",
+          "version": "1.0",
+          "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+          "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+          "word_start": 0,
+          "word_end": 101,
+          "score": 0.101281,
+          "lexical_score": 0.101281,
+          "semantic_score": 0.0
+        }
+      ],
+      "steps": [
+        {
+          "step": "memoria",
+          "detail": "0 intercambios previos; contexto activado"
+        },
+        {
+          "step": "tool_search_knowledge_base",
+          "detail": "Agente ReAct: ok"
+        },
+        {
+          "step": "tool_check_sla_policy",
+          "detail": "Agente ReAct: ok"
+        },
+        {
+          "step": "tool_draft_response",
+          "detail": "Agente ReAct: ok"
+        },
+        {
+          "step": "revision_humana",
+          "detail": "Revisar afirmaciones y citas antes de usar el borrador"
+        }
+      ],
+      "usage": {
+        "input_tokens": 1671,
+        "output_tokens": 333
+      },
+      "timings": {
+        "retrieval_ms": 9.41,
+        "generation_ms": 105727.81,
+        "total_ms": 117022.89
+      },
+      "human_approval_required": true
+    },
+    {
+      "trace_id": "0a5bf378-32ea-49d5-8485-cdd94d6aebd3",
+      "created_at": "2026-10-11T15:07:15.103805+00:00",
+      "session_id": "9a7a03ca-bb29-41da-b7ae-f9897abe3cb3",
+      "status": "draft",
+      "mode": "ollama",
+      "model": "qwen2.5:1.5b",
+      "requested_provider": "ollama",
+      "fallback_used": false,
+      "warning": null,
+      "orchestration": {
+        "requested": "react",
+        "executed": "langchain-react-ollama"
+      },
+      "tool_events": [
+        {
+          "actor": "Agente ReAct",
+          "tool": "tool_search_knowledge_base",
+          "status": "ok",
+          "observation": {
+            "count": 4,
+            "source_ids": [
+              "EXT-COOKIE:0",
+              "EXT-NET:0",
+              "INT-NET:0",
+              "INT-ACC:0"
+            ],
+            "sufficient_for_draft": true
+          },
+          "elapsed_ms": 60.2
+        },
+        {
+          "actor": "Agente ReAct",
+          "tool": "tool_check_sla_policy",
+          "status": "ok",
+          "observation": {
+            "priority": "Baja",
+            "first_response_hours": 24,
+            "policy_id": "INT-SLA"
+          },
+          "elapsed_ms": 2.05
+        },
+        {
+          "actor": "Agente ReAct",
+          "tool": "tool_draft_response",
+          "status": "ok",
+          "observation": {
+            "status": "draft",
+            "category": "Facturación",
+            "citation_count": 3,
+            "human_approval_required": true
+          },
+          "elapsed_ms": 94698.69
+        }
+      ],
+      "memory": {
+        "previous_turns": 1,
+        "turn_count": 2,
+        "window_size": 3,
+        "retained_turns": 2,
+        "summary": "",
+        "used": true,
+        "summary_strategy": "extractive_user_messages"
+      },
+      "retriever": "lexical",
+      "prompt_version": "v4",
+      "prompt_sha256": "ac7c58c2eae5edb56fcb58313e8687ae9c2cecdc27268832ded1b490df5e7220",
+      "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+      "config": {
+        "chunk_words": 110,
+        "overlap_words": 20,
+        "top_k": 4,
+        "min_score": 0.06,
+        "max_context_chars": 6500,
+        "semantic_weight": 0.55,
+        "prompt_version": "v4"
+      },
+      "decision": {
+        "category": "Facturación",
+        "summary": "El portal no inicia sesión en Firefox, pero funciona en otro navegador. ¿Cómo reviso las cookies y los datos del sitio?",
+        "suggested_reply": "Para revisar las cookies y los datos del sitio en Firefox, consulte la guía de Mozilla sobre cookies y datos de sitios en Firefox. También puede desactivar cookies y revisar la configuración de privacidad y borrar cookies, datos y caché para identificar si el problema se encuentra en Firefox o en otro sitio específico.",
+        "justification": "La guía de Mozilla proporciona información sobre cómo gestionar cookies y datos de sitios en Firefox, lo que es útil para identificar el origen del problema.",
+        "citations": [
+          {
+            "source_id": "EXT-COOKIE:0",
+            "quote": "Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios."
+          },
+          {
+            "source_id": "EXT-NET:0",
+            "quote": "Para fallos de ciertos sitios menciona revisar cookies y caché."
+          },
+          {
+            "source_id": "INT-ACC:0",
+            "quote": "Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado."
+          }
+        ],
+        "needs_review": true
+      },
+      "priority": "Baja",
+      "first_response_hours": 24,
+      "policy": {
+        "source_id": "INT-SLA:0",
+        "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+        "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+      },
+      "sources": [
+        {
+          "id": "EXT-COOKIE:0",
+          "doc_id": "EXT-COOKIE",
+          "title": "Firefox: cookies, caché y datos del sitio",
+          "source_type": "external",
+          "origin": "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+          "version": "sintesis-2026-09-08",
+          "sha256": "30043a892004ac65989b2f8a52f8b91dfc1370c06d8afac35eb307af7eb5afce",
+          "text": "Síntesis en español de Mozilla Support: cookies y datos de sitios en Firefox. Las cookies almacenan preferencias y estado de inicio de sesión. Firefox permite eliminar los datos del sitio actual desde el control situado junto a la dirección. También permite gestionar sitios específicos desde la configuración de privacidad y borrar cookies, datos y caché. Para una incidencia de un único portal, se puede revisar la gestión de datos de ese sitio antes de borrar datos de todos los sitios. Los nombres de los controles varían con la versión. Al eliminar cookies puede perderse el estado de inicio de sesión. Consultar la guía original antes de aplicar los pasos.",
+          "word_start": 0,
+          "word_end": 109,
+          "score": 0.28125,
+          "lexical_score": 0.28125,
+          "semantic_score": 0.0
+        },
+        {
+          "id": "EXT-NET:0",
+          "doc_id": "EXT-NET",
+          "title": "Firefox no carga sitios; otros navegadores funcionan",
+          "source_type": "external",
+          "origin": "https://support.mozilla.org/en-US/kb/firefox-cant-load-websites-other-browsers-can",
+          "version": "sintesis-2026-09-08",
+          "sha256": "6aa927a70dc2a1f9d762784cf8dc21c07ac1a5b4b30f69c7566f58d2a3b239f3",
+          "text": "Síntesis en español de Mozilla Support: Firefox no carga sitios aunque otro navegador funciona. Cuando el problema afecta solo a Firefox, la guía considera bloqueos de software de seguridad, configuración de conexión o proxy, datos del sitio y extensiones. Conviene comparar el comportamiento con otro navegador para delimitar la incidencia. Para fallos de ciertos sitios menciona revisar cookies y caché. Las modificaciones avanzadas requieren experiencia y pueden afectar estabilidad y seguridad; en una organización deben revisarse con el responsable técnico. Esta documentación del proveedor describe posibles diagnósticos, no demuestra cuál es la causa de un ticket concreto.",
+          "word_start": 0,
+          "word_end": 97,
+          "score": 0.196546,
+          "lexical_score": 0.196546,
+          "semantic_score": 0.0
+        },
+        {
+          "id": "INT-NET:0",
+          "doc_id": "INT-NET",
+          "title": "VPN, internet, Firefox y conectividad",
+          "source_type": "internal",
+          "origin": "Nexo TI / procedimiento simulado",
+          "version": "1.0",
+          "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+          "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+          "word_start": 0,
+          "word_end": 99,
+          "score": 0.117653,
+          "lexical_score": 0.117653,
+          "semantic_score": 0.0
+        },
+        {
+          "id": "INT-ACC:0",
+          "doc_id": "INT-ACC",
+          "title": "Acceso al portal y contraseña bloqueada",
+          "source_type": "internal",
+          "origin": "Nexo TI / procedimiento simulado",
+          "version": "1.0",
+          "sha256": "11be8446d4f4739fbc31786f6e2c06cde86f3edd68fc5f75ff3a5d95e47f415f",
+          "text": "Procedimiento interno simulado de acceso al portal de Nexo TI, versión 1.0. Para problemas de acceso o contraseña en el portal, utilizar la opción Recuperar contraseña desde la página oficial y verificar la identidad por el canal de soporte registrado. Nunca solicitar la contraseña actual, códigos de un solo uso ni tokens. Si la cuenta continúa bloqueada, derivar a Soporte Técnico con el mensaje de error y la hora del intento. Si falla solo Firefox, complementar el diagnóstico con la documentación de Mozilla sobre cookies o conectividad. El operador debe confirmar el sitio afectado antes de sugerir cambios en el navegador.",
+          "word_start": 0,
+          "word_end": 101,
+          "score": 0.102015,
+          "lexical_score": 0.102015,
+          "semantic_score": 0.0
+        }
+      ],
+      "steps": [
+        {
+          "step": "memoria",
+          "detail": "1 intercambios previos; contexto activado"
+        },
+        {
+          "step": "tool_search_knowledge_base",
+          "detail": "Agente ReAct: ok"
+        },
+        {
+          "step": "tool_check_sla_policy",
+          "detail": "Agente ReAct: ok"
+        },
+        {
+          "step": "tool_draft_response",
+          "detail": "Agente ReAct: ok"
+        },
+        {
+          "step": "revision_humana",
+          "detail": "Revisar afirmaciones y citas antes de usar el borrador"
+        }
+      ],
+      "usage": {
+        "input_tokens": 1695,
+        "output_tokens": 306
+      },
+      "timings": {
+        "retrieval_ms": 42.52,
+        "generation_ms": 94697.45,
+        "total_ms": 104523.6
+      },
+      "human_approval_required": true
+    }
+  ]
+}

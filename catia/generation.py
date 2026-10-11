@@ -9,7 +9,7 @@ from .config import ROOT
 from .schemas import Decision
 
 
-def build_messages(ticket, hits, version):
+def build_messages(ticket, hits, version, memory=None):
     """Separa el prompt del sistema de los datos no confiables del ticket y del corpus."""
     system = (ROOT / "prompts" / f"{version}.txt").read_text(encoding="utf-8")
     # JSON delimita datos; la defensa frente a inyección se complementa con
@@ -17,6 +17,8 @@ def build_messages(ticket, hits, version):
     payload = {"ticket": ticket, "documents": [
         {"source_id": h["id"], "title": h["title"], "type": h["source_type"], "text": h["text"]}
         for h in hits]}
+    if memory:
+        payload["conversation_context"] = memory
     return [{"role": "system", "content": system},
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
 
@@ -30,7 +32,7 @@ class OllamaGenerator:
         self.model = os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
         self.url = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
 
-    def generate(self, ticket, hits, version):
+    def generate(self, ticket, hits, version, memory=None):
         """Restringe las citas a opciones del contexto y devuelve decisión y uso de tokens."""
         # El mismo contrato de Python se convierte en restricciones para la generación.
         schema = Decision.model_json_schema()
@@ -52,7 +54,7 @@ class OllamaGenerator:
         # Petición síncrona local: espera la respuesta completa y limita tiempo y longitud.
         # temperature=0 reduce variación, pero no constituye garantía de exactitud.
         response = httpx.post(self.url + "/api/chat", json={
-            "model": self.model, "messages": build_messages(ticket, hits, version),
+            "model": self.model, "messages": build_messages(ticket, hits, version, memory),
             "stream": False, "format": schema,
             "options": {"temperature": 0, "num_predict": 1100, "num_ctx": 4096},
         }, timeout=120)
@@ -69,9 +71,11 @@ class DemoGenerator:
     name = "demo"
     model = "simulador-extractivo-v1 (sin LLM)"
 
-    def generate(self, ticket, hits, version):
+    def generate(self, ticket, hits, version, memory=None):
         """Clasifica por palabras clave y copia extractos; no ejecuta ni evalúa un LLM."""
         text = ticket.lower()
+        if memory and not any(w in text for w in ["factur", "cobro", "plan", "precio", "firefox", "vpn", "phishing"]):
+            text += " " + " ".join(memory.get("recent_user_messages", [])).lower()
         if any(w in text for w in ["factur", "cobro", "cobraron", "cargo", "pago"]):
             category = "Facturación"
         elif any(w in text for w in ["precio", "plan", "cotiz", "contratar", "comercial"]):

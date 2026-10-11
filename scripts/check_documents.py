@@ -22,7 +22,10 @@ if __name__=="__main__":
         if file.name=="presentacion_CAT-IA.pdf":
             for index in [0,4,9]:
                 doc[index].get_pixmap(matrix=pymupdf.Matrix(1.4,1.4)).save(preview/f"slide-{index+1}.png")
-        if file.name=="05_guia_defensa.pdf":
+        if file.name=="presentacion_EA2_CAT-IA.pdf":
+            for index in [0, 3, 7]:
+                doc[index].get_pixmap(matrix=pymupdf.Matrix(1.4,1.4)).save(preview/f"ea2-slide-{index+1}.png")
+        if file.name=="11_guion_clase_ea2.pdf":
             doc[0].get_pixmap().save(preview/"guia.png")
         doc.close()
     report={"checks":checks,"passed":not any(c["text_outside_page"] for c in checks),

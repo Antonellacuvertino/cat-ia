@@ -6,7 +6,7 @@ from catia.config import ROOT
 
 # Lista permitida: excluye por construcción modelos, entorno virtual y trazas locales.
 ALLOWED_DIRS = {"catia", "config", "data", "docs", "evaluation", "prompts", "reports", "scripts", "tests", "web", "deliverables"}
-ALLOWED_FILES = {"README.md", "requirements.txt", "requirements-browser.txt", "pyproject.toml", ".gitignore", ".env.example", "iniciar.bat", "iniciar_modelo_local.bat", "instalar.bat", "verificar.bat"}
+ALLOWED_FILES = {"README.md", "requirements.txt", "requirements-ea2.txt", "requirements-browser.txt", "pyproject.toml", ".gitignore", ".gitattributes", ".env.example", "iniciar.bat", "iniciar_modelo_local.bat", "instalar.bat", "instalar_ea2.bat", "verificar.bat"}
 
 if __name__ == "__main__":
     destination=ROOT/"dist"

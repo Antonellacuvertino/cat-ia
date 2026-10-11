@@ -1,25 +1,32 @@
-flowchart TB
-    subgraph Ingesta[Ingesta al iniciar]
-      I[7 fuentes internas simuladas] --> M[Manifiesto: origen, versión y SHA-256]
-      E[2 síntesis externas de Mozilla] --> M
-      M --> C[Fragmentación: 110 palabras / 20 overlap]
-      C --> V[Índice TF-IDF en memoria]
-      C -. modo híbrido opcional .-> D[Embeddings Ollama normalizados]
-    end
-    U[Operador: ticket e impacto] --> W[Interfaz web local]
-    W --> A[API FastAPI + validación de entrada]
-    A --> G[Agente de flujo acotado]
-    G --> R[Recuperar documentos: k, umbral y presupuesto]
-    V --> R
-    D -. señal semántica .-> R
-    G --> P[Política interna: prioridad y primera respuesta]
-    R --> X[Prompt versionado + contexto]
-    X --> L[LLM local Ollama / simulador explícito]
-    L --> J[Validar esquema y citas]
-    R -->|sin evidencia| N[Abstener y derivar]
-    J -->|salida inválida o fallo| N
-    J -->|borrador validado| H[Revisión humana]
-    P --> H
+﻿flowchart TB
+    U[Operador: ticket e impacto] --> UI[Interfaz: modo e hilo]
+    UI --> API[FastAPI: contratos y sesiones]
+    API --> A[ConversationAgent]
+    A <--> MEM[SQLite: ventana y resumen extractivo]
+    A --> R[ReAct acotado / LangChain]
+    A --> C[CrewAI / Process.sequential]
+    C --> T[Triage: politica]
+    T --> I[Investigador: evidencia]
+    I --> D[Redactor: categoria y borrador]
+    R --> TOOLS[Catalogo permitido y contratos]
+    T --> TOOLS
+    I --> TOOLS
+    D --> TOOLS
+    TOOLS --> SLA[Reglas SLA / INT-SLA]
+    TOOLS --> RET[Retriever TF-IDF / hibrido opcional]
+    F[7 fuentes internas / 2 externas locales] --> ING[Manifiesto / hashes / fragmentos]
+    ING --> RET
+    RET --> CTX[Contexto documental + v4]
+    MEM -. antecedentes no citables .-> CTX
+    CTX --> L[Ollama / simulador explicito]
+    L --> V[Decision y citas validadas]
+    RET -->|sin evidencia| N[Abstencion]
+    L -->|fallo| N
+    L -->|fallo y respaldo permitido| SIM[Demo etiquetado]
+    SIM --> V
+    V --> H[Revision humana obligatoria]
     N --> H
-    H --> W
-    G --> T[Traza local sin texto del ticket]
+    SLA --> H
+    H --> UI
+    A --> LOG[Eventos de herramientas / metadatos]
+    UI -->|borrar hilo| MEM

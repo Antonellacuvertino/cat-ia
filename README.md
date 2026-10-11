@@ -1,77 +1,111 @@
 # CAT-IA · Soporte con evidencia
 
-**Autoras: Antonella Cuvertino y Miriam Hammami.**
+Asistente de soporte para **Nexo TI**, una organización ficticia. Clasifica solicitudes, recupera documentación interna y externa y prepara respuestas con citas para revisión humana. La Experiencia 2 incorpora memoria de conversación y coordinación de herramientas.
 
-Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.
+**Autoras:** Antonella Cuvertino y Miriam Hammami
 
-Proyecto académico de Ingeniería de Software para ISY0101. Asistente de clasificación de tickets y propuestas de respuesta con recuperación aumentada. Organización ficticia: **Nexo TI**. No hay aprobación docente ni resultados organizacionales reales acreditados.
+**Docente:** Sebastián Ignacio Sánchez Morales
 
-## Inicio rápido en Windows
+**Asignatura:** ISY0101 · Ingeniería de Software
 
-1. Instalar Python 3.12 y ejecutar `instalar.bat` (requiere internet para dependencias).
-2. Ejecutar `iniciar.bat` y abrir http://127.0.0.1:8000.
-3. Seleccionar un caso de ejemplo y pulsar **Analizar con evidencia**.
-4. Revisar categoría, prioridad, borrador, citas y recorrido del agente.
-5. Ejecutar `verificar.bat` para pruebas, evaluación del simulador y PDF.
+**Estado:** prototipo académico local · EA2 actualizada el 11/10/2026
 
-La entrega contiene las dependencias fijadas en `requirements.txt`. La carpeta `.venv` es local y se excluye del ZIP. No requiere Node, base de datos ni cuentas para el modo de práctica.
+## Funcionalidades
 
-## Activar el LLM real
+- RAG sobre nueve documentos: siete internos simulados y dos síntesis de guías de Mozilla con procedencia registrada.
+- Sesiones persistentes en SQLite: tres intercambios recientes, resumen extractivo y borrado desde la interfaz.
+- Agente individual con ciclo ReAct acotado y herramientas tipadas de LangChain.
+- Equipo CrewAI secuencial: Triage, Investigador RAG y Redactor.
+- Prioridad por política, validación de citas, trazas de herramientas y revisión humana obligatoria.
+- Ollama para inferencia local; simulador explícito para ensayar sin modelo.
 
-En el equipo donde se preparó esta entrega hay una instalación portable en `.tools/ollama` y modelos en `.tools/models`. `iniciar_modelo_local.bat` inicia ese servicio en el puerto 11435; mantener su ventana abierta y luego ejecutar `iniciar.bat`. La configuración local usa ese puerto. En otro equipo, el ZIP no incluye binarios ni modelos: seguir la instalación estándar de abajo, cuyo puerto es 11434.
+## Inicio rápido · Windows
 
-Instalar Ollama desde https://ollama.com/download y ejecutar:
+Requisito: Python 3.12. La instalación necesita internet.
+
+```powershell
+.\instalar.bat
+.\instalar_ea2.bat
+.\iniciar.bat
+```
+
+Abre **http://127.0.0.1:8000**. El segundo instalador añade CrewAI; la instalación base permite el modo individual. No se necesitan Node ni servicios de base de datos: SQLite viene con Python. La API se documenta en http://127.0.0.1:8000/docs mientras la app está encendida.
+
+Para practicar: selecciona **Cobro duplicado**, analiza el caso, activa **Usar antecedentes** y pregunta «¿Qué debo hacer en ese caso?». Revisa memoria, herramientas y fuentes. Borra el hilo cuando cambies de caso. Lee el aviso que identifica simulación o LLM.
+
+## Configurar Ollama
+
+Instala [Ollama](https://ollama.com/download) y descarga el modelo:
 
 ```powershell
 ollama pull qwen2.5:1.5b
-Copy-Item .env.example .env
 ```
 
-Editar `.env`: `CATIA_PROVIDER=ollama`. Iniciar Ollama y reiniciar CAT-IA. Si ya existe `.env`, editarlo sin sobreescribirlo. La primera descarga del modelo requiere internet y varios GB libres; el rendimiento depende del equipo. Se propone un modelo pequeño, no se afirma que alcance las métricas objetivo sin evaluación.
+El instalador prepara `.env` desde `.env.example` si no existe. Edita la configuración y reinicia la app:
 
-Para recuperación semántica opcional:
-
-```powershell
-ollama pull nomic-embed-text
+```dotenv
+CATIA_PROVIDER=ollama
+OLLAMA_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=qwen2.5:1.5b
+CATIA_ORCHESTRATION=react
+CATIA_MEMORY_WINDOW=3
+CATIA_RETRIEVER=lexical
 ```
 
-Configurar `CATIA_RETRIEVER=hybrid`. Combina coseno TF-IDF con coseno de embeddings densos. El comportamiento multilingüe del modelo de embeddings debe evaluarse en el corpus español antes de preferirlo. La ruta evaluada sin modelos es `lexical` (TF-IDF), una recuperación vectorial dispersa, no embeddings semánticos.
+En el computador original, `iniciar_modelo_local.bat` usa la instalación portable de `.tools/` en el puerto **11435**. Esa instalación y sus modelos no se incluyen en GitHub ni en el ZIP. En otro equipo utiliza la instalación estándar y el puerto correspondiente.
 
-## Comandos de evaluación
+Para ensayar sin inferencia configura `CATIA_PROVIDER=demo`. El respaldo automático a demo está desactivado: solo se permite con la casilla explícita de la interfaz y se identifica en el resultado. La recuperación híbrida opcional requiere `nomic-embed-text` y `CATIA_RETRIEVER=hybrid`; sus métricas no deben confundirse con las del recuperador TF-IDF evaluado.
 
-La prueba real breve se ejecuta con `.\.venv\Scripts\python.exe -m scripts.smoke_llm`; guarda `reports/llm_smoke.json` y falla si no obtiene borrador validado. Para verificar la interfaz con CDP se requiere `requirements-browser.txt`; el script `scripts/check_browser.py` documenta el puerto de depuración esperado. Las capturas y el resultado del navegador están en reports.
+## Documentos para presentar EA2
+
+| Archivo | Uso |
+|---|---|
+| [Presentación EA2](deliverables/presentacion_EA2_CAT-IA.pdf) | Ocho diapositivas para la clase. |
+| [Guion de Antonella y Miriam](deliverables/11_guion_clase_ea2.pdf) | Qué decir y cómo demostrar la app paso a paso. |
+| [Dossier EA2](deliverables/dossier_EA2_CAT-IA.pdf) | Implementación, decisiones, guion y resultados consolidados. |
+| [Arquitectura EA2](deliverables/arquitectura_EA2.pdf) | Componentes y flujo de la solución. |
+| [Informe editable](docs/03_agentes_ea2.md) | Contratos, memoria, agentes, API y limitaciones. |
+| [Resultados verificables](reports/EA2_RESULTADOS.md) | Evidencia de pruebas y alcance de las mediciones. |
+
+Los Markdown son las fuentes editables de los PDF. EA1 se conserva en un [dossier consolidado](deliverables/dossier_completo_CAT-IA.pdf), su [presentación](deliverables/presentacion_CAT-IA.pdf) y su [arquitectura](deliverables/arquitectura_EA1.pdf). Sus secciones están en `docs/01`–`09`; describen la etapa anterior. Entrega EA1: 09/09/2026. Fecha de entrega EA2 por confirmar.
+
+## Verificación y entrega
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest --cov=catia --cov-report=json:reports/coverage.json --junitxml=reports/tests.xml
-.\.venv\Scripts\python.exe -m scripts.evaluate --provider demo
-.\.venv\Scripts\python.exe -m scripts.evaluate --provider ollama --prompt v2
-.\.venv\Scripts\python.exe -m scripts.evaluate --provider ollama --prompt v3
-.\.venv\Scripts\python.exe -m scripts.evaluate --provider ollama --prompt v1
-.\.venv\Scripts\python.exe -m scripts.evaluate --provider ollama --baseline
+# Software: no requiere Ollama; CrewAI se prueba si está instalado.
+.\.venv\Scripts\python.exe -m pytest -q tests --junitxml=reports/tests_ea2.xml --cov=catia --cov-report=json:reports/coverage_ea2.json
+
+# Integración real: requiere Ollama y el modelo configurado.
+.\.venv\Scripts\python.exe -m scripts.smoke_ea2 --provider ollama --mode react --followup
+.\.venv\Scripts\python.exe -m scripts.smoke_ea2 --provider ollama --mode crew
+
+# Documentos y paquete de entrega.
 .\.venv\Scripts\python.exe -m scripts.build_documents
 .\.venv\Scripts\python.exe -m scripts.package
+.\.venv\Scripts\python.exe -m scripts.check_package
 ```
 
-La evaluación CLI usa recuperación lexical para comparar en condiciones constantes. Activar `hybrid` en la app no cambia esa evaluación. Para medir embeddings, extender explícitamente el experimento y registrar el modelo; no atribuirle resultados del baseline lexical.
+`verificar.bat` reúne las pruebas de software, el ensayo simulado y la generación de PDF. El ZIP se crea en `dist/CAT-IA_entrega.zip`; no se versiona porque puede regenerarse. Su comprobación valida hashes y arranque desde una extracción con las dependencias del entorno actual.
 
-## Documentos
+Evidencia registrada al 11/10/2026: **45 pruebas sin fallos**, cobertura de líneas **93,8 %**, comprobaciones de interfaz y tres consultas reales de integración con Ollama (dos individuales y una con CrewAI). Estas consultas tardaron aproximadamente 105–157 segundos en este equipo. No constituyen una evaluación independiente de calidad del modelo.
 
-- `docs/01_propuesta_mejorada.md`: organización, objetivos y viabilidad.
-- `docs/02_informe_tecnico.md`: requisitos, arquitectura, datos, decisiones y API.
-- `docs/03_plan_pruebas.md`: pruebas, métricas, protocolo y evidencia.
-- `docs/04_manual_usuario.md`: instalación, uso y resolución de problemas.
-- `docs/05_guia_defensa.md`: explicación del código, guion, preguntas y cambios en vivo.
-- `docs/06_matriz_rubrica.md`: IE1–IE9, archivos y estado verificable.
-- `docs/07_presentacion.md`: contenido editable de las diapositivas.
-- `docs/08_entrega.md`: pasos pendientes y preparación de entrega.
-- `docs/09_demostracion_paso_a_paso.md`: clics, comandos, qué decir y recorrido del código comentado.
-- `deliverables/`: PDF de los documentos y presentación.
-- `reports/`: pruebas y métricas efectivamente ejecutadas.
+## Organización del repositorio
 
-## Estructura
+| Carpeta | Contenido |
+|---|---|
+| `catia/` | API, contratos, recuperación, generación, memoria, herramientas y agentes. |
+| `web/` | Interfaz HTML, CSS y JavaScript. |
+| `data/`, `config/` | Corpus, manifiesto de fuentes y configuración RAG. |
+| `prompts/` | Versiones v1–v3 de EA1 y v4 con continuidad para EA2. |
+| `tests/`, `evaluation/` | Pruebas de software y casos de evaluación. |
+| `reports/` | Evidencias identificadas por etapa, modelo y experimento. |
+| `docs/`, `deliverables/` | Fuentes editables y siete PDF seleccionados para consulta y exposición. |
+| `scripts/` | Evaluación, verificación y generación reproducible de entregables. |
 
-`catia/` contiene configuración, contratos, recuperación, proveedores, agente y API. `web/` contiene la interfaz sin frameworks de frontend. `data/` contiene las fuentes y su manifiesto con hashes. `prompts/` conserva v1 zero-shot, v2 contextual y v3 con taxonomía optimizada a partir de errores observados. `evaluation/` separa desarrollo y prueba. `tests/` valida comportamientos. `scripts/` reproduce los artefactos.
+Se conservan los experimentos y prompts anteriores para comparar resultados. Se omiten PDF por capítulo que duplicaban los dossiers. `.env`, memoria, trazas locales, modelos, entorno virtual, cachés y ZIP generados quedan excluidos del repositorio.
 
-## Límites importantes
+## Alcance y límites
 
-El modo **demo** es un simulador, no un LLM. Las pruebas con mocks validan contratos, no inferencia real. La comprobación de citas exactas no demuestra fidelidad semántica; el operador debe comprobarla. Hay evaluaciones del LLM local en `reports/`, incluyendo una regresión de v3 sobre casos conocidos. No se garantiza una calificación: falta la aprobación del caso, la revisión semántica humana y la defensa individual. La aplicación se ejecuta en loopback y no incluye autenticación empresarial ni persistencia de tickets. Las fuentes externas son síntesis verificadas, no búsqueda web en vivo.
+La memoria aporta antecedentes; no entrena el modelo ni convierte respuestas anteriores en evidencia. Las fuentes externas están incorporadas al corpus: no hay búsqueda web en vivo ni conexión a cuentas de Gmail o Microsoft. El sistema no envía respuestas a clientes.
+
+La coincidencia de una cita no demuestra fidelidad semántica. La revisión humana de fidelidad y relevancia sigue pendiente. El prototipo funciona en loopback, sin autenticación empresarial, y debe usarse con datos ficticios. El resumen puede perder matices. Las métricas EA1 no se transfieren al prompt v4 ni garantizan desempeño organizacional o una calificación.

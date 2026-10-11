@@ -26,7 +26,7 @@ RNF01: ejecución reproducible en Python 3.12 y dependencias fijadas. RNF02: int
 
 ## Arquitectura
 
-El diagrama editable está en docs/arquitectura.mmd y su representación en deliverables/arquitectura.pdf. Hay dos recorridos: ingesta al arranque y consulta por ticket. En la ingesta, el manifiesto controla documentos activos, rutas y hashes; luego se fragmentan y vectorizan. En la consulta, el agente prepara el ticket, recupera evidencia, aplica política, invoca al generador, valida y presenta el borrador al operador.
+El diagrama editable de esta etapa está en docs/arquitectura_ea1.mmd y su representación en deliverables/arquitectura_EA1.pdf. Hay dos recorridos: ingesta al arranque y consulta por ticket. En la ingesta, el manifiesto controla documentos activos, rutas y hashes; luego se fragmentan y vectorizan. En la consulta, el agente prepara el ticket, recupera evidencia, aplica política, invoca al generador, valida y presenta el borrador al operador.
 
 Capas: presentación (web/), transporte (catia/api.py), aplicación (catia/agent.py), conocimiento (catia/retrieval.py), generación (catia/generation.py), contratos (catia/schemas.py) y configuración (config/ y prompts/). Las dependencias apuntan desde la API al agente y desde este a retriever y generador; las pruebas pueden reemplazar el proveedor sin modificar el dominio.
 

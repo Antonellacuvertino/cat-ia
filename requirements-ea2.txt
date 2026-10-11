@@ -1,0 +1,3 @@
+# CrewAI se instala aparte: sus dependencias son mayores que las del modo individual.
+-r requirements.txt
+crewai==1.15.27

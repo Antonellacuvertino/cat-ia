@@ -138,7 +138,7 @@ def architecture(c, x=35, y=75, scale=1):
 
 def build_architecture():
     """Exporta el diagrama de arquitectura como un PDF independiente."""
-    path=OUT/"arquitectura.pdf"
+    path=OUT/"arquitectura_EA1.pdf"
     c=canvas.Canvas(str(path),pagesize=(760,520));c.setTitle("Arquitectura CAT-IA")
     c.setAuthor(AUTHORS)
     c.setFillColor(PAPER);c.rect(0,0,760,520,fill=1,stroke=0)
@@ -209,7 +209,6 @@ def result_summary():
         lines += ["## Inferencia real", "No hay evidencia guardada de una prueba real en este informe. Instalar/configurar Ollama y ejecutar antes de la defensa."]
     text="\n\n".join(lines)+"\n"
     (ROOT/"reports/RESUMEN_RESULTADOS.md").write_text(text,encoding="utf-8")
-    markdown_pdf(text,OUT/"resultados_pruebas.pdf")
     return count,failed,coverage,report
 
 
@@ -263,18 +262,18 @@ def presentation(summary):
 
 if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
-    for file in sorted((ROOT/"docs").glob("0*.md")):
-        if file.name.startswith("07_"):
-            continue
-        markdown_pdf(file.read_text(encoding="utf-8"),OUT/(file.stem+".pdf"))
+    # EA1 se entrega consolidada: las secciones editables se mantienen en docs/.
+    # No generar además un PDF por sección del mismo dossier.
     build_architecture()
     summary=result_summary()
     presentation(summary)
     dossier=["# CAT-IA · Dossier del proyecto", f"Autoras: {AUTHORS}.", "Docente: Sebastián Ignacio Sánchez Morales. Fecha de entrega: 09/09/2026.", "Este documento reúne la propuesta, informe de aplicación, plan de pruebas, manual, preparación de defensa y matriz de evaluación. La presentación y el diagrama PDF se entregan como archivos independientes."]
     for file in sorted((ROOT/"docs").glob("0*.md")):
-        if not file.name.startswith("07_"):
+        if not file.name.startswith("07_") and file.name != "03_agentes_ea2.md":
             dossier.append(file.read_text(encoding="utf-8"))
     dossier.append((ROOT/"reports/RESUMEN_RESULTADOS.md").read_text(encoding="utf-8"))
     dossier.append((ROOT/"reports/ANALISIS_CUALITATIVO_LLM.md").read_text(encoding="utf-8"))
     markdown_pdf("\n\n".join(dossier),OUT/"dossier_completo_CAT-IA.pdf")
     print("Generados PDF en",OUT)
+    from scripts.build_ea2_documents import build
+    build()

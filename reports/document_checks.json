@@ -1,47 +1,17 @@
 {
   "checks": [
     {
-      "file": "01_propuesta_mejorada.pdf",
+      "file": "11_guion_clase_ea2.pdf",
       "pages": 3,
       "text_outside_page": []
     },
     {
-      "file": "02_informe_tecnico.pdf",
-      "pages": 5,
+      "file": "arquitectura_EA1.pdf",
+      "pages": 1,
       "text_outside_page": []
     },
     {
-      "file": "03_plan_pruebas.pdf",
-      "pages": 3,
-      "text_outside_page": []
-    },
-    {
-      "file": "04_manual_usuario.pdf",
-      "pages": 3,
-      "text_outside_page": []
-    },
-    {
-      "file": "05_guia_defensa.pdf",
-      "pages": 5,
-      "text_outside_page": []
-    },
-    {
-      "file": "06_matriz_rubrica.pdf",
-      "pages": 2,
-      "text_outside_page": []
-    },
-    {
-      "file": "08_entrega.pdf",
-      "pages": 2,
-      "text_outside_page": []
-    },
-    {
-      "file": "09_demostracion_paso_a_paso.pdf",
-      "pages": 7,
-      "text_outside_page": []
-    },
-    {
-      "file": "arquitectura.pdf",
+      "file": "arquitectura_EA2.pdf",
       "pages": 1,
       "text_outside_page": []
     },
@@ -51,13 +21,18 @@
       "text_outside_page": []
     },
     {
+      "file": "dossier_EA2_CAT-IA.pdf",
+      "pages": 8,
+      "text_outside_page": []
+    },
+    {
       "file": "presentacion_CAT-IA.pdf",
       "pages": 13,
       "text_outside_page": []
     },
     {
-      "file": "resultados_pruebas.pdf",
-      "pages": 2,
+      "file": "presentacion_EA2_CAT-IA.pdf",
+      "pages": 8,
       "text_outside_page": []
     }
   ],

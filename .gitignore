@@ -3,7 +3,12 @@ __pycache__/
 .pytest_cache/
 .coverage
 .env
+.env.*
+!.env.example
 runtime/
 dist/
 .tools/
 *.log
+.ruff_cache/
+.mypy_cache/
+htmlcov/
