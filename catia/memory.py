@@ -24,6 +24,8 @@ class MemoryStore:
         # Franjas acotadas: evita un diccionario de locks que crezca por cada UUID.
         self.locks = [threading.RLock() for _ in range(32)]
         with self.connect() as db:
+            # sessions conserva ventana/resumen; case_notes guarda hasta veinte
+            # entradas con borradores, independientes de la ventana de tres turnos.
             db.execute("CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, summary TEXT NOT NULL, turns TEXT NOT NULL, count INTEGER NOT NULL, updated TEXT NOT NULL)")
             db.execute("CREATE TABLE IF NOT EXISTS case_notes (id TEXT PRIMARY KEY, session_id TEXT NOT NULL, user TEXT NOT NULL, draft TEXT NOT NULL)")
 
@@ -32,6 +34,8 @@ class MemoryStore:
         """Abre una conexión independiente por operación; no comparte conexiones entre hilos."""
         db = sqlite3.connect(self.path, timeout=10)
         db.execute("PRAGMA secure_delete=ON")
+        # El context manager confirma la transacción o hace rollback ante errores.
+        # finally cierra la conexión incluso si una consulta lanza una excepción.
         try:
             with db:
                 yield db
@@ -68,6 +72,8 @@ class MemoryStore:
                                        "category": decision["category"], "status": status}]
             summary = state["summary"]
             while len(turns) > self.window:
+                # Solo resumimos la entrada humana: una respuesta anterior puede
+                # contener errores y no debe convertirse automáticamente en evidencia.
                 old = turns.pop(0)
                 summary = (summary + "\nEntrada anterior (extracto): " + old["user"][:240])[-self.summary_chars:]
             with self.connect() as db:
@@ -115,6 +121,10 @@ class MemoryStore:
         if not rows:
             return []
         vectors = embeddings.encode([query] + [r[1] for r in rows])
+        # El primer vector pertenece a la consulta. El adaptador los normaliza,
+        # por eso @ calcula similitud coseno, no porcentaje de certeza.
         matches = [{'note_id': row[0], 'user': row[1][:450], 'similarity': round(float(vectors[0] @ vector), 4)}
                    for row, vector in zip(rows, vectors[1:])]
+        # Se descartan resultados por debajo del umbral y se toman los dos mejores.
+        # El umbral es una elección del prototipo, no una garantía de relevancia.
         return sorted([r for r in matches if r['similarity'] >= 0.65], key=lambda r: -r['similarity'])[:2]

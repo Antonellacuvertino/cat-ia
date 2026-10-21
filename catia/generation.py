@@ -18,6 +18,8 @@ def build_messages(ticket, hits, version, memory=None):
         {"source_id": h["id"], "title": h["title"], "type": h["source_type"], "text": h["text"]}
         for h in hits]}
     if memory:
+        # Contexto de conversación y documentos son campos distintos: recordar una
+        # entrada del operador no autoriza a citarla como procedimiento de la empresa.
         payload["conversation_context"] = memory
     return [{"role": "system", "content": system},
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
@@ -60,6 +62,8 @@ class OllamaGenerator:
         }, timeout=120)
         response.raise_for_status()
         data = response.json()
+        # JSON válido es solo el primer control. tools.py comprobará después que las
+        # citas pertenezcan al contexto y que pasen la regla de coherencia temática.
         # Validar otra vez detecta salidas que no respetan el contrato del proyecto.
         decision = Decision.model_validate_json(data["message"]["content"])
         return decision, {"input_tokens": data.get("prompt_eval_count"),

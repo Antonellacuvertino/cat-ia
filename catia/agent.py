@@ -133,6 +133,8 @@ class ConversationAgent(Agent):
     def run(self, ticket: Ticket):
         """Serializa un hilo, ejecuta sus herramientas y conserva un intercambio redactado."""
         sid = str(ticket.session_id) if ticket.session_id else self.memory.create()
+        # El bloqueo cubre leer, generar y guardar: dos consultas simultáneas del
+        # mismo hilo no deben partir del mismo contador y sobrescribir su avance.
         with self.memory.locked(sid):
             previous = self.memory.get(sid)
             return self._run_session(ticket, sid, previous)
@@ -147,11 +149,15 @@ class ConversationAgent(Agent):
         clean = redact(ticket.text)
         from .guardrails import EvidenceMismatch, expand_query, select_context
         memory, context_control = select_context(clean, previous, self.memory, ticket.use_context)
+        # context_control se devuelve a la UI para explicar un descarte de memoria.
+        # Ignorar contexto en una consulta no borra el historial guardado.
         # Solo entradas humanas para búsqueda: nunca se indexan borradores del modelo.
         prior_queries = memory.get("recent_user_messages", [])
         query = expand_query((" ".join(prior_queries[-1:]) + " " + clean).strip())[:6000]
         state = ToolContext(ticket, clean, query, memory, self.retriever, self.generator)
         state.store, state.session_id = self.memory, sid
+        # Si cambia el tema no buscamos registros anteriores para esta consulta:
+        # hacerlo podría volver a introducir el contexto que acabamos de excluir.
         state.use_history = ticket.use_context and not context_control['topic_change']
         requested = ticket.orchestration or self.mode
         engine, status, warning = requested, "draft", None
@@ -161,6 +167,8 @@ class ConversationAgent(Agent):
             if state.decision is None:
                 status = "insufficient_context"
         except Exception as exc:
+            # Traducimos fallos técnicos a estados que la interfaz puede explicar.
+            # evidence_mismatch no significa «servidor caído»: se retuvo un borrador.
             status = "evidence_mismatch" if isinstance(exc, EvidenceMismatch) else "dependency_missing" if isinstance(exc, ImportError) else (
                 "invalid_output" if isinstance(exc, ValueError) else "provider_error")
             warning = {"code": status, "message": "No se completó la orquestación. Revisa modelo, herramientas o instalación de EA2."}
@@ -169,6 +177,8 @@ class ConversationAgent(Agent):
             # La continuidad en demo requiere opción explícita; jamás pasa por inferencia real.
             if ticket.allow_demo_fallback and status == "provider_error" and self.generator.name != "demo":
                 failed_events = list(state.events)
+                # El simulador recibe un estado nuevo para no reutilizar una decisión
+                # parcial del proveedor fallido; sus eventos se conservan por separado.
                 state = ToolContext(ticket, clean, query, memory, self.retriever, DemoGenerator())
                 state.store, state.session_id = self.memory, sid
                 state.use_history = ticket.use_context and not context_control['topic_change']
@@ -188,11 +198,14 @@ class ConversationAgent(Agent):
         priority, sla = priority_for(ticket)
         policy = next(c for c in self.retriever.chunks if c.doc_id == "INT-SLA")
         saved = self.memory.append(sid, clean, state.decision.model_dump(), status)
+        # El historial registra también abstenciones. case_notes, en cambio, solo
+        # recibe los borradores que la herramienta validó y consiguió guardar.
         steps = [{"step": "memoria", "detail": f"{previous['turn_count']} intercambios previos; contexto {'activado' if ticket.use_context else 'ignorado'}"}]
         steps += [{"step": e["tool"], "detail": f"{e['actor']}: {e['status']}"} for e in state.events]
         steps.append({"step": "revision_humana", "detail": "Revisar afirmaciones y citas antes de usar el borrador"})
         result = {
             "trace_id": str(uuid.uuid4()), "created_at": datetime.now(timezone.utc).isoformat(),
+            # session_id enlaza varios turnos; trace_id identifica esta ejecución.
             "session_id": sid, "status": status, "mode": state.generator.name, "model": state.generator.model,
             "requested_provider": self.generator.name, "fallback_used": fallback, "warning": warning,
             "orchestration": {"requested": requested, "executed": engine}, "tool_events": state.events,

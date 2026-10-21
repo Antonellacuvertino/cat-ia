@@ -18,6 +18,8 @@ class ToolContext:
     memory: dict
     retriever: object
     generator: object
+    # default_factory crea listas nuevas para cada solicitud; una lista compartida
+    # mezclaría resultados y llamadas de usuarios o hilos diferentes.
     hits: list = field(default_factory=list)
     completed: list = field(default_factory=list)
     events: list = field(default_factory=list)
@@ -52,6 +54,8 @@ def create_tools(state: ToolContext):
             # Una similitud densa no basta: para temas conocidos exigimos señal en el documento.
             state.hits = [h for h in state.hits if target & topics(h['title'] + ' ' + h['text'])]
         recalled = []
+        # Solo hybrid aporta embeddings. El historial recuperado se incorpora como
+        # antecedente no confiable; nunca se agrega a hits ni se ofrece como cita.
         if state.store and state.use_history and state.retriever.embeddings:
             recalled = state.store.search_notes(state.session_id, query, state.retriever.embeddings)
             if recalled:
@@ -85,18 +89,24 @@ def create_tools(state: ToolContext):
         Requiere búsqueda y política completadas. La memoria nunca es fuente citable.
         """
         required = {"tool_search_knowledge_base", "tool_check_sla_policy"}
+        # Esta precondición se comprueba aunque el planificador intente saltarse pasos.
         if not required.issubset(state.completed):
             raise ValueError("Faltan búsqueda o política antes de redactar")
         if not state.hits:
+            # Una ausencia de fuentes es una abstención de negocio, no un error HTTP.
             return {"status": "insufficient_context", "draft_created": False}
         start = time.perf_counter()
         decision, state.usage = state.generator.generate(state.clean, state.hits, "v4", memory=state.memory)
+        # Primero verificamos existencia textual; luego coherencia temática. Ningún
+        # control equivale a demostrar que todas las afirmaciones son verdaderas.
         validate_evidence(decision, state.hits)
         validate_alignment(decision, state.query)
         decision.needs_review = True
         state.decision = decision
         note_id = None
         if state.store:
+            # Escritura efectiva en SQLite tras validar. El UUID devuelto permite
+            # demostrar que se guardó un borrador, sin afirmar que se envió al cliente.
             note_id = state.store.save_draft(state.session_id, state.clean, decision.model_dump())
         state.generation_ms += (time.perf_counter() - start) * 1000
         return {"status": "draft", "category": decision.category,
@@ -124,12 +134,15 @@ def execute_tool(name: str, state: ToolContext, registry: dict, actor: str) -> d
         raise ValueError("Herramienta desconocida o llamada repetida")
     start = time.perf_counter()
     try:
+        # invoke aplica el contrato de la herramienta antes de ejecutar su función.
         result = registry[name].invoke(arguments_for(name, state))
     except Exception as exc:
         detail = str(exc) if isinstance(exc, EvidenceMismatch) else 'La herramienta falló; no se acepta un resultado inventado.'
         state.events.append({"actor": actor, "tool": name, "status": "error", "observation": detail})
         raise
     state.completed.append(name)
+    # Solo una ejecución sin excepción se marca completada. Su observación describe
+    # resultados visibles, no el razonamiento privado del modelo.
     state.events.append({"actor": actor, "tool": name, "status": "ok", "observation": result,
                          "elapsed_ms": round((time.perf_counter() - start) * 1000, 2)})
     return result

@@ -28,6 +28,8 @@ def create_agent():
     generator = OllamaGenerator() if provider_name() == "ollama" else DemoGenerator()
     memory = MemoryStore(Path(os.getenv("CATIA_MEMORY_DB", str(ROOT / "runtime/memory.sqlite3"))),
                          window=int(os.getenv("CATIA_MEMORY_WINDOW", "3")))
+    # Inyección de dependencias: el agente recibe recuperación, generador y memoria;
+    # las pruebas pueden sustituirlos sin cambiar el flujo de la API.
     return ConversationAgent(Retriever(read_config(), embeddings=embeddings), generator, memory,
                              ROOT / "runtime/traces", mode=os.getenv("CATIA_ORCHESTRATION", "react"))
 
@@ -79,6 +81,8 @@ def create_app(agent=None):
         """Recibe un Ticket validado por FastAPI y ejecuta el flujo; errores no controlados devuelven 503."""
         try:
             return app.state.agent.run(ticket)
+        # Los estados draft/insufficient_context/evidence_mismatch se devuelven
+        # dentro del JSON del agente. Aquí se traducen excepciones que escaparon a él.
         except KeyError as exc:
             raise HTTPException(404, "Sesión inexistente. Inicia una conversación nueva.") from exc
         except Exception as exc:
@@ -106,6 +110,7 @@ def create_app(agent=None):
     @app.delete("/api/sessions/{session_id}")
     def delete_session(session_id: UUID):
         """Borra memoria del hilo; no borra resultados descargados previamente."""
+        # MemoryStore.delete borra tanto la ventana/resumen como case_notes del hilo.
         if not session_store().delete(str(session_id)):
             raise HTTPException(404, "Sesión inexistente")
         return {"deleted": True}

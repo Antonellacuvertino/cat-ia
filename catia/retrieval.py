@@ -113,6 +113,8 @@ class Retriever:
         if self.embeddings:
             semantic = np.maximum(0, self.dense @ self.embeddings.encode([query])[0])
         weight = self.config.semantic_weight if self.embeddings else 0
+        # Combinación ponderada de dos señales de búsqueda. Un score alto no indica
+        # que una recomendación del LLM sea verdadera: son evaluaciones diferentes.
         # En lexical, weight=0: el modelo de embeddings no participa.
         scores = (1 - weight) * lexical + weight * semantic
         hits, used = [], 0

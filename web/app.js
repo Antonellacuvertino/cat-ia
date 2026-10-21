@@ -79,6 +79,8 @@ function render(r){
   $('review-note').textContent=r.status==='draft'?'Borrador pendiente de revisión. Comprueba alcance, citas e impacto antes de responder.':'El sistema se abstuvo ('+r.status+'). Requiere intervención de un operador.';
   $('trace').textContent='Traza '+r.trace_id+' · '+r.model+' · prompt '+r.prompt_version;
   $('execution-mode').textContent='Ejecutado: '+r.orchestration.executed+' · Contexto previo: '+(r.memory.used?'sí':'no');
+  // El navegador comunica la decisión del backend; no detecta temas por su cuenta.
+  // ?. permite mostrar resultados antiguos que no incluían context_control.
   if(r.context_control?.topic_change)$('execution-mode').textContent+=' · Cambio de tema detectado: se ignoraron los antecedentes anteriores para esta consulta.';
   if(r.fallback_used){$('review-note').textContent='SIMULACIÓN DE RESPALDO: falló el proveedor real. Este borrador proviene de reglas y extractos, no del LLM.';}
   else if(r.warning){$('review-note').textContent=r.warning.message+' Estado: '+r.status;}

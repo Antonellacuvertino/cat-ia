@@ -128,9 +128,11 @@ def architecture(existing_canvas=None):
     c.setFillColor(PAPER); c.rect(0, 0, 960, 620, fill=1, stroke=0)
     paragraph(c, 'CAT-IA · Arquitectura EA2', 35, 590, 850, 28)
     def box(x, y, w, text):
+        # Cada componente usa el mismo tamaño de alto y texto ajustado al ancho disponible.
         c.setFillColor(LIME); c.setStrokeColor(GREEN); c.roundRect(x, y, w, 64, 9, fill=1)
         paragraph(c, text, x+12, y+51, w-24, 13)
     def arrow(x1, y1, x2, y2):
+        # El ángulo de la línea permite dibujar la punta en cualquier orientación.
         c.setStrokeColor(GREEN); c.line(x1, y1, x2, y2)
         import math
         a = math.atan2(y2-y1, x2-x1)

@@ -14,10 +14,12 @@ from catia.schemas import Ticket, Decision
 
 @pytest.fixture
 def agent(tmp_path):
+    # Fixture aislada: SQLite temporal y simulador; no modifica memoria ni llama al LLM real.
     return ConversationAgent(Retriever(read_config()), DemoGenerator(), MemoryStore(tmp_path/'memory.sqlite3'))
 
 
 def test_paraphrase_recovers_invoice_without_history(agent):
+    # Reproduce P2: recuperar INT-FAC por expansión sin depender de un turno previo.
     result = agent.run(Ticket(text='me cobraron dos veces', use_context=False))
     assert result['status'] == 'draft'
     assert result['sources'][0]['doc_id'] == 'INT-FAC'
@@ -26,6 +28,8 @@ def test_paraphrase_recovers_invoice_without_history(agent):
 
 
 def test_topic_change_isolates_generation_and_followup(agent):
+    # Inspeccionamos lo que recibe el generador, no solo la categoría final: el
+    # contexto de factura tampoco debe reaparecer en la siguiente pregunta genérica.
     first = agent.run(Ticket(text='Mi factura tiene un cobro duplicado'))
     real_demo = agent.generator.generate
     agent.generator.generate = Mock(wraps=real_demo)
@@ -40,6 +44,8 @@ def test_topic_change_isolates_generation_and_followup(agent):
 
 
 def test_literal_quote_does_not_validate_wrong_answer(agent):
+    # La cita existe realmente en INT-NET, pero el borrador habla de factura.
+    # El Mock inyecta el error de forma reproducible; no simula una prueba de calidad del LLM.
     hit = next(c for c in agent.retriever.chunks if c.doc_id == 'INT-NET')
     wrong = Decision(category='Facturación', summary='Consulta de VPN',
         suggested_reply='Revise la factura para confirmar si hay dos cobros del mismo servicio.',
@@ -55,6 +61,7 @@ def test_literal_quote_does_not_validate_wrong_answer(agent):
 
 
 def test_right_category_with_unrelated_quote_is_rejected():
+    # Tener categoría correcta no basta: una cita de Firefox no respalda el tema VPN.
     wrong = Decision(category='Soporte Técnico', summary='La VPN no conecta',
         suggested_reply='Para la VPN registre el error y la hora.', justification='Prueba de cita no pertinente.',
         citations=[{'source_id':'INT-NET:0','quote':'Si falla Firefox pero otro navegador funciona, revisar datos del sitio.'}], needs_review=True)
@@ -63,6 +70,7 @@ def test_right_category_with_unrelated_quote_is_rejected():
 
 
 def test_tool_writes_and_delete_erases_long_memory(agent):
+    # Reabrir SQLite comprueba persistencia, y un segundo UUID comprueba aislamiento.
     r = agent.run(Ticket(text='Mi factura tiene un cobro duplicado'))
     note = r['tool_events'][-1]['observation']['saved_draft_id']
     reopened = MemoryStore(agent.memory.path)
@@ -79,6 +87,8 @@ def test_tool_writes_and_delete_erases_long_memory(agent):
 
 
 def test_insufficient_source_and_provider_failure(agent, monkeypatch):
+    # Primer caso: el filtro excluye el procedimiento necesario. Segundo caso:
+    # se simula una conexión fallida sin apagar Ollama ni cambiar la configuración.
     absent = agent.run(Ticket(text='me cobraron dos veces', source_filter='external'))
     assert absent['status'] == 'insufficient_context'
     agent.generator = Mock(name='provider', model='unavailable', url='http://unavailable')

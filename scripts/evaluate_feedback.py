@@ -17,6 +17,8 @@ def main():
     embeddings = OllamaEmbeddings(generator.url, 'nomic-embed-text')
     hybrid = Retriever(read_config(), embeddings=embeddings)
     comparisons = []
+    # Separamos tres condiciones para no atribuir a embeddings una mejora que
+    # podría proceder únicamente de añadir «factura cobro duplicado» a la consulta.
     for query in ['me cobraron dos veces', 'me descontaron el doble', 'no me conecta la VPN',
                   'necesito revisar el importe repetido en el recibo']:
         row = {'query': query}
@@ -38,6 +40,7 @@ def main():
             print('Ejecutando', label, flush=True)
             result = agent.run(Ticket(text=query, session_id=sid, use_context=context))
             report['rows'].append({'case':label,'result':result})
+            # Guardar tras cada caso conserva evidencia parcial si una llamada posterior falla.
             path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
             print(label, result['status'], result['decision']['category'], flush=True)
         # Registros anteriores fuera de la ventana se buscan con embeddings reales.
@@ -50,6 +53,7 @@ def main():
         path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
         print('Resultado de regresión:', report['passed'])
     finally:
+        # Solo se borra el UUID sintético creado por este ensayo, no las sesiones de la app.
         memory.delete(sid)
 
 
