@@ -1,91 +1,99 @@
-# CAT-IA · Experiencia 2: agentes, herramientas y memoria
+# CAT-IA · Agente funcional EP2
 
-Autoras: Antonella Cuvertino y Miriam Hammami.
+Ingeniería de Soluciones con IA · ISY0101. Autoras: Antonella Cuvertino y Miriam Hammami. Docente: Sebastián Ignacio Sánchez Morales. Revisión: 21/10/2026.
 
-Docente: Sebastián Ignacio Sánchez Morales. Actualización: 11/10/2026. La fecha de entrega de EA2 y la sección están pendientes de confirmar; 09/09/2026 corresponde a EA1.
+## Requerimiento y alcance
 
-## Qué cambió
+Nexo TI es una organización ficticia. El agente consulta procedimientos, continúa un caso, calcula prioridad y registra un borrador local pendiente de revisión. No envía mensajes ni modifica cuentas externas. El corpus mantiene siete documentos internos simulados y dos síntesis de guías de Mozilla; su origen y hashes están en data/sources.json.
 
-EA1 analizaba cada ticket por separado mediante un flujo RAG fijo. EA2 incorpora una sesión persistente, una ventana de conversación, un resumen extractivo y herramientas tipadas. La interfaz permite elegir agente individual o equipo de tres roles. Conserva documentos, prioridad por reglas, citas y revisión humana.
+La pauta EP2_ISY0101_Estudiante.pdf exige consulta, escritura, memoria corta y recuperación semántica de largo plazo, planificación explícita, al menos tres escenarios adaptativos, diagrama, decisiones y evidencia. La presentación es individual. El encargo representa 20% y la presentación 80% de EP2; la evaluación completa pondera 35% según la portada. La fecha límite se informa por AVA.
 
-La referencia recibida para esta implementación es el texto de RA2 e IL2.1–IL2.4 adjuntado por la estudiante. No se inventan ponderaciones ni aprobación del docente. Las decisiones de adaptación al equipo local se explicitan a continuación.
+## Retroalimentación y correcciones
 
-## IL2.1 · Herramientas
+El docente revisó el commit 32e3a7b y reportó pruebas del 19/10/2026: continuidad correcta en facturación; fallo de recuperación con «me cobraron dos veces»; contaminación de factura al preguntar por VPN; citas literales que no respaldaban la respuesta. Sus latencias de 11–17 segundos corresponden a su equipo. Son observaciones aportadas por el docente, no mediciones repetidas aquí.
 
-catia/tools.py construye herramientas con el decorador tool de langchain_core. Cada solicitud tiene un ToolContext propio: no comparte citas, resultados ni memoria con otras sesiones.
+Se añadió catia/guardrails.py. expand_query amplía patrones conocidos de cobro repetido; es expansión léxica, no recuperación semántica. select_context identifica señales conocidas, descarta antecedentes incompatibles y limita continuaciones al segmento reciente. No elimina el historial visual al cambiar de tema. validate_alignment revisa categoría, respuesta y cita respecto al tema único detectado; ante desacuerdo devuelve evidence_mismatch y no publica el borrador.
 
-- tool_search_knowledge_base(query, top_k): recupera fragmentos internos y externos respetando filtro, umbral y presupuesto.
-- tool_check_sla_policy(impact, service_down, security_incident): calcula prioridad y primera respuesta. Los argumentos deben coincidir con los campos ingresados por el operador.
-- tool_draft_response(): llama al generador, valida Decision, comprueba citas contra los fragmentos de esta solicitud y fuerza needs_review=true. Sin evidencia no llama al generador.
+No se atribuye el fallo al tamaño del modelo. Falta un experimento entre modelos con iguales casos, recuperación y criterios para sostener esa explicación. Los controles implementados reducen problemas concretos, pero pueden omitir cambios sutiles y hechos falsos dentro del mismo tema.
 
-La firma de SLA conserva los indicadores existentes, en lugar de una urgencia textual ambigua. La herramienta de borrador toma evidencia del estado validado, no de una lista fabricada por el planificador. Son adaptaciones deliberadas de las firmas orientativas recibidas.
+## Herramientas y escritura · IE1–IE2
 
-El catálogo contiene funciones de aplicación; no integra Gmail, Microsoft, un servicio de ticketera ni MCP. El generador consulta Ollama por HTTP y la búsqueda usa las fuentes externas de Mozilla incorporadas al corpus. No se afirma que sean llamadas web a Mozilla en tiempo real. La validación de citas sigue sin demostrar fidelidad semántica.
+catia/tools.py declara herramientas con langchain_core.tools.tool. Cada solicitud posee ToolContext aislado y los argumentos se vinculan a datos validados.
 
-## IL2.2 · Memoria corta y persistencia
+- tool_search_knowledge_base consulta el corpus respetando filtros y presupuesto. En modo híbrido también recupera entradas humanas anteriores del mismo hilo mediante embeddings. Devuelve identificadores y cantidad; no pensamientos privados.
+- tool_check_sla_policy aplica prioridad y primera respuesta según impacto declarado. El modelo no puede modificar esos argumentos.
+- tool_draft_response genera, comprueba citas y tema y escribe el borrador en SQLite case_notes mediante save_draft. Devuelve saved_draft_id y write_target. Es una herramienta de generación y escritura efectiva, no solo un texto que simula haber guardado algo.
 
-catia/memory.py usa SQLite, incluido en Python. La ruta por defecto es runtime/memory.sqlite3 y está fuera del ZIP/Git. Una sesión tiene UUID, resumen, ventana de intercambios, contador y fecha de actualización UTC. La interfaz guarda únicamente el UUID en localStorage.
+La herramienta de escritura requiere búsqueda y política completadas. Sin documentos no genera ni escribe un borrador. Si la validación falla no se registra como aceptado. La persistencia del historial corto ocurre al terminar la solicitud, incluso para registrar el resultado de una abstención. Todo borrador queda needs_review=true; guardarlo no es aprobarlo ni enviarlo.
 
-La ventana conserva por defecto tres intercambios redactados. Al superar ese número, la entrada humana más antigua se convierte en un extracto de hasta 240 caracteres que se incorpora a un resumen limitado a 900. La ventana y el resumen sobreviven a reiniciar el proceso. No se conserva el historial completo indefinidamente y no se entrena al modelo.
+## Memoria corta · IE3
 
-El resumen es extractivo y determinista, no un resumen generado por otra IA. Evita una llamada costosa al modelo local y puede perder matices o texto antiguo por truncamiento. Se usa la alternativa de ventana por session_id permitida en las instrucciones; no se depende de las clases históricas ConversationBufferWindowMemory/ConversationSummaryMemory.
+MemoryStore guarda sesiones UUID en SQLite. La ventana retiene tres intercambios; al excederla agrega extractos de hasta 240 caracteres de entradas humanas a un resumen limitado a 900. El resumen es determinista, no generado por un LLM. La ruta normal es runtime/memory.sqlite3, fuera de Git y ZIP.
 
-El contexto entregado al generador incluye como máximo dos entradas previas recortadas y el resumen. La consulta RAG añade la última entrada previa al texto actual cuando el operador activa el contexto. Los borradores previos se muestran en pantalla, pero no se usan como evidencia ni se añaden a la consulta. Si cambia el tema, desactivar contexto o borrar el hilo. No hay detección semántica automática fiable de cambio de tema.
+El generador recibe como máximo dos entradas recientes recortadas, resumen filtrado y, si aplica, contexto semántico de entradas antiguas. Los borradores previos pueden verse en pantalla pero no se convierten en evidencia ni se insertan en la consulta de recuperación.
 
-La misma sesión se serializa mediante locks del proceso. SQLite realiza las escrituras. Este diseño se verifica con un solo proceso de aplicación; no es una garantía de aislamiento transaccional de todo el flujo para varios workers. El UUID identifica el hilo, no autentica a una persona: el prototipo sigue siendo local, sin cuentas ni permisos multiusuario.
+Un cambio de tema reconocido, como facturación a VPN, excluye antecedentes anteriores para esa consulta y muestra context_control.topic_change. Las consultas sin señal explícita conservan continuidad. Las mixtas o ambiguas requieren revisión: no hay detección universal de tema.
 
-La memoria persiste texto con redacción parcial de patrones sensibles, a diferencia de las trazas, que siguen omitiendo el ticket y el borrador. Deben usarse datos ficticios. DELETE elimina la ventana y resumen locales, sin borrar archivos JSON descargados ni copias de seguridad externas. No se afirma anonimización completa ni borrado forense.
+## Memoria persistente y semántica · IE4
 
-## IL2.3 · Agente individual
+case_notes guarda como máximo veinte registros por hilo, independientes de la ventana corta. Cada registro contiene un UUID, la entrada humana redactada y el borrador pendiente. save_draft elimina registros anteriores al límite. DELETE /api/sessions/{id} borra tanto sesiones como case_notes del hilo.
 
-catia/orchestration.py implementa un ciclo ReAct acotado sobre herramientas LangChain. Observa el ticket, selecciona una herramienta disponible, la ejecuta y vuelve a evaluar precondiciones. Con Ollama, una salida JSON restringida elige si empezar por búsqueda o política; cuando solo queda una acción válida, el programa la ejecuta directamente para ahorrar llamadas. El borrador siempre va después de búsqueda y política.
+Con CATIA_RETRIEVER=hybrid y nomic-embed-text disponible, la búsqueda combina TF-IDF y embeddings del corpus. search_notes obtiene vectores de la consulta y de las entradas humanas persistidas, filtra temas incompatibles y recupera hasta dos con coseno mínimo 0,65. Los identifica como semantic_history_ids en la observación. Sus textos se agregan a conversation_context.semantic_history como antecedentes no confiables, nunca como citas documentales.
 
-Hay un máximo de tres herramientas distintas por solicitud, lista permitida, contratos y rechazo de duplicados. No es un agente de autonomía abierta ni un planificador que puede ejecutar cualquier comando. La interfaz expone actor, herramienta, estado, duración y observaciones resumidas; no publica pensamientos internos del modelo.
+La recuperación está aislada al mismo UUID y permite continuar tras reiniciar; no conecta hilos distintos ni implementa identidad multiusuario. Los vectores se calculan en memoria al consultar, no se persisten en una base vectorial. Para veinte registros por hilo es sencillo; con mayor volumen se necesitaría indexación y políticas de retención más completas.
 
-En modo demo, la elección es determinista y se etiqueta langchain-react-demo. En modo real, se etiqueta langchain-react-ollama. La generación sigue usando Ollama y el esquema dinámico de citas. El conteo usage de la respuesta corresponde a la generación final; no agrega automáticamente el consumo del planificador ni todos los intercambios de CrewAI.
+En modo lexical no existe esta recuperación semántica de historial. Ese modo sirve como baseline o ensayo de bajo costo, pero no debe presentarse como evidencia del requisito semántico. reports/feedback_real.json compara recuperación original, expansión y modo híbrido y guarda la prueba de memoria con embeddings reales.
 
-## IL2.3 · Equipo secuencial
+## Planificación y decisiones · IE5–IE6
 
-El segundo modo utiliza CrewAI real: tres objetos Agent con role, goal y backstory, tres Task con context que incluye las tareas anteriores y Process.sequential. Cada rol dispone de una herramienta mínima: Triage consulta SLA; Investigador RAG recupera evidencia; Redactor genera la categoría y el borrador validado.
+run_react implementa un ciclo explícito de tres herramientas distintas. Al inicio Ollama elige por JSON restringido entre búsqueda y política; cuando solo queda una acción válida, el código la ejecuta directamente. Borrador y escritura requieren ambas consultas completadas. La política se aplica también si falla el planificador. No hay acciones arbitrarias ni bucles abiertos.
 
-Para reducir inferencias redundantes, la clasificación definitiva se realiza junto con la redacción; Triage se concentra en el impacto y la política. Esta distribución se diferencia del ejemplo que proponía clasificar también en Triage. No se presentan dos clasificaciones independientes ni se atribuye esa decisión al agente de reglas SLA.
+run_crew crea tres Agent, tres Task y Process.sequential con contexto de tareas previas: Triage consulta SLA, Investigador busca y Redactor genera y registra. Cada rol tiene una sola herramienta. LocalStageLLM traduce una acción JSON validada al protocolo Action/Action Input de CrewAI. No se presenta como elección libre entre varias acciones en cada rol. Las observaciones finales se componen desde el resultado validado.
 
-LocalStageLLM adapta el protocolo textual de herramientas de CrewAI al servidor local. En demo responde de manera determinista para ejercitar el framework sin LLM. En modo real consulta Ollama antes de ejecutar la herramienta usando JSON restringido a la acción de ese rol; valida el nombre y lo traduce a Action/Action Input. El rol tiene una sola acción autorizada, por lo que esa llamada no representa una elección autónoma entre alternativas. El texto libre inicial falló en la integración con el modelo pequeño; el contrato restringido evita depender de que reproduzca el formato de CrewAI. Tras una observación validada, la conclusión de la etapa se compone a partir del resultado de herramienta; el texto libre del agente no reemplaza el contrato final.
+Escenarios reproducibles: continuidad del mismo tema; cambio de factura a VPN con descarte de contexto; ausencia de INT-FAC al filtrar externas; salida incorrecta inyectada que activa evidence_mismatch; proveedor desconectado simulado que activa provider_error. docs/13_prompts_demostracion.md indica pasos, salidas y explicación. Los fallos se detienen y no se disfrazan como éxito.
 
-Se limita cada agente a dos iteraciones y cada adaptador a tres llamadas, con tiempo máximo por petición. No hay delegación ni memoria nativa de CrewAI: se usa la memoria controlada de CAT-IA. La telemetría/tracing se desactiva. Las dependencias de CrewAI son mayores y se instalan mediante instalar_ea2.bat; la instalación base permite el modo individual.
+El respaldo a DemoGenerator requiere casilla explícita y un fallo de proveedor. Se identifica como fallback_demo, con requested_provider y mode distintos. Una salida desalineada no se convierte silenciosamente en simulación exitosa.
 
-## Fallos y revisión humana
+## Arquitectura y flujo · IE7–IE9
 
-EA2 añade una opción visible para permitir simulación si falla el proveedor. Está desactivada por defecto. Si el operador la habilita y se produce un error de proveedor, se ejecuta el flujo individual con DemoGenerator. El resultado indica fallback_used=true, requested_provider=ollama, mode=demo, estado fallback_demo y advertencia. No se presenta como éxito del LLM ni como ejecución satisfactoria del equipo real solicitado.
+docs/arquitectura.mmd y deliverables/arquitectura_EA2.pdf representan la implementación actual. El diagrama está también dentro de docs/presentacion_EA2_CAT-IA.pdf. El README contiene un diagrama Mermaid y enlaces a las instrucciones. La presentación se guarda en docs/ como pide la pauta, sin otra copia idéntica en deliverables/.
 
-Sin autorización de simulación se devuelve abstención explícita. Una salida inválida o dependencia ausente no se disfraza como simulación exitosa. La API continúa respondiendo con estado de negocio. Todos los borradores y abstenciones mantienen needs_review=true y human_approval_required=true. No existe botón de envío automático a clientes.
+Flujo: interfaz → API y validación → selección de contexto → modo individual/equipo → consulta documental y de memoria → política → generación → citas y coherencia temática → registro local → revisión humana. Una entrada inválida devuelve 422. Ausencia de fuentes devuelve insufficient_context; desalineación devuelve evidence_mismatch; fallos de herramientas quedan en tool_events y se devuelve un resultado controlado.
 
-## API y configuración
+## ADR-01 · Framework y control
 
-- POST /api/sessions crea un hilo y devuelve session_id.
-- GET /api/sessions/{session_id} devuelve ventana, resumen y contador del hilo local.
-- DELETE /api/sessions/{session_id} elimina su memoria.
-- POST /api/tickets/analyze conserva los campos anteriores y admite session_id, orchestration=react/crew, use_context y allow_demo_fallback. Si no se proporciona sesión, crea una nueva.
-- GET /api/health declara memoria habilitada, modo por defecto y disponibilidad de CrewAI, además del modelo y corpus. No prueba inferencia real.
+Decisión: herramientas tipadas LangChain y comparación opcional con CrewAI. Requerimiento: integrar consultas, escritura y decisiones visibles. Alternativa: funciones Python directas sin biblioteca; eran suficientes para EA1, pero no mostraban contratos de herramientas y roles de un framework. Costo: más dependencias y llamadas. No se exige un framework específico; la selección no garantiza escalabilidad empresarial.
 
-CATIA_ORCHESTRATION selecciona react o crew. CATIA_MEMORY_WINDOW controla N entre 1 y 8. CATIA_MEMORY_DB permite cambiar el archivo SQLite. CATIA_PROVIDER elige demo u ollama; OLLAMA_URL debe coincidir con el puerto del servicio. No se necesitan credenciales cloud para estos modos.
+## ADR-02 · Memoria
 
-EA2 usa prompts/v4.txt para añadir continuidad sin reescribir las versiones históricas. El baseline Agent y scripts.evaluate conservan experimentos EA1 con su selección de versión. En /api/health la configuración RAG puede mantener v3 como baseline; el resultado EA2 informa v4 como versión efectivamente utilizada. La evaluación EA2 se ejecuta con scripts.smoke_ea2 y sus reportes separados.
+Decisión: ventana, resumen extractivo y registros SQLite acotados por hilo. Requerimiento: continuidad, persistencia y borrado verificables. Alternativas: historial completo en el prompt o resumen por LLM; aumentan contexto, costo o riesgo de errores. Límite: truncamiento y aislamiento solo local, sin autenticación. Los locks serializan el hilo dentro de un proceso, no garantizan transacciones completas entre varios workers.
 
-## IL2.4 · Arquitectura y archivos
+## ADR-03 · Recuperación
 
-docs/arquitectura.mmd representa el flujo actual. docs/arquitectura_ea1.mmd conserva el diagrama anterior. deliverables/arquitectura_EA2.pdf y presentacion_EA2_CAT-IA.pdf muestran la arquitectura y explicación de EA2. La presentación anterior se conserva como EA1. El informe y los resultados se reúnen en dossier_EA2_CAT-IA.pdf; el guion se conserva también separado para practicar.
+Decisión: conservar TF-IDF como baseline y habilitar híbrido con embeddings para la demostración EP2. Requerimiento: recuperar paráfrasis y contexto persistente por similitud. Alternativa: solo reglas de sinónimos; mejora casos conocidos pero no cumple por sí sola recuperación semántica. Costo: descarga adicional, latencia y calibración. La similitud no es certeza; el filtro temático reduce algunos resultados ajenos sin resolver todos los falsos positivos.
 
-ConversationAgent extiende el baseline en catia/agent.py. Las rutas se conectan en catia/api.py; los contratos en catia/schemas.py. Las nuevas responsabilidades están separadas en memory.py, tools.py y orchestration.py. prompts/v4.txt delimita los antecedentes como datos no confiables. tests/test_ea2.py verifica los nuevos comportamientos.
+## ADR-04 · Validación
 
-## Pruebas y evidencia
+Decisión: combinar contrato JSON, pertenencia literal de citas y coherencia temática antes de escribir. Requerimiento: impedir el caso de una respuesta de factura con citas de VPN. Alternativa: juez LLM adicional por cada afirmación; demanda recursos y también puede equivocarse. Límite: las reglas no prueban implicación semántica y pueden rechazar paráfrasis válidas o aceptar hechos falsos del mismo tema. La revisión humana permanece obligatoria.
 
-reports/tests_ea2.xml y reports/coverage_ea2.json registran la suite EA1+EA2 ejecutada. Los casos incluyen continuidad, aislamiento, ventana, resumen, persistencia al reabrir, borrado, concurrencia de un hilo, redacción, precondiciones, argumentos, lista permitida, planificación alternativa, fallos y ciclo de sesiones API.
+## ADR-05 · Modelo local
 
-La prueba CrewAI con DemoGenerator ejecuta el framework y las herramientas reales usando decisiones simuladas; no acredita la calidad del modelo. scripts.smoke_ea2 --provider ollama --mode react/crew registra inferencia real separada si la ejecución termina sin fallback. El informe EA2 generado lee esos resultados y muestra estados efectivos, incluidos los fallos. No se trasladan los 20 aciertos de v3 a v4.
+Decisión: mantener qwen2.5:1.5b y ejecutar embeddings locales. Requerimiento: reproducibilidad en un equipo con recursos limitados y ausencia de credenciales cloud. Alternativa: un modelo mayor o remoto; requeriría medir calidad, costo y latencia antes de migrar. No se afirma que 1,5B cause los errores observados ni que un modelo mayor los elimine.
 
-La fidelidad y relevancia humanas siguen pendientes. Una prueba de integración exitosa no demuestra generalización ni cumplimiento de toda una pauta aún no entregada íntegramente. El desempeño en CPU, el resumen extractivo y la ausencia de autenticación siguen siendo limitaciones.
+## API, instalación y pruebas
 
-## Referencias de implementación
+README.md y .env.example describen variables y arranque. GET /api/health informa configuración; no prueba inferencia. POST /api/tickets/analyze admite session_id, orchestration, use_context y allow_demo_fallback. POST/GET/DELETE /api/sessions permiten crear, consultar y borrar memoria corta; el borrado también elimina registros persistentes.
 
-LangChain, herramientas tipadas y decorador: https://reference.langchain.com/python/langchain-core/tools/convert/tool. CrewAI, tareas y contexto secuencial: https://docs.crewai.com/en/concepts/tasks. CrewAI, contratos de herramientas: https://docs.crewai.com/en/concepts/tools. CrewAI, adaptadores de modelos: https://docs.crewai.com/en/concepts/llms. Referencias consultadas durante la implementación de EA2; versiones instaladas principales en requirements.txt y requirements-ea2.txt.
+El prompt de EA2 sigue siendo v4; los controles nuevos son código, no entrenamiento ni cambios ocultos al prompt. La traza informa el prompt utilizado. usage cuenta tokens de generación final, no todas las llamadas de planificación o embeddings.
+
+tests/test_feedback.py reproduce fallos controlados, cambio de tema, citas ajenas, escritura y borrado. reports/tests_feedback.xml y coverage_feedback.json registran la suite actual. scripts.evaluate_feedback ejecuta Ollama y embeddings reales con P1–P3. reports/FEEDBACK_RESULTADOS.md separa resultados actuales y anteriores. Las pruebas con mocks no acreditan calidad del LLM.
+
+## Limitaciones y privacidad
+
+Prototipo local con datos ficticios. Redacción parcial de patrones sensibles; no anonimización garantizada. Memoria y borradores persisten en runtime hasta borrado o límites; las descargas del navegador no se borran al eliminar un hilo. No hay autenticación, búsqueda entre usuarios ni conectores a sistemas reales. La fidelidad semántica completa y la generalización siguen pendientes de evaluación independiente.
+
+## Referencias
+
+Pauta local: EP2_ISY0101_Estudiante.pdf, páginas 1–8, facilitada por la estudiante. Retroalimentación docente copiada en la conversación, revisión del commit 32e3a7b y pruebas declaradas del 19/10/2026.
+
+LangChain Core 1.6.9: https://reference.langchain.com/python/langchain-core/tools/convert/tool. CrewAI 1.15.27: https://docs.crewai.com/en/concepts/tasks y https://docs.crewai.com/en/concepts/tools. Ollama: https://docs.ollama.com/api/embed. Modelos: https://ollama.com/library/qwen2.5 y https://ollama.com/library/nomic-embed-text. Dependencias exactas en requirements.txt y requirements-ea2.txt; la versión local de Ollama se consulta con ollama --version.

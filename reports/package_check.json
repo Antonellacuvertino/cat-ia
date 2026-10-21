@@ -1,8 +1,8 @@
 {
   "zip_integrity": true,
-  "hashes_verified": 112,
+  "hashes_verified": 127,
   "isolated_source_startup": true,
-  "zip_sha256": "4cd982496bda85223dd9d776f7d6fe894cab04553c556724e892872a12380ddd",
+  "zip_sha256": "de5435c17f89d796fe09f4fedc328dfef21927a8714aa955461a05b7875d1e1d",
   "environment": "Dependencias del entorno actual; fuentes extraídas del ZIP",
   "output": "Arranque y análisis correctos desde ZIP"
 }

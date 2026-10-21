@@ -1,0 +1,772 @@
+{
+  "created_at": "2026-10-21T20:29:11.672310+00:00",
+  "model": "qwen2.5:1.5b",
+  "embedding_model": "nomic-embed-text",
+  "retrieval_comparison": [
+    {
+      "query": "me cobraron dos veces",
+      "lexical_original": [],
+      "lexical_expanded": [
+        {
+          "id": "INT-FAC:0",
+          "score": 0.340999
+        }
+      ],
+      "hybrid": [
+        {
+          "id": "INT-SLA:90",
+          "score": 0.299555
+        },
+        {
+          "id": "INT-COM:0",
+          "score": 0.294644
+        },
+        {
+          "id": "INT-NET:0",
+          "score": 0.283031
+        },
+        {
+          "id": "INT-SLA:0",
+          "score": 0.271695
+        }
+      ]
+    },
+    {
+      "query": "me descontaron el doble",
+      "lexical_original": [],
+      "lexical_expanded": [
+        {
+          "id": "INT-FAC:0",
+          "score": 0.340999
+        }
+      ],
+      "hybrid": [
+        {
+          "id": "INT-SLA:90",
+          "score": 0.317748
+        },
+        {
+          "id": "EXT-COOKIE:0",
+          "score": 0.302641
+        },
+        {
+          "id": "INT-SUG:0",
+          "score": 0.298821
+        },
+        {
+          "id": "INT-COM:0",
+          "score": 0.296951
+        }
+      ]
+    },
+    {
+      "query": "no me conecta la VPN",
+      "lexical_original": [
+        {
+          "id": "INT-NET:0",
+          "score": 0.200016
+        }
+      ],
+      "lexical_expanded": [
+        {
+          "id": "INT-NET:0",
+          "score": 0.200016
+        }
+      ],
+      "hybrid": [
+        {
+          "id": "INT-NET:0",
+          "score": 0.46879
+        },
+        {
+          "id": "INT-SEC:0",
+          "score": 0.314488
+        },
+        {
+          "id": "INT-ACC:0",
+          "score": 0.311353
+        },
+        {
+          "id": "EXT-NET:0",
+          "score": 0.298544
+        }
+      ]
+    },
+    {
+      "query": "necesito revisar el importe repetido en el recibo",
+      "lexical_original": [
+        {
+          "id": "INT-FAC:0",
+          "score": 0.069343
+        },
+        {
+          "id": "EXT-NET:0",
+          "score": 0.067023
+        },
+        {
+          "id": "EXT-COOKIE:0",
+          "score": 0.063255
+        }
+      ],
+      "lexical_expanded": [
+        {
+          "id": "INT-FAC:0",
+          "score": 0.069343
+        },
+        {
+          "id": "EXT-NET:0",
+          "score": 0.067023
+        },
+        {
+          "id": "EXT-COOKIE:0",
+          "score": 0.063255
+        }
+      ],
+      "hybrid": [
+        {
+          "id": "INT-FAC:0",
+          "score": 0.350273
+        },
+        {
+          "id": "EXT-NET:0",
+          "score": 0.334956
+        },
+        {
+          "id": "EXT-COOKIE:0",
+          "score": 0.328088
+        },
+        {
+          "id": "INT-SLA:90",
+          "score": 0.320214
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "case": "P1a",
+      "result": {
+        "trace_id": "98af78e3-248e-454f-874e-620ebc136469",
+        "created_at": "2026-10-21T20:30:13.045282+00:00",
+        "session_id": "f9c12b6b-0b4d-46af-b712-682bde89e5dc",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "requested_provider": "ollama",
+        "fallback_used": false,
+        "warning": null,
+        "orchestration": {
+          "requested": "react",
+          "executed": "langchain-react-ollama"
+        },
+        "tool_events": [
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_search_knowledge_base",
+            "status": "ok",
+            "observation": {
+              "count": 1,
+              "source_ids": [
+                "INT-FAC:0"
+              ],
+              "sufficient_for_draft": true,
+              "semantic_history_ids": []
+            },
+            "elapsed_ms": 1058.29
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_check_sla_policy",
+            "status": "ok",
+            "observation": {
+              "priority": "Baja",
+              "first_response_hours": 24,
+              "policy_id": "INT-SLA"
+            },
+            "elapsed_ms": 1.74
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_draft_response",
+            "status": "ok",
+            "observation": {
+              "status": "draft",
+              "category": "Facturación",
+              "citation_count": 1,
+              "human_approval_required": true,
+              "saved_draft_id": "3ee29907-b4e2-40ea-a25a-94c92ba293e7",
+              "write_target": "SQLite case_notes"
+            },
+            "elapsed_ms": 49907.79
+          }
+        ],
+        "context_control": {
+          "action": "recent_topic_context",
+          "topic_change": false,
+          "topics": [
+            "billing"
+          ]
+        },
+        "memory": {
+          "previous_turns": 0,
+          "turn_count": 1,
+          "window_size": 3,
+          "retained_turns": 1,
+          "summary": "",
+          "used": false,
+          "summary_strategy": "extractive_user_messages"
+        },
+        "retriever": "hybrid",
+        "prompt_version": "v4",
+        "prompt_sha256": "ac7c58c2eae5edb56fcb58313e8687ae9c2cecdc27268832ded1b490df5e7220",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v4"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Factura con cobro duplicado",
+          "suggested_reply": "Por favor, proporciona el número de factura para que podamos verificar y corregir el error.",
+          "justification": "El documento menciona que el problema se relaciona con facturas incorrectas, cobros duplicados o cargos no reconocidos, lo que sugiere que el problema podría estar relacionado con la factura en cuestión.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros."
+            }
+          ],
+          "needs_review": true
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.549342,
+            "lexical_score": 0.340999,
+            "semantic_score": 0.719805
+          }
+        ],
+        "steps": [
+          {
+            "step": "memoria",
+            "detail": "0 intercambios previos; contexto activado"
+          },
+          {
+            "step": "tool_search_knowledge_base",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_check_sla_policy",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_draft_response",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Revisar afirmaciones y citas antes de usar el borrador"
+          }
+        ],
+        "usage": {
+          "input_tokens": 1116,
+          "output_tokens": 185
+        },
+        "timings": {
+          "retrieval_ms": 901.84,
+          "generation_ms": 49904.51,
+          "total_ms": 60047.6
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "case": "P1b",
+      "result": {
+        "trace_id": "be31f8e3-c316-4a9a-ab47-0c59e1c3d18e",
+        "created_at": "2026-10-21T20:31:18.505451+00:00",
+        "session_id": "f9c12b6b-0b4d-46af-b712-682bde89e5dc",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "requested_provider": "ollama",
+        "fallback_used": false,
+        "warning": null,
+        "orchestration": {
+          "requested": "react",
+          "executed": "langchain-react-ollama"
+        },
+        "tool_events": [
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_search_knowledge_base",
+            "status": "ok",
+            "observation": {
+              "count": 1,
+              "source_ids": [
+                "INT-FAC:0"
+              ],
+              "sufficient_for_draft": true,
+              "semantic_history_ids": [
+                "3ee29907-b4e2-40ea-a25a-94c92ba293e7"
+              ]
+            },
+            "elapsed_ms": 1923.75
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_check_sla_policy",
+            "status": "ok",
+            "observation": {
+              "priority": "Baja",
+              "first_response_hours": 24,
+              "policy_id": "INT-SLA"
+            },
+            "elapsed_ms": 2.6
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_draft_response",
+            "status": "ok",
+            "observation": {
+              "status": "draft",
+              "category": "Facturación",
+              "citation_count": 1,
+              "human_approval_required": true,
+              "saved_draft_id": "ced2ad62-5f3e-4413-9f32-0b0c7355e4c2",
+              "write_target": "SQLite case_notes"
+            },
+            "elapsed_ms": 56096.51
+          }
+        ],
+        "context_control": {
+          "action": "recent_topic_context",
+          "topic_change": false,
+          "topics": [
+            "billing"
+          ]
+        },
+        "memory": {
+          "previous_turns": 1,
+          "turn_count": 2,
+          "window_size": 3,
+          "retained_turns": 2,
+          "summary": "",
+          "used": true,
+          "summary_strategy": "extractive_user_messages"
+        },
+        "retriever": "hybrid",
+        "prompt_version": "v4",
+        "prompt_sha256": "ac7c58c2eae5edb56fcb58313e8687ae9c2cecdc27268832ded1b490df5e7220",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v4"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Factura duplicada, necesito confirmar si corresponde a Facturación para proceder con la corrección.",
+          "suggested_reply": "Por favor, proporciona el número de factura para que podamos verificar y proceder con la corrección.",
+          "justification": "La solicitud se refiere a una factura duplicada, lo que implica un problema de facturación. La corrección debe ser gestionada por el equipo de Facturación, por lo que solicito el número de factura para que podamos confirmar la situación.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros."
+            }
+          ],
+          "needs_review": true
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.509598,
+            "lexical_score": 0.311288,
+            "semantic_score": 0.671852
+          }
+        ],
+        "steps": [
+          {
+            "step": "memoria",
+            "detail": "1 intercambios previos; contexto activado"
+          },
+          {
+            "step": "tool_search_knowledge_base",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_check_sla_policy",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_draft_response",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Revisar afirmaciones y citas antes de usar el borrador"
+          }
+        ],
+        "usage": {
+          "input_tokens": 1139,
+          "output_tokens": 212
+        },
+        "timings": {
+          "retrieval_ms": 1913.82,
+          "generation_ms": 56093.14,
+          "total_ms": 65433.74
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "case": "P2",
+      "result": {
+        "trace_id": "6b8515f7-0693-4a96-9803-c9f5e9cda23f",
+        "created_at": "2026-10-21T20:32:24.629971+00:00",
+        "session_id": "f9c12b6b-0b4d-46af-b712-682bde89e5dc",
+        "status": "draft",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "requested_provider": "ollama",
+        "fallback_used": false,
+        "warning": null,
+        "orchestration": {
+          "requested": "react",
+          "executed": "langchain-react-ollama"
+        },
+        "tool_events": [
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_check_sla_policy",
+            "status": "ok",
+            "observation": {
+              "priority": "Baja",
+              "first_response_hours": 24,
+              "policy_id": "INT-SLA"
+            },
+            "elapsed_ms": 17.97
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_search_knowledge_base",
+            "status": "ok",
+            "observation": {
+              "count": 1,
+              "source_ids": [
+                "INT-FAC:0"
+              ],
+              "sufficient_for_draft": true,
+              "semantic_history_ids": []
+            },
+            "elapsed_ms": 1058.08
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_draft_response",
+            "status": "ok",
+            "observation": {
+              "status": "draft",
+              "category": "Facturación",
+              "citation_count": 1,
+              "human_approval_required": true,
+              "saved_draft_id": "523f7697-464c-462d-b999-0c8e704fbff0",
+              "write_target": "SQLite case_notes"
+            },
+            "elapsed_ms": 56966.21
+          }
+        ],
+        "context_control": {
+          "action": "disabled",
+          "topic_change": false,
+          "topics": [
+            "billing"
+          ]
+        },
+        "memory": {
+          "previous_turns": 2,
+          "turn_count": 3,
+          "window_size": 3,
+          "retained_turns": 3,
+          "summary": "",
+          "used": false,
+          "summary_strategy": "extractive_user_messages"
+        },
+        "retriever": "hybrid",
+        "prompt_version": "v4",
+        "prompt_sha256": "ac7c58c2eae5edb56fcb58313e8687ae9c2cecdc27268832ded1b490df5e7220",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v4"
+        },
+        "decision": {
+          "category": "Facturación",
+          "summary": "Factura duplicada y pago duplicado",
+          "suggested_reply": "Por favor, comunique al equipo de Facturación el número de factura y el monto del cargo duplicado. Este incidente podría ser un error de facturación o un pago incorrecto. Los detalles de la factura y el monto del cargo duplicado son importantes para identificar el problema y proceder con la corrección.",
+          "justification": "La facturación es la categoría correcta porque el incidente se refiere a un pago duplicado, lo que generalmente se debe a un error en la facturación.",
+          "citations": [
+            {
+              "source_id": "INT-FAC:0",
+              "quote": "Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros."
+            }
+          ],
+          "needs_review": true
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-FAC:0",
+            "doc_id": "INT-FAC",
+            "title": "Factura, cobro duplicado y pagos",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "c646aef9e496fb9b7df641cd7328740f1b6c9ce53a82740ae9943eeb092308cb",
+            "text": "Procedimiento interno simulado de facturación de Nexo TI, versión 1.0. Para factura incorrecta, cobro duplicado o cargo no reconocido, registrar el identificador de factura, fecha y monto del cargo; derivar al equipo de Facturación para contrastar registros. No solicitar el número completo de tarjeta ni datos bancarios sensibles. Ningún borrador del asistente autoriza devoluciones, descuentos o anulaciones. El equipo confirma si corresponde una corrección después de revisar la evidencia. Una solicitud de pago o comprobante también pertenece a Facturación. La primera respuesta depende del impacto declarado y no de la palabra urgente.",
+            "word_start": 0,
+            "word_end": 92,
+            "score": 0.525073,
+            "lexical_score": 0.340999,
+            "semantic_score": 0.675679
+          }
+        ],
+        "steps": [
+          {
+            "step": "memoria",
+            "detail": "2 intercambios previos; contexto ignorado"
+          },
+          {
+            "step": "tool_check_sla_policy",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_search_knowledge_base",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_draft_response",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Revisar afirmaciones y citas antes de usar el borrador"
+          }
+        ],
+        "usage": {
+          "input_tokens": 1077,
+          "output_tokens": 227
+        },
+        "timings": {
+          "retrieval_ms": 1054.54,
+          "generation_ms": 56963.24,
+          "total_ms": 66090.61
+        },
+        "human_approval_required": true
+      }
+    },
+    {
+      "case": "P3",
+      "result": {
+        "trace_id": "5051bf1c-868a-452b-a2fa-5038807e8738",
+        "created_at": "2026-10-21T20:33:32.543716+00:00",
+        "session_id": "f9c12b6b-0b4d-46af-b712-682bde89e5dc",
+        "status": "evidence_mismatch",
+        "mode": "ollama",
+        "model": "qwen2.5:1.5b",
+        "requested_provider": "ollama",
+        "fallback_used": false,
+        "warning": {
+          "code": "evidence_mismatch",
+          "message": "Las citas existen, pero no respaldan el tema detectado en la respuesta. Se retuvo el borrador para revisión."
+        },
+        "orchestration": {
+          "requested": "react",
+          "executed": "react"
+        },
+        "tool_events": [
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_check_sla_policy",
+            "status": "ok",
+            "observation": {
+              "priority": "Baja",
+              "first_response_hours": 24,
+              "policy_id": "INT-SLA"
+            },
+            "elapsed_ms": 8.8
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_search_knowledge_base",
+            "status": "ok",
+            "observation": {
+              "count": 1,
+              "source_ids": [
+                "INT-NET:0"
+              ],
+              "sufficient_for_draft": true,
+              "semantic_history_ids": []
+            },
+            "elapsed_ms": 1312.79
+          },
+          {
+            "actor": "Agente ReAct",
+            "tool": "tool_draft_response",
+            "status": "error",
+            "observation": "La herramienta falló; no se acepta un resultado inventado."
+          }
+        ],
+        "context_control": {
+          "action": "ignore_previous_topic",
+          "topic_change": true,
+          "topics": [
+            "vpn"
+          ]
+        },
+        "memory": {
+          "previous_turns": 3,
+          "turn_count": 4,
+          "window_size": 3,
+          "retained_turns": 3,
+          "summary": "\nEntrada anterior (extracto): Mi factura tiene un cobro duplicado",
+          "used": false,
+          "summary_strategy": "extractive_user_messages"
+        },
+        "retriever": "hybrid",
+        "prompt_version": "v4",
+        "prompt_sha256": "ac7c58c2eae5edb56fcb58313e8687ae9c2cecdc27268832ded1b490df5e7220",
+        "corpus_sha256": "e0ea556c2513539a3b31ebfe71d5b2025b0c5b06a8c44028bbc1a16f1c38c636",
+        "config": {
+          "chunk_words": 110,
+          "overlap_words": 20,
+          "top_k": 4,
+          "min_score": 0.06,
+          "max_context_chars": 6500,
+          "semantic_weight": 0.55,
+          "prompt_version": "v4"
+        },
+        "decision": {
+          "category": "No determinado",
+          "summary": "no me conecta la VPN",
+          "suggested_reply": "No se obtuvo un borrador con evidencia suficiente. Derivar al operador y revisar antecedentes o conexión.",
+          "justification": "Abstención: contexto insuficiente o ejecución no validada.",
+          "citations": [],
+          "needs_review": true
+        },
+        "priority": "Baja",
+        "first_response_hours": 24,
+        "policy": {
+          "source_id": "INT-SLA:0",
+          "text": "Política de prioridad y primera respuesta de Nexo TI. Fuente interna simulada, versión 1.0. Un incidente de seguridad declarado, o una interrupción que afecta a toda la organización, tiene prioridad Alta y primera respuesta en 1 hora hábil. Una interrupción individual, o un problema que afecta a un equipo o a la organización sin caída total, tiene prioridad Media y primera respuesta en 4 horas hábiles. Las demás solicitudes individuales tienen prioridad Baja y primera respuesta en 24 horas hábiles. Primera respuesta significa contacto inicial del operador; no es un compromiso de resolución. El horario supuesto del prototipo es lunes a viernes de 09:00 a 18:00, sin cálculo de feriados",
+          "sha256": "433137f5fff0ccbb82447c3a98e9bb71d0b672c970cd01fa4a32dff655f50854"
+        },
+        "sources": [
+          {
+            "id": "INT-NET:0",
+            "doc_id": "INT-NET",
+            "title": "VPN, internet, Firefox y conectividad",
+            "source_type": "internal",
+            "origin": "Nexo TI / procedimiento simulado",
+            "version": "1.0",
+            "sha256": "8bd18f90e6761abd2aab0d863b037bb8edea896dc1088bce436e25e6d81f47fe",
+            "text": "Procedimiento interno simulado de conectividad y VPN de Nexo TI, versión 1.0. Ante error de VPN, internet o conexión al portal, registrar mensaje de error, hora, equipo y alcance. Comprobar si otros sitios y navegadores funcionan para distinguir un problema general de uno propio de Firefox. No desactivar el firewall, antivirus o controles corporativos ni cambiar el proxy administrado sin aprobación del responsable técnico. Si falla Firefox pero otro navegador funciona, consultar la guía externa de Mozilla como apoyo diagnóstico. Una caída de toda la organización se deriva de inmediato con prioridad Alta si se declara interrupción del servicio.",
+            "word_start": 0,
+            "word_end": 99,
+            "score": 0.46879,
+            "lexical_score": 0.200016,
+            "semantic_score": 0.688695
+          }
+        ],
+        "steps": [
+          {
+            "step": "memoria",
+            "detail": "3 intercambios previos; contexto activado"
+          },
+          {
+            "step": "tool_check_sla_policy",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_search_knowledge_base",
+            "detail": "Agente ReAct: ok"
+          },
+          {
+            "step": "tool_draft_response",
+            "detail": "Agente ReAct: error"
+          },
+          {
+            "step": "revision_humana",
+            "detail": "Revisar afirmaciones y citas antes de usar el borrador"
+          }
+        ],
+        "usage": {
+          "input_tokens": 1070,
+          "output_tokens": 216
+        },
+        "timings": {
+          "retrieval_ms": 1310.89,
+          "generation_ms": 0,
+          "total_ms": 67883.38
+        },
+        "human_approval_required": true
+      }
+    }
+  ],
+  "scope": "Regresión conocida P1–P3; no evaluación independiente ni comparación de tamaños de modelo.",
+  "semantic_history_ids": [
+    "523f7697-464c-462d-b999-0c8e704fbff0"
+  ],
+  "passed": false
+}

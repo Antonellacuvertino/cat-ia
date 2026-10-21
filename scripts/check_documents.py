@@ -10,7 +10,7 @@ if __name__=="__main__":
     preview=ROOT/"runtime/pdf-checks"
     preview.mkdir(parents=True,exist_ok=True)
     # Recorre todos los PDF y detecta bloques de texto que exceden los límites físicos de página.
-    for file in sorted((ROOT/"deliverables").glob("*.pdf")):
+    for file in sorted(list((ROOT/"deliverables").glob("*.pdf")) + list((ROOT/"docs").glob("*.pdf"))):
         doc=pymupdf.open(file)
         outside=[]
         for i,page in enumerate(doc):

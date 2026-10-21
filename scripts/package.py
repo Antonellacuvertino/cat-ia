@@ -11,7 +11,11 @@ ALLOWED_FILES = {"README.md", "requirements.txt", "requirements-ea2.txt", "requi
 if __name__ == "__main__":
     destination=ROOT/"dist"
     destination.mkdir(exist_ok=True)
-    files=[p for p in ROOT.rglob("*") if p.is_file() and
+    # Recorre solo directorios entregables; no enumera modelos, .venv ni perfiles locales.
+    candidates = [ROOT/name for name in ALLOWED_FILES]
+    for name in ALLOWED_DIRS:
+        candidates.extend((ROOT/name).rglob('*'))
+    files=[p for p in candidates if p.is_file() and
            (p.relative_to(ROOT).parts[0] in ALLOWED_DIRS or p.relative_to(ROOT).as_posix() in ALLOWED_FILES) and
            not any(part in {"__pycache__", ".pytest_cache"} for part in p.relative_to(ROOT).parts) and p.suffix != ".pyc" and p.name != "package_check.json"]
     with zipfile.ZipFile(destination/"CAT-IA_entrega.zip","w",zipfile.ZIP_DEFLATED) as archive:

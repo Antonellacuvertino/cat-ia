@@ -25,6 +25,7 @@ class MemoryStore:
         self.locks = [threading.RLock() for _ in range(32)]
         with self.connect() as db:
             db.execute("CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, summary TEXT NOT NULL, turns TEXT NOT NULL, count INTEGER NOT NULL, updated TEXT NOT NULL)")
+            db.execute("CREATE TABLE IF NOT EXISTS case_notes (id TEXT PRIMARY KEY, session_id TEXT NOT NULL, user TEXT NOT NULL, draft TEXT NOT NULL)")
 
     @contextmanager
     def connect(self):
@@ -83,5 +84,37 @@ class MemoryStore:
     def delete(self, session_id):
         """Elimina el hilo local; una copia JSON descargada por el usuario es independiente."""
         with self.locked(session_id), self.connect() as db:
+            db.execute("DELETE FROM case_notes WHERE session_id=?", (str(UUID(str(session_id))),))
             cursor = db.execute("DELETE FROM sessions WHERE id=?", (str(UUID(str(session_id))),))
             return cursor.rowcount > 0
+
+    def save_draft(self, session_id, user, decision):
+        """Herramienta de escritura: registra un borrador pendiente, sin enviarlo a clientes."""
+        sid = str(UUID(str(session_id)))
+        note_id = str(uuid4())
+        # La solicitud ya conserva el lock del hilo en ConversationAgent. CrewAI puede
+        # ejecutar esta herramienta en otro thread: no readquirir aquí ese RLock.
+        with self.connect() as db:
+            if db.execute('SELECT id FROM sessions WHERE id=?', (sid,)).fetchone() is None:
+                raise KeyError('Sesión inexistente')
+            db.execute('INSERT INTO case_notes VALUES (?, ?, ?, ?)',
+                       (note_id, sid, user[:4000], json.dumps(decision, ensure_ascii=False)))
+            # Retención explícita: máximo veinte registros por hilo, independiente de ventana corta.
+            db.execute('DELETE FROM case_notes WHERE session_id=? AND rowid NOT IN '
+                       '(SELECT rowid FROM case_notes WHERE session_id=? ORDER BY rowid DESC LIMIT 20)', (sid, sid))
+        return note_id
+
+    def search_notes(self, session_id, query, embeddings):
+        """Recupera hasta dos entradas humanas anteriores del mismo hilo mediante embeddings."""
+        from .guardrails import topics
+        with self.connect() as db:
+            rows = db.execute('SELECT id, user FROM case_notes WHERE session_id=? ORDER BY rowid DESC',
+                              (str(UUID(str(session_id))),)).fetchall()
+        target = topics(query)
+        rows = [r for r in rows if not target or not topics(r[1]) or not target.isdisjoint(topics(r[1]))]
+        if not rows:
+            return []
+        vectors = embeddings.encode([query] + [r[1] for r in rows])
+        matches = [{'note_id': row[0], 'user': row[1][:450], 'similarity': round(float(vectors[0] @ vector), 4)}
+                   for row, vector in zip(rows, vectors[1:])]
+        return sorted([r for r in matches if r['similarity'] >= 0.65], key=lambda r: -r['similarity'])[:2]

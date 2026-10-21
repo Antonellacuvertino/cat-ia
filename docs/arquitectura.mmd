@@ -2,7 +2,8 @@
     U[Operador: ticket e impacto] --> UI[Interfaz: modo e hilo]
     UI --> API[FastAPI: contratos y sesiones]
     API --> A[ConversationAgent]
-    A <--> MEM[SQLite: ventana y resumen extractivo]
+    A --> GC[Seleccionar contexto y advertir cambio de tema]
+    GC <--> MEM[SQLite: ventana y resumen extractivo]
     A --> R[ReAct acotado / LangChain]
     A --> C[CrewAI / Process.sequential]
     C --> T[Triage: politica]
@@ -13,20 +14,25 @@
     I --> TOOLS
     D --> TOOLS
     TOOLS --> SLA[Reglas SLA / INT-SLA]
-    TOOLS --> RET[Retriever TF-IDF / hibrido opcional]
+    TOOLS --> RET[Retriever TF-IDF / hibrido con embeddings]
+    RET <--> NOTES[SQLite case_notes: hasta 20 registros por hilo]
+    NOTES -. entradas humanas por similitud .-> CTX
     F[7 fuentes internas / 2 externas locales] --> ING[Manifiesto / hashes / fragmentos]
     ING --> RET
     RET --> CTX[Contexto documental + v4]
     MEM -. antecedentes no citables .-> CTX
     CTX --> L[Ollama / simulador explicito]
-    L --> V[Decision y citas validadas]
+    L --> V[Validar contrato, citas y coherencia tematica]
     RET -->|sin evidencia| N[Abstencion]
     L -->|fallo| N
     L -->|fallo y respaldo permitido| SIM[Demo etiquetado]
     SIM --> V
+    V -->|valido: escribir borrador| NOTES
+    V -->|desalineado| N
     V --> H[Revision humana obligatoria]
     N --> H
     SLA --> H
     H --> UI
     A --> LOG[Eventos de herramientas / metadatos]
     UI -->|borrar hilo| MEM
+    UI -->|borrar registros del hilo| NOTES

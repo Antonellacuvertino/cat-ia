@@ -1,67 +1,61 @@
-# Guion sencillo para mostrar CAT-IA · EA2
+# Guion individual · CAT-IA · EP2
 
-Autoras: Antonella Cuvertino y Miriam Hammami. Docente: Sebastián Ignacio Sánchez Morales. Preparado el 11/10/2026.
+Ingeniería de Soluciones con IA (ISY0101). Autoras: Antonella Cuvertino y Miriam Hammami. Docente: Sebastián Ignacio Sánchez Morales. Actualización: 21/10/2026.
 
-## Preparación
+La pauta indica presentación individual: cada integrante debe practicar el recorrido completo. El repositorio representa 20% y la presentación 80% de esta evaluación. La fecha límite se consulta en AVA.
 
-En este computador están instaladas las dependencias EA2. En otro equipo ejecutar instalar.bat y después instalar_ea2.bat para habilitar CrewAI. Para inferencia real iniciar_modelo_local.bat corresponde únicamente al equipo que tiene la instalación portable; luego iniciar.bat y abrir http://127.0.0.1:8000. No iniciar dos servidores en el mismo puerto.
+## Antes de presentar
 
-Para un ensayo rápido sin modelo, configurar CATIA_PROVIDER=demo en .env y reiniciar la aplicación. Para el LLM real usar ollama y comprobar su URL. Leer el aviso de modo antes de hablar. El modo equipo en CPU puede demorar más por sus consultas adicionales. No afirmar que el simulador es IA generativa.
+Ejecuta instalar.bat e instalar_ea2.bat si es otro computador. Inicia Ollama con los modelos qwen2.5:1.5b y nomic-embed-text descargados. Configura CATIA_PROVIDER=ollama y CATIA_RETRIEVER=hybrid. En este computador portable, OLLAMA_URL usa 11435; una instalación estándar suele usar 11434. Ejecuta iniciar.bat y abre http://127.0.0.1:8000. Confirma el aviso LLM y recuperador híbrido. No basta que health responda para garantizar que el modelo genera.
 
-## Diapositivas 1 y 2 · Antonella · 45 segundos
+Abre la presentación en docs/presentacion_EA2_CAT-IA.pdf y los archivos catia/orchestration.py, catia/tools.py, catia/guardrails.py y reports/FEEDBACK_RESULTADOS.md. Lee también docs/13_prompts_demostracion.md. Usa datos ficticios. Ensaya las consultas antes: la latencia varía por equipo; el profesor informó 11–17 segundos en el suyo, no es una promesa para el nuestro.
 
-«Somos Antonella Cuvertino y Miriam Hammami. En esta segunda experiencia mejoramos CAT-IA, nuestro asistente de soporte para la empresa ficticia Nexo TI. Antes analizaba cada solicitud por separado. Ahora permite continuar una conversación y coordinar herramientas para preparar una respuesta con evidencia».
+## Diapositivas 1 y 2 · 40 segundos
 
-## Diapositiva 3 · Antonella · 40 segundos
+«Soy [tu nombre]. Con mi compañera desarrollamos CAT-IA para la organización ficticia Nexo TI. El problema es atender solicitudes usando procedimientos dispersos sin perder los antecedentes del caso. El agente consulta documentos, determina la prioridad según una política y prepara un borrador que registra localmente. Una persona siempre lo revisa».
 
-«Organizamos el trabajo en tres herramientas. Una busca documentos; otra consulta las reglas de prioridad; y otra genera el borrador y comprueba sus citas. El agente solo puede usar herramientas permitidas, por eso no puede enviar correos ni ejecutar acciones sobre clientes».
+## Diapositiva 3 · Diagrama · 45 segundos
 
-Si preguntan por código: catia/tools.py, create_tools y execute_tool. La prioridad usa impacto declarado; no basta escribir URGENTE.
+«La solicitud entra por la API. El sistema selecciona el contexto del hilo y el modo de trabajo. Las herramientas consultan la política, recuperan documentos y generan un borrador. Antes de registrarlo, comprobamos citas y coherencia temática. Si falta evidencia o falla una herramienta, mostramos una abstención o un error controlado».
 
-## Diapositiva 4 · Miriam · 40 segundos
+Señala las flechas, la memoria y las ramas de fallo. No enumeres módulos sin explicar qué información pasa entre ellos.
 
-«Cada conversación tiene su propio identificador. Conservamos los últimos tres intercambios y un resumen breve de entradas anteriores. Guardamos esto en SQLite para continuar después de reiniciar. El resumen es extractivo: recoge partes del texto, sin otra llamada de IA. Podemos borrar la memoria desde la pantalla».
+## Diapositiva 4 · Decisiones de diseño · 40 segundos
 
-Si preguntan por código: catia/memory.py, get, append y delete. La memoria no es entrenamiento y las respuestas anteriores no se convierten en documentos confiables.
+«Elegimos LangChain para declarar herramientas con argumentos validados y CrewAI para mostrar roles con tareas secuenciales. SQLite resuelve la persistencia de este prototipo sin desplegar otro servidor. Ollama permite ejecutar localmente el modelo. Agregamos embeddings para comparar significado aproximado, aunque requieren un modelo adicional y evaluación en español».
 
-## Diapositiva 5 · Miriam · 45 segundos
+## Diapositiva 5 · Autonomía · 35 segundos
 
-«Tenemos dos modos. El individual selecciona una herramienta disponible y sigue un ciclo limitado. En el equipo, CrewAI organiza tres roles en secuencia: Triage revisa la prioridad, el Investigador recupera documentos y el Redactor clasifica y prepara el borrador. En ambos casos una persona debe revisar la respuesta».
+«El modelo puede elegir entre buscar o consultar la política al inicio del flujo individual, y redacta la respuesta. El código decide los pasos obligatorios, el número máximo de llamadas y los controles. En CrewAI los roles están predefinidos. No presentamos esta autonomía limitada como un agente que pueda ejecutar cualquier acción».
 
-Si preguntan por código: catia/orchestration.py, run_react y run_crew. El modo individual usa herramientas de LangChain; el equipo utiliza objetos Agent, Task, context y Process.sequential de CrewAI.
+## Diapositiva 6 · Memoria · 40 segundos
 
-## Diapositiva 6 · Demostración · 1 a 2 minutos más tiempo de inferencia
+«La ventana conserva tres intercambios y un resumen extractivo. Además, registramos hasta veinte borradores pendientes con la entrada humana. En modo híbrido recuperamos por similitud entradas del mismo hilo, incluso si salieron de la ventana. Los borradores previos no se convierten en fuentes documentales. El borrado elimina ambos almacenamientos del hilo».
 
-1. Abre la app. Di si estás usando demo o LLM real. Pulsa Borrar memoria y empezar para trabajar con un hilo limpio.
+## Diapositivas 7 y 8 · Retroalimentación · 50 segundos
 
-2. Selecciona Agente individual. Pulsa Cobro duplicado y después Analizar con evidencia. Muestra categoría, fuentes y Ver herramientas y agentes. El ejemplo desactiva contexto previo para no mezclar temas.
+«El profesor encontró una paráfrasis que TF-IDF no reconocía y una respuesta sobre facturación cuando el usuario había cambiado a VPN. Además, las citas eran auténticas pero no respaldaban esa respuesta. Incorporamos un control de cambio de tema y una validación temática adicional. La expansión por sinónimos y los embeddings son mecanismos distintos. No hemos demostrado que cambiar a un modelo más grande resuelva estos errores».
 
-3. Activa Usar antecedentes de esta conversación. Escribe «¿Qué debo hacer en ese caso?» y vuelve a analizar. Muestra que el hilo conserva la consulta anterior sobre la factura. Verifica la respuesta, sin dar por correcto cualquier texto del modelo.
+## Diapositiva 9 · Demostración
 
-4. Abre Ver memoria de la conversación. Muestra los intercambios. Para enseñar el resumen, realiza más de tres consultas del mismo caso; evita hacerlo en vivo con LLM si el tiempo es corto. Se pueden preparar esos turnos antes o ensayarlos en demo.
+Borra memoria, usa Agente individual y fuentes internas y externas. Ejecuta en orden:
 
-5. Selecciona Equipo de 3 agentes. Envía de nuevo un caso claro. Muestra Triage, Investigador RAG y Redactor en las herramientas. Si ejecutas demo, explica que CrewAI sí se ejecuta, pero las decisiones del modelo son simuladas.
+1. «Mi factura tiene un cobro duplicado». Muestra el borrador, INT-FAC y saved_draft_id en las herramientas.
+2. «¿Qué debo hacer en ese caso?» con antecedentes activados. Muestra el uso del hilo.
+3. «no me conecta la VPN» sin borrar el hilo. Muestra el aviso de cambio de tema y verifica que no aconseje revisar facturas. Si se retiene el borrador, explica evidence_mismatch.
+4. Cambia Fuentes consultadas a Solo externas. Envía «me cobraron dos veces» sin antecedentes. Explica por qué falta el procedimiento interno y el sistema se abstiene. Restaura el filtro.
+5. Si queda tiempo, repite un caso claro con Equipo de 3 agentes y muestra Triage, Investigador y Redactor.
 
-6. Pulsa Borrar memoria y empezar. Comprueba que desaparece el historial del hilo. Inicia un caso nuevo. No prometas que una pregunta genérica siempre se abstendrá: la similitud puede recuperar algún documento poco pertinente.
+No ocultes una salida distinta de la esperada. Descarga el JSON y señala status, sources, tool_events, context_control, warning y timings. La pauta valora explicar un fallo con evidencia.
 
-## Diapositiva 7 · Pruebas · 40 segundos
+## Diapositiva 10 · 30 segundos
 
-«Agregamos pruebas para comprobar que una sesión no use datos de otra, que la memoria persista, que se pueda borrar y que las herramientas rechacen acciones no permitidas. También distinguimos los ensayos con simulador de las pruebas reales con Ollama. Los resultados actuales están en el informe de EA2».
+«Las pruebas comprueban contratos y los escenarios reproducibles. Las inferencias guardadas muestran lo que ocurrió en esos casos, no una garantía general. El aporte es continuar el trabajo, hacer visibles las herramientas y detectar algunas respuestas desalineadas antes de que el operador las use».
 
-Para ejecutarlas: .\.venv\Scripts\python.exe -m pytest -q. Para evidencia detallada abrir reports/EA2_RESULTADOS.md. Leer el resultado real: no memorizar un número si luego cambia la suite.
+## Si te piden cambiar algo en vivo
 
-## Diapositiva 8 · Cierre · 30 segundos
+Para top_k, usa el selector de fragmentos y explica que más contexto puede aumentar cobertura y ruido. Para impacto, cambia Personas afectadas y Servicio interrumpido: la prioridad sale de priority_for en catia/agent.py. Para ignorar antecedentes, desactiva la casilla y muestra context_control. Para ver el prompt, abre prompts/v4.txt: es una instrucción, no entrenamiento. Si editas código debes reiniciar la app; no prometas que se recarga automáticamente.
 
-«El aporte de esta etapa es dar continuidad a los casos y hacer visible cómo colaboran memoria, herramientas y agentes. La aplicación sigue siendo un prototipo local. Las citas se comprueban, pero todavía necesitamos revisar si cada recomendación es correcta y pertinente antes de usarla».
+## Preguntas para practicar
 
-## Si falla el modelo
-
-Sin la casilla de respaldo se muestra un error controlado. Si habilitas Permitir simulación si falla el proveedor, la pantalla indica SIMULACIÓN DE RESPALDO cuando se utiliza. Di «el modelo falló; ahora mostramos el flujo simulado». No atribuyas ese borrador al LLM ni a una ejecución real del equipo.
-
-## Tres respuestas cortas para practicar
-
-¿Entrenaron una IA? «No modificamos los pesos del modelo. Adaptamos documentos, instrucciones, herramientas y memoria».
-
-¿La memoria y el RAG son lo mismo? «No. La memoria conserva antecedentes del caso; el RAG busca documentos que respaldan la respuesta».
-
-¿El sistema decide solo? «Decide dentro de un catálogo y límites programados. La prioridad sigue reglas y la persona revisa el borrador antes de usarlo».
+Consulta docs/14_preguntas_defensa.md. Practica cada respuesta con el archivo abierto y un ejemplo de tu aplicación. No memorices métricas históricas como si fueran resultados del código actual.

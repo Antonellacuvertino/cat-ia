@@ -6,6 +6,16 @@
       "text_outside_page": []
     },
     {
+      "file": "13_prompts_demostracion.pdf",
+      "pages": 3,
+      "text_outside_page": []
+    },
+    {
+      "file": "14_preguntas_defensa.pdf",
+      "pages": 4,
+      "text_outside_page": []
+    },
+    {
       "file": "arquitectura_EA1.pdf",
       "pages": 1,
       "text_outside_page": []
@@ -22,7 +32,7 @@
     },
     {
       "file": "dossier_EA2_CAT-IA.pdf",
-      "pages": 8,
+      "pages": 14,
       "text_outside_page": []
     },
     {
@@ -32,7 +42,7 @@
     },
     {
       "file": "presentacion_EA2_CAT-IA.pdf",
-      "pages": 8,
+      "pages": 10,
       "text_outside_page": []
     }
   ],

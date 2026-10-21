@@ -1,0 +1,11 @@
+{
+  "created_at": "2026-10-21T20:36:09.511275+00:00",
+  "provider": "demo",
+  "checks": [
+    "Cambio de factura a VPN: aviso visible y antecedentes excluidos",
+    "Solo externas + cobro: abstención visible y sin fuentes ajenas",
+    "Vista móvil sin desbordamiento",
+    "Borrado de sesión desde la interfaz"
+  ],
+  "passed": true
+}

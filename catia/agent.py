@@ -145,11 +145,14 @@ class ConversationAgent(Agent):
 
         started = time.perf_counter()
         clean = redact(ticket.text)
-        memory = self.memory.context(previous) if ticket.use_context else {}
+        from .guardrails import EvidenceMismatch, expand_query, select_context
+        memory, context_control = select_context(clean, previous, self.memory, ticket.use_context)
         # Solo entradas humanas para búsqueda: nunca se indexan borradores del modelo.
         prior_queries = memory.get("recent_user_messages", [])
-        query = (" ".join(prior_queries[-1:]) + " " + clean).strip()[:6000]
+        query = expand_query((" ".join(prior_queries[-1:]) + " " + clean).strip())[:6000]
         state = ToolContext(ticket, clean, query, memory, self.retriever, self.generator)
+        state.store, state.session_id = self.memory, sid
+        state.use_history = ticket.use_context and not context_control['topic_change']
         requested = ticket.orchestration or self.mode
         engine, status, warning = requested, "draft", None
         fallback = False
@@ -158,13 +161,17 @@ class ConversationAgent(Agent):
             if state.decision is None:
                 status = "insufficient_context"
         except Exception as exc:
-            status = "dependency_missing" if isinstance(exc, ImportError) else (
+            status = "evidence_mismatch" if isinstance(exc, EvidenceMismatch) else "dependency_missing" if isinstance(exc, ImportError) else (
                 "invalid_output" if isinstance(exc, ValueError) else "provider_error")
             warning = {"code": status, "message": "No se completó la orquestación. Revisa modelo, herramientas o instalación de EA2."}
+            if status == 'evidence_mismatch':
+                warning['message'] = str(exc) + ' Se retuvo el borrador para revisión.'
             # La continuidad en demo requiere opción explícita; jamás pasa por inferencia real.
             if ticket.allow_demo_fallback and status == "provider_error" and self.generator.name != "demo":
                 failed_events = list(state.events)
                 state = ToolContext(ticket, clean, query, memory, self.retriever, DemoGenerator())
+                state.store, state.session_id = self.memory, sid
+                state.use_history = ticket.use_context and not context_control['topic_change']
                 try:
                     engine = run_react(state)
                     state.events = failed_events + state.events
@@ -172,7 +179,7 @@ class ConversationAgent(Agent):
                     status = "fallback_demo" if state.decision else "insufficient_context"
                 except Exception:
                     status = "provider_error"
-        if state.decision is None or status in {"provider_error", "invalid_output", "dependency_missing"}:
+        if state.decision is None or status in {"provider_error", "invalid_output", "dependency_missing", "evidence_mismatch"}:
             state.decision = Decision(category="No determinado", summary=clean[:300], citations=[], needs_review=True,
                 suggested_reply="No se obtuvo un borrador con evidencia suficiente. Derivar al operador y revisar antecedentes o conexión.",
                 justification="Abstención: contexto insuficiente o ejecución no validada.")
@@ -189,9 +196,10 @@ class ConversationAgent(Agent):
             "session_id": sid, "status": status, "mode": state.generator.name, "model": state.generator.model,
             "requested_provider": self.generator.name, "fallback_used": fallback, "warning": warning,
             "orchestration": {"requested": requested, "executed": engine}, "tool_events": state.events,
+            "context_control": context_control,
             "memory": {"previous_turns": previous["turn_count"], "turn_count": saved["turn_count"],
                        "window_size": self.memory.window, "retained_turns": len(saved["turns"]),
-                       "summary": saved["summary"], "used": bool(ticket.use_context and previous["turn_count"]),
+                       "summary": saved["summary"], "used": bool(memory and previous["turn_count"]),
                        "summary_strategy": "extractive_user_messages"},
             "retriever": self.retriever.mode, "prompt_version": "v4",
             "prompt_sha256": hashlib.sha256((ROOT / "prompts/v4.txt").read_bytes()).hexdigest(),

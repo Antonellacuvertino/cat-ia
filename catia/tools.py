@@ -6,6 +6,7 @@ from typing import Literal
 from langchain_core.tools import tool
 
 from .agent import priority_for, validate_evidence
+from .guardrails import EvidenceMismatch, topics, validate_alignment
 
 
 @dataclass
@@ -26,6 +27,9 @@ class ToolContext:
     usage: dict = field(default_factory=lambda: {"input_tokens": None, "output_tokens": None})
     retrieval_ms: float = 0
     generation_ms: float = 0
+    store: object = None
+    session_id: str | None = None
+    use_history: bool = False
 
 
 def create_tools(state: ToolContext):
@@ -43,9 +47,19 @@ def create_tools(state: ToolContext):
             raise ValueError("Argumentos de recuperación inválidos")
         start = time.perf_counter()
         state.hits = state.retriever.search(query, top_k, state.ticket.source_filter)
+        target = topics(query)
+        if len(target) == 1:
+            # Una similitud densa no basta: para temas conocidos exigimos señal en el documento.
+            state.hits = [h for h in state.hits if target & topics(h['title'] + ' ' + h['text'])]
+        recalled = []
+        if state.store and state.use_history and state.retriever.embeddings:
+            recalled = state.store.search_notes(state.session_id, query, state.retriever.embeddings)
+            if recalled:
+                state.memory['semantic_history'] = [r['user'] for r in recalled]
         state.retrieval_ms += (time.perf_counter() - start) * 1000
         return {"count": len(state.hits), "source_ids": [h["id"] for h in state.hits],
-                "sufficient_for_draft": bool(state.hits)}
+                "sufficient_for_draft": bool(state.hits),
+                "semantic_history_ids": [r['note_id'] for r in recalled]}
 
     @tool
     def tool_check_sla_policy(impact: Literal["individual", "equipo", "organizacion"],
@@ -78,11 +92,16 @@ def create_tools(state: ToolContext):
         start = time.perf_counter()
         decision, state.usage = state.generator.generate(state.clean, state.hits, "v4", memory=state.memory)
         validate_evidence(decision, state.hits)
+        validate_alignment(decision, state.query)
         decision.needs_review = True
         state.decision = decision
+        note_id = None
+        if state.store:
+            note_id = state.store.save_draft(state.session_id, state.clean, decision.model_dump())
         state.generation_ms += (time.perf_counter() - start) * 1000
         return {"status": "draft", "category": decision.category,
-                "citation_count": len(decision.citations), "human_approval_required": True}
+                "citation_count": len(decision.citations), "human_approval_required": True,
+                "saved_draft_id": note_id, "write_target": "SQLite case_notes" if note_id else None}
 
     return {t.name: t for t in [tool_search_knowledge_base, tool_check_sla_policy, tool_draft_response]}
 
@@ -106,8 +125,9 @@ def execute_tool(name: str, state: ToolContext, registry: dict, actor: str) -> d
     start = time.perf_counter()
     try:
         result = registry[name].invoke(arguments_for(name, state))
-    except Exception:
-        state.events.append({"actor": actor, "tool": name, "status": "error", "observation": "La herramienta falló; no se acepta un resultado inventado."})
+    except Exception as exc:
+        detail = str(exc) if isinstance(exc, EvidenceMismatch) else 'La herramienta falló; no se acepta un resultado inventado.'
+        state.events.append({"actor": actor, "tool": name, "status": "error", "observation": detail})
         raise
     state.completed.append(name)
     state.events.append({"actor": actor, "tool": name, "status": "ok", "observation": result,
